@@ -98,7 +98,16 @@ h6 {
   margin: 0;
   max-height: 40px;
 }
+@media (max-width: 792px) {
+.poem-filters li{
+font-size:7px !important;
 
+}
+.filterh{
+font-size:16px;
+margin-top:4px !important;
+}
+}
 @media (max-width: 992px) {
   #header {
     height: 60px;
@@ -972,7 +981,7 @@ font-size:20px;
     margin-top: 120px;
 }
 .board-poemtype{
-    color:darkgray;
+    color:#787878;
 }
 .poem-filters{
     list-style: none;
