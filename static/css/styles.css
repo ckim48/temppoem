@@ -1,0 +1,115 @@
+/*Login Page*/
+
+.login-box, .signup-box {
+	background-color: white;
+	border: 1px solid #A2AFF6;
+	padding: 10px 50px 10px 50px;
+/*	padding: space btw content and border; clockwise from top*/
+	border-radius: 5px;
+	max-width: 400px;
+	box-shadow: 0 0 10px rgba(0,0,0,0.1);
+/*	a - opacity*/
+}
+
+.login-box {
+	max-width: 400px;
+}
+
+.signup-box {
+	max-width: 600px;
+}
+
+.login-box h1, .signup-box h1 {
+	font-family: 'Nanum Myeongjo', serif;
+	font-weight: 800;
+	font-size: 30px;
+}
+
+body p {
+	color: black;
+	font-family: 'Nanum Myeongjo', serif;
+}
+
+body a {
+	color: gray;
+}
+
+body a:hover {
+	color: black;
+}
+
+.login-box input {
+/*	or: .login-box .form-control*/
+	font-size: 20px;
+}
+
+.btn-success {
+	font-family: 'Nanum Myeongjo', serif;
+	font-weight: 700;
+	padding: 5px 50px 5px 50px;
+	background-color: white;
+	color: black;
+	border: 1px solid #A2AFF6;
+}
+
+/*x space*/
+.btn-success:hover {
+	background-color: #A2AFF6;
+	border: 1px solid gray;
+}
+
+.form-check-label {
+	font-family: 'Nanum Myeongjo', serif;
+	font-size: 15px;
+	color: gray;
+}
+
+.form-group {
+	font-family: 'Nanum Myeongjo', serif;
+	font-size: 5px;
+}
+
+h1 {
+    color: #A2AFF6;
+    font-family: 'Nanum Myeongjo', serif;
+    font-weight: 800;
+    font-size: 50px;
+}
+
+.word-box {
+    border:1px solid darkgray;
+    color: black;
+    width: 1000px;
+    height: 50px;
+    border-radius: 5px;
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 18px;
+}
+@media (max-width: 1000px) {
+	.word-box {
+		width: 600px;
+	}
+}
+@media (max-width: 500px) {
+	.word-box {
+		width: 350px;
+	}
+}
+
+.btn-primary {
+    background-color: #A2AFF6;
+    border-color: darkgray;
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 18px;
+}
+
+.btn-primary:hover {
+    background-color: #909BD8;
+    border-color: darkgray;
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 18px;
+}
+
+body {
+    margin: 0;
+}
