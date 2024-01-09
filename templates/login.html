@@ -1,0 +1,57 @@
+<!Doctype HTML>
+<html>
+	<head>
+		<title> Poem Project Sign in </title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+		<link rel="stylesheet" href="../static/css/styles.css"> 
+		<!-- css/ => going into css folder -->
+		<!-- ../ => going back to parent's directory (파일기준으로 한번 뒤로가는) -->
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=DM+Sans:opsz@9..40&family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
+	</head>
+
+	<body>
+
+		<div class="container">
+			<div class="login-box mx-auto mt-5">
+				<!-- m - margin, x - x-axis (L & R), auto - automatically same -->
+				<h1 class="text-center"> Log in </h1>
+				{% with messages = get_flashed_messages() %}
+					{% if messages%} <!--if have message-->
+						<div class="alert alert-danger" role="alert">
+							Wrong password or username!
+						</div>
+					{% endif %}
+				{% endwith %}
+				<form action="/login" method="POST">
+					<div class="form-group mt-3">
+						<input class="form-control" placeholder="Username" name="username">
+					</div>
+					<div class="form-group mt-3">
+						<input type="password" class="form-control" placeholder="Password" name="password">
+					</div>
+					<div class="form-check">
+  						<input class="form-check-input mt-3" type="checkbox" value="" id="flexCheckDefault">
+  						<label class="form-check-label mt-3" for="flexCheckDefault">
+    					Remember me
+  						</label>
+					</div>
+					<div class="text-center">
+						<button type="submit" class="btn btn-success mt-2">Log in</button>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<p class="mt-2 text-center mt-3"> Don't have an account? <a href="{{url_for('signup')}}"> Register here </a> </p>
+
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"> </script>
+	</body>
+</html>
+
+<!-- html - structure
+css - decorating (colour, font)
+js - interactively changing website content (showing content when button clicked) -->
