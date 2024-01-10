@@ -970,9 +970,13 @@ body {
 .close-modal{
 font-size:20px;
 }
-.haikuback{
+.haikuback {
     background-image: url("../img/haiku.jpg");
     background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    height: 100vh;
 }
 
 

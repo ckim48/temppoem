@@ -80,9 +80,7 @@ def login():
 	if request.method == "POST": #submitting
 		username = request.form.get("username")
 		password = request.form.get("password")
-
 		input_password = password.encode('utf-8')
-
 		conn = sqlite3.connect('static/database.db')
 		cursor = conn.cursor()
 		cursor.execute("Select password from Users where username=?", (username,)) # cursor -> ()
@@ -124,7 +122,8 @@ def poem_writing_haiku():
 			today_date = datetime.today()
 			conn = sqlite3.connect("static/database.db")
 			cursor = conn.cursor()
-			cursor.execute("Insert INTO Poem (username, content, date) VALUES (?,?,?)",(username,content,today_date))
+			type = "haiku"
+			cursor.execute("Insert INTO Poem (username, content, date,type) VALUES (?,?,?,?)",(username,content,today_date,type))
 			conn.commit()
 			conn.close()
 
@@ -133,6 +132,31 @@ def poem_writing_haiku():
 			flash("Wrong!")
 			return render_template('poem_writing_haiku.html',isLogin=isLogin)
 
+	else:
+		if "username" not in session:
+			return redirect(url_for('login'))
+		else:
+			isLogin=True
+		return render_template('poem_writing_haiku.html',isLogin=isLogin)
+
+@app.route('/poem_writing_free', methods=['GET','POST'])
+def poem_writing_free():
+	isLogin = False
+	if request.method == "POST":
+		isLogin=True
+		lines = request.form.getlist("line") #["line1", "line2","line3"]
+
+		username = session["username"]
+		content = "\n".join(lines) # "line1\nline2\nline3\n"
+		today_date = datetime.today()
+		conn = sqlite3.connect("static/database.db")
+		cursor = conn.cursor()
+		type = "free"
+		cursor.execute("Insert INTO Poem (username, content, date) VALUES (?,?,?,?)",(username,content,today_date,type))
+		conn.commit()
+		conn.close()
+
+		return redirect(url_for('index'),isLogin=isLogin)
 	else:
 		if "username" not in session:
 			return redirect(url_for('login'))
@@ -156,7 +180,8 @@ def poem_writing_acrostic():
 			today_date = datetime.today()
 			conn = sqlite3.connect("static/database.db")
 			cursor = conn.cursor()
-			cursor.execute("Insert INTO Poem (username, content, date) VALUES (?,?,?)",(username,content,today_date))
+			type = "acrostic"
+			cursor.execute("Insert INTO Poem (username, content, date, type) VALUES (?,?,?,?)",(username,content,today_date, type))
 			conn.commit()
 			conn.close()
 
