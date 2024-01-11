@@ -21,6 +21,8 @@ def bwrite(): #index func calls render_template, showing login.html on website
 	isLogin = False
 	if "username" in session:
 		isLogin = True
+	else:
+		return redirect(url_for('login'))
 	return render_template('bwrite.html', isLogin = isLogin) # html var = python var
 
 def username_exists(username):
