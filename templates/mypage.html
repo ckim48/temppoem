@@ -44,8 +44,8 @@
               <li><a href="{{url_for('poem_writing_free')}}">Freestyle</a></li>
             </ul>
           </li>
-          <li><a class="nav-link scrollto active" href="{{url_for('board')}}">Board</a></li>
-                      <li><a class="nav-link scrollto" href="{{url_for('mypage')}}">My Poem</a></li>
+          <li><a class="nav-link scrollto" href="{{url_for('board')}}">Board</a></li>
+                      <li><a class="nav-link scrollto active" href="{{url_for('mypage')}}">My Poem</a></li>
 
           <li><a class="nav-link scrollto" href="{{url_for('statistics')}}">Statistics</a></li>
 
@@ -63,11 +63,10 @@
       </header>
 
       <main>
+        <div class="container stat-mt">
+          <h1 class="mb-5 text-center">My Poem</h1>
 
-
-        <div class="container board-top">
-
-          <div class="row mb-4">
+                  <div class="row mb-4">
             <div class="col-lg-6 d-flex">
                 <h4>Filter |</h4>
                 <ul class="poem-filters">
@@ -88,75 +87,60 @@
 
 
           <div class="row poem-container">
-            {% for i in range(num_poems) %}
-              {% if i < 4 %}
-                <div class="col-md-6 col-lg-3 poem-item filter-{{types[i]}} mt-4 mt-md-4" data-title="{{titles[i]}}" data-date="{{dates[i][0:10]}}" data-type="{{types[i]}}">
-              {% else %}
-                <div class="col-md-6 col-lg-3 poem-item filter-{{types[i]}} mt-4 mt-md-4 mt-lg-4"data-title="{{titles[i]}}"  data-date="{{ dates[i][0:10]}}" data-type="{{types[i]}}">
-              {% endif %}
-              <div class="card poem-card mx-auto" style="width: 18rem;">
-                <div class="card-body">
-                  <h5 class="card-title"><span class="title">{{titles[i]}}</span> - <span class="board-poemtype type">{{types[i]}}</span></h5>
-                  <h6 class="card-subtitle mb-2 text-muted">{{usernames[i]}} - <span class="date">{{dates[i][0:10]}}</span></h6>
+              {% set counter = 0 %}
+                    {% for i in range(num_poems) %}
+                        {% if username == usernames[i] %}
+                            {% set counter = counter + 1 %}
+                          {% if counter < 4 %}
+                            <div class="col-md-6 col-lg-3 poem-item filter-{{types[i]}} mt-4 mt-md-4" data-title="{{titles[i]}}" data-date="{{dates[i][0:10]}}" data-type="{{types[i]}}">
+                          {% else %}
+                            <div class="col-md-6 col-lg-3 poem-item filter-{{types[i]}} mt-4 mt-md-4 mt-lg-4"data-title="{{titles[i]}}"  data-date="{{ dates[i][0:10]}}" data-type="{{types[i]}}">
+                          {% endif %}
 
-                  <p class="card-text">{{contents[i][0:100]}}.....{{ids[i]}}</p>
 
-                <div class="d-flex justify-content-between">
-                  <a class="card-link" data-bs-toggle="modal" data-bs-target="#poemModal" data-title="{{titles[i]}}" data-type="{{types[i]}}" data-username="{{usernames[i]}}" data-date="{{dates[i][0:10]}}" data-content="{{contents[i]}}">
-  More
-</a>
-                    {% if liked_status[i] == 1 %}
-                  <div class="text-right">
-                    <button class="btn btn-outline-danger like-button really-like" data-poem-id="{{ ids[i] }}" data-username="{{ usernames[i] }}" data-liked="{{ liked_status[i] }}">
-                        <i class="bi bi-heart-fill"></i>  Liked
-                    </button>
+                      <div class="card poem-card mx-auto" style="width: 18rem;">
+                        <div class="card-body">
+                          <h5 class="card-title"><span class="title">{{titles[i]}}</span> - <span class="board-poemtype type">{{types[i]}}</span></h5>
+                          <h6 class="card-subtitle mb-2 text-muted">{{usernames[i]}} - <span class="date">{{dates[i][0:10]}}</span></h6>
+
+                          <p class="card-text">{{contents[i][0:100]}}.....{{ids[i]}}</p>
+
+                        <div class="d-flex justify-content-between">
+                          <a class="card-link" data-bs-toggle="modal" data-bs-target="#poemModal" data-title="{{titles[i]}}" data-type="{{types[i]}}" data-username="{{usernames[i]}}" data-date="{{dates[i][0:10]}}" data-content="{{contents[i]}}">
+          More
+        </a>
+                            {% if liked_status[i] == 1 %}
+                          <div class="text-right">
+                            <button class="btn btn-outline-danger like-button really-like" data-poem-id="{{ ids[i] }}" data-username="{{ usernames[i] }}" data-liked="{{ liked_status[i] }}">
+                                <i class="bi bi-heart-fill"></i>  Liked
+                            </button>
+                          </div>
+
+                            {%else %}
+                                              <div class="text-right">
+                            <button class="btn btn-outline-danger like-button" data-poem-id="{{ ids[i] }}" data-username="{{ usernames[i] }}" data-liked="{{ liked_status[i] }}">
+                                <i class="bi bi-heart"></i> Like
+                            </button>
+                          </div>
+                            {% endif %}
+                        </div>
+                        </div>
+                      </div>
+
+
+
+                    </div>
+                        {% endif %}
+                    {% endfor %}
+
                   </div>
 
-                    {%else %}
-                                      <div class="text-right">
-                    <button class="btn btn-outline-danger like-button" data-poem-id="{{ ids[i] }}" data-username="{{ usernames[i] }}" data-liked="{{ liked_status[i] }}">
-                        <i class="bi bi-heart"></i> Like
-                    </button>
-                  </div>
-                    {% endif %}
-                </div>
-                </div>
-              </div>
-            </div>
 
-            {% endfor %}
-
-          </div>
         </div>
         </div>
-
-
       </main>
 
-                                                <div class="modal fade" id="poemModal" tabindex="-1" aria-labelledby="poemModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="poemModalLabel">Poem Details</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!-- Poem details content goes here -->
-        <h6 class="modal-subtitle mb-2 text-muted"><span class="username"></span> - <span class="date"></span></h6>
-        <p class="modal-text"></p>
-      </div>
-<!--      <div class="modal-footer">-->
-<!--        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">-->
-<!--          <i class="bi bi-heart"></i> Like-->
-<!--        </button>-->
-<!--      </div>-->
-    </div>
-  </div>
-</div>
-  <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-      <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
 <script>
   const select = (el, all = false) => {
@@ -296,8 +280,6 @@
       });
    });
 </script>
-
-
 
   </body>
 

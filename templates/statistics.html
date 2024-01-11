@@ -45,6 +45,8 @@
             </ul>
           </li>
           <li><a class="nav-link scrollto" href="{{url_for('board')}}">Board</a></li>
+                      <li><a class="nav-link scrollto" href="{{url_for('mypage')}}">My Poem</a></li>
+
           <li><a class="nav-link scrollto active" href="{{url_for('statistics')}}">Statistics</a></li>
 
           {% if isLogin %}
@@ -64,7 +66,7 @@
         <div class="container stat-mt">
           <h1 class="mb-5 text-center">Statistics</h1>
           <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-6 mt-5 mt-md-0">
                   <div class="card data-card mx-auto">
                     <div class="card-body">
                         <h3 class="text-center">Number of types</h3>
@@ -73,33 +75,33 @@
                     </div>
                   </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6 mt-5 mt-md-0" >
                 <div class="card data-card mx-auto">
                     <div class="card-body">
                         <h3 class="text-center">Acticvity</h3>
                         <p class="text-center">Description</p>
-                        <canvas id="loginLine"></canvas>
+                        <canvas id="loginLine"  height="250" width="400"> </canvas>
                     </div>
                   </div>
               </div>
 
-                            <div class="col-md-6 mt-md-5">
+                            <div class="col-md-6 mt-5 mt-md-5">
                 <div class="card data-card mx-auto">
                     <div class="card-body">
-                        <h3 class="text-center">Acticvity</h3>
+                        <h3 class="text-center">Frequent Words</h3>
                         <p class="text-center">Description</p>
-                        <canvas id="wordBar"></canvas>
+                        <canvas id="wordBar"  height="250" width="400"></canvas>
                     </div>
                   </div>
               </div>
 
 
-                            <div class="col-md-6 mt-md-5">
+                            <div class="col-md-6 mt-5 mt-md-5">
                 <div class="card data-card mx-auto">
                     <div class="card-body">
-                        <h3 class="text-center">Acticvity</h3>
+                        <h3 class="text-center">Number of Likes</h3>
                         <p class="text-center">Description</p>
-                        <canvas id="loginLine"></canvas>
+                        <canvas id="likesBar"  height="250" width="400"></canvas>
                     </div>
                   </div>
               </div>
@@ -149,6 +151,90 @@
     });
 
 
+        var data_wordBar = {
+            labels: ['Word1', 'Word2', 'Word3', 'Word4', 'Word5', 'Word6', 'Word7'],
+            datasets: [{
+                label: 'Frequency',
+                data: [15, 10, 8, 7, 5, 3, 2],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 0, 0, 0.2)',
+                    'rgba(0, 255, 0, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 205, 86, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 0, 0, 1)',
+                    'rgba(0, 255, 0, 1)',
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        var ctx_wordBar = document.getElementById('wordBar').getContext('2d');
+        var barChart = new Chart(ctx_wordBar, {
+            type: 'bar',
+            data: data_wordBar,
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+
+        var data_likeBar = {
+            labels: ['User1', 'User2', 'User3', 'User4', 'User5'],
+            datasets: [{
+                label: 'Number of Likes',
+                data: [40, 32, 18, 17, 15, 13, 12],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 205, 86, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 159, 64, 1)',
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        var ctx_wordBar = document.getElementById('likesBar').getContext('2d');
+        var barChart = new Chart(ctx_wordBar, {
+            type: 'bar',
+            data: data_likeBar,
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
   </script>
   </body>
 

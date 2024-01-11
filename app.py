@@ -24,7 +24,55 @@ def bwrite(): #index func calls render_template, showing login.html on website
 	else:
 		return redirect(url_for('login'))
 	return render_template('bwrite.html', isLogin = isLogin) # html var = python var
+@app.route('/mypage', methods=['GET']) # / => main homepage; decorator
+def mypage(): #index func calls render_template, showing login.html on website
+	isLogin = False
 
+	if request.method == "POST":
+		pass
+	else:
+		isLogin = True
+		conn = sqlite3.connect('static/database.db')
+		cursor = conn.cursor()
+
+		# Modify your query to join Poem with Likes
+		query = """
+			SELECT P.username, P.content, P.date, P.title, P.type,P.id,
+				   COALESCE(L.liked, 0) AS liked
+			FROM Poem P
+			LEFT JOIN Likes L ON P.id = L.poem_id AND L.username = ?
+		"""
+		cursor.execute(query, (session.get("username"),))
+		rows = cursor.fetchall()
+
+		usernames = []  # ["scott", "alice"]
+		contents = []  # ["poem...", "poem2..."]
+		dates = []  # ["2023-12-12", "2022-10-10"]
+		titles = []
+		types = []
+		likes = []
+		ids = []
+
+		for row in rows:
+			usernames.append(row[0])
+			contents.append(row[1])
+			dates.append(row[2])
+			titles.append(row[3])
+			types.append(row[4].title())
+			likes.append(row[6])
+
+			ids.append(row[5])
+		print(likes)
+		print(ids)
+		if "username" not in session:
+			isLogin = False
+			return redirect(url_for('login'))
+		else:
+			isLogin = True
+
+		return render_template('mypage.html',ids=ids, usernames=usernames, contents=contents,
+							   dates=dates, titles=titles, types=types, liked_status=likes,
+							   num_poems=len(usernames), isLogin=isLogin, username = session["username"])
 def username_exists(username):
 	conn = sqlite3.connect('static/database.db')
 	cursor = conn.cursor()
