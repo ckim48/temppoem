@@ -46,12 +46,12 @@
         <ul>
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
           <li><a class="nav-link scrollto" href="{{url_for('index')}}#about">About</a></li>
-          <li class="dropdown"><a href="{{url_for('poem_writing_haiku')}}"><span>Write Poem</span> <i class="bi bi-chevron-down"></i></a>
+          <li class="dropdown"><a href="{{url_for('bwrite')}}"><span>Write Poem</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="{{url_for('poem_writing_haiku')}}">Haiku</a></li>
               <li><a href="{{url_for('poem_writing_sonnet')}}">Sonnet</a></li>
               <li><a href="{{url_for('poem_writing_acrostic')}}">Acrostic</a></li>
-              <li><a href="#">Freestyle</a></li>
+              <li><a href="{{url_for('poem_writing_free')}}">Freestyle</a></li>
             </ul>
           </li>
           <li><a class="nav-link scrollto" href="{{url_for('board')}}">Board</a></li>
@@ -73,7 +73,8 @@
     <div class="container text-center text-md-left" data-aos="fade-up">
       <h1>Welcome to Poetry World</h1>
       <h2>Our website is designed to help you get immersed in the world of poetry, <br> allowing you to compose your own fabulous poems.</h2>
-      <a href="{{url_for('poem_writing_haiku')}}" class="btn-get-started scrollto">Get started</a>
+      <a href="{{url_for('bwrite')}}" class="btn-get-started scrollto">Get started</a>
+
     </div>
   </section><!-- End Hero -->
 
@@ -105,7 +106,7 @@
       <div class="container">
 
         <div class="section-title"data-aos="fade-up">
-          <h2>Why Us</h2>
+          <h2>Features</h2>
         </div>
 
         <div class="row" >
@@ -137,7 +138,35 @@
         </div>
 
       </div>
-    </section><!-- End Features Section -->
+    </section>
+
+ <section id="contact" class="why-us section-bg">
+  <div class="container">
+
+    <div class="section-title" data-aos="fade-up">
+      <h2>Contact</h2>
+    </div>
+
+    <div class="row" data-aos="fade-up">
+
+
+      <div class="col-lg-12">
+        <div class="info-box mx-auto">
+          <i class="bx bx-envelope"></i>
+          <h3>Email Me</h3>
+          <p>info@example.com</p>
+        </div>
+      </div>
+
+
+
+
+  </div>
+</section>
+
+
+
+      <!-- End Features Section -->
 
     
 

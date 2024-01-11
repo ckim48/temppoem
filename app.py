@@ -16,6 +16,12 @@ def index(): #index func calls render_template, showing login.html on website
 	if "username" in session:
 		isLogin = True
 	return render_template('index.html', isLogin = isLogin) # html var = python var
+@app.route('/bwrite', methods=['GET']) # / => main homepage; decorator
+def bwrite(): #index func calls render_template, showing login.html on website
+	isLogin = False
+	if "username" in session:
+		isLogin = True
+	return render_template('bwrite.html', isLogin = isLogin) # html var = python var
 
 def username_exists(username):
 	conn = sqlite3.connect('static/database.db')

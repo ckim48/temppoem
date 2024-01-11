@@ -24,7 +24,9 @@ h5,
 h6 {
   font-family: 'Cormorant Garamond', serif;
 }
-
+.contactcard{
+width:40%;
+}
 /*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/
@@ -999,21 +1001,33 @@ font-size:20px;
     cursor: pointer;
     font-size: 14px;
     display: inline-block;
-    background: #A2AFF6;
+    background: white;
     border: 1px solid #A2AFF6;
     padding: 5px 15px 5px 15px;
     border-radius: 50px;
     margin-right: 20px;
-    color: white;
+    color: #A2AFF6;
     font-weight: 500;
 }
 .poem-filters li:hover{
-    background: #B89ACA;
-        border: 1px solid #B89ACA;
+    background: #A2AFF6;
+    color:white;
+        border: 1px solid #A2AFF6;
 
 }
+.card-link{
+cursor:pointer
+}
+.card-link:hover{
+color:black;
+}
+.like-button{
+font-size:14px;
+}
+
 .filter-active{
-background:red !important;
+background:#A2AFF6 !important;
+color:white !important;
 }
 .poem-card{
 background-color:#ECEFFE;
@@ -1080,5 +1094,109 @@ transition: transform 0.3s ease-in-out;
 .why-us .box:hover span,
 .why-us .box:hover h4,
 .why-us .box:hover p {
+  color: #fff;
+}
+
+
+.info-box {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 60%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.info-box i {
+  font-size: 36px;
+  color: #A2AFF6;
+}
+
+.info-box h3 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 15px;
+  color: #333;
+}
+
+.info-box p {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #666;
+}
+
+
+@media (max-width: 768px) {
+  .info-box {
+    margin-bottom: 20px;
+  }
+}
+
+
+.featured-services .icon-box {
+  padding: 30px;
+  width: 400px;
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 0 29px 0 rgba(68, 88, 144, 0.12);
+  transition: all 0.3s ease-in-out;
+  border-radius: 8px;
+  z-index: 1;
+}
+
+.featured-services .icon-box::before {
+  content: "";
+  position: absolute;
+  background: #A2AFF6;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  top: 100%;
+  transition: all 0.3s;
+  z-index: -1;
+}
+
+.featured-services .icon-box:hover::before {
+  background: #A2AFF6;
+  top: 0;
+  border-radius: 0px;
+}
+
+.featured-services .icon {
+  margin-bottom: 15px;
+}
+
+.featured-services .icon i {
+  font-size: 48px;
+  line-height: 1;
+  color: #A2AFF6;
+  transition: all 0.3s ease-in-out;
+}
+
+.featured-services .title {
+  font-weight: 700;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.featured-services .title a {
+  color: #111;
+}
+
+.featured-services .description {
+  font-size: 15px;
+  line-height: 28px;
+  margin-bottom: 0;
+}
+
+.featured-services .icon-box:hover .title a,
+.featured-services .icon-box:hover .description,
+ .featured-services .icon-box:hover .test-now{
+  color: #fff;
+}
+
+.featured-services .icon-box:hover .icon i {
   color: #fff;
 }

@@ -59,6 +59,8 @@
       </header>
 
       <main>
+
+
         <div class="container board-top">
 
           <div class="row mb-4">
@@ -76,7 +78,6 @@
                 <ul class="poem-filters">
                     <li class="sorting" data-sort-by ="date">Date</li>
                     <li class="sorting"  data-sort-by ="title">Title</li>
-                    <li class="sorting"  data-sort-by ="type">Type</li>
                 </ul>
             </div>
           </div>
@@ -94,16 +95,54 @@
                   <h5 class="card-title"><span class="title">{{titles[i]}}</span> - <span class="board-poemtype type">{{types[i]}}</span></h5>
                   <h6 class="card-subtitle mb-2 text-muted">{{usernames[i]}} - <span class="date">{{dates[i][0:10]}}</span></h6>
 
-                  <p class="card-text">{{contents[i][0:100]}}</p>
-                  <a href="#" class="card-link">More</a>
+                  <p class="card-text">{{contents[i][0:100]}}.....</p>
+
+                <div class="d-flex justify-content-between">
+                  <a class="card-link" data-bs-toggle="modal" data-bs-target="#poemModal" data-title="{{titles[i]}}" data-type="{{types[i]}}" data-username="{{usernames[i]}}" data-date="{{dates[i][0:10]}}" data-content="{{contents[i]}}">
+  More
+</a>
+                  <div class="text-right">
+                    <button class="btn btn-outline-danger like-button" data-bs-toggle="modal" data-bs-target="#haiku_instruction">
+                      <i class="bi bi-heart"></i> Like
+                    </button>
+                  </div>
+                </div>
                 </div>
               </div>
             </div>
+
             {% endfor %}
+
           </div>
         </div>
+        </div>
+
+
       </main>
 
+                                                <div class="modal fade" id="poemModal" tabindex="-1" aria-labelledby="poemModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="poemModalLabel">Poem Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Poem details content goes here -->
+        <h6 class="modal-subtitle mb-2 text-muted"><span class="username"></span> - <span class="date"></span></h6>
+        <p class="modal-text"></p>
+      </div>
+<!--      <div class="modal-footer">-->
+<!--        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">-->
+<!--          <i class="bi bi-heart"></i> Like-->
+<!--        </button>-->
+<!--      </div>-->
+    </div>
+  </div>
+</div>
+  <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+      <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
 
   <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
 <script>
@@ -159,12 +198,11 @@
     }
   });
 </script>
-      <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
 
   <script>
     $('.poem-filters .sorting').each(function() {
   $(this).on('click', function(e) {
-    e.preventDefault();
+<!--    e.preventDefault();-->
     var sortBy = $(this).data('sort-by');
     console.log(sortBy);
     if (sortBy === 'title' || sortBy === 'date' || sortBy === 'type') {
@@ -174,6 +212,28 @@
   });
 });
   </script>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+
+    const moreButtons = document.querySelectorAll('.card-link');
+
+    moreButtons.forEach(button => {
+      button.addEventListener('click', function () {
+      console.log("check")
+        const title = this.getAttribute('data-title');
+        const type = this.getAttribute('data-type');
+        const username = this.getAttribute('data-username');
+        const date = this.getAttribute('data-date');
+        const content = this.getAttribute('data-content');
+
+        document.querySelector('#poemModal .modal-title').innerHTML = `${title} - ${type}`;
+        document.querySelector('#poemModal .modal-subtitle').innerHTML = `${username} - ${date}`;
+        document.querySelector('#poemModal .modal-text').innerHTML = content;
+      });
+    });
+  });
+</script>
   </body>
 
 </html>
