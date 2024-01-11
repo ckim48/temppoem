@@ -45,6 +45,7 @@
             </ul>
           </li>
           <li><a class="nav-link scrollto" href="{{url_for('board')}}">Board</a></li>
+
           {% if isLogin %}
             <li><a class="nav-link scrollto" href="{{url_for('logout')}}">Logout</a></li>
           {% else %}
@@ -95,17 +96,26 @@
                   <h5 class="card-title"><span class="title">{{titles[i]}}</span> - <span class="board-poemtype type">{{types[i]}}</span></h5>
                   <h6 class="card-subtitle mb-2 text-muted">{{usernames[i]}} - <span class="date">{{dates[i][0:10]}}</span></h6>
 
-                  <p class="card-text">{{contents[i][0:100]}}.....</p>
+                  <p class="card-text">{{contents[i][0:100]}}.....{{ids[i]}}</p>
 
                 <div class="d-flex justify-content-between">
                   <a class="card-link" data-bs-toggle="modal" data-bs-target="#poemModal" data-title="{{titles[i]}}" data-type="{{types[i]}}" data-username="{{usernames[i]}}" data-date="{{dates[i][0:10]}}" data-content="{{contents[i]}}">
   More
 </a>
+                    {% if liked_status[i] == 1 %}
                   <div class="text-right">
-                    <button class="btn btn-outline-danger like-button" data-bs-toggle="modal" data-bs-target="#haiku_instruction">
-                      <i class="bi bi-heart"></i> Like
+                    <button class="btn btn-outline-danger like-button really-like" data-poem-id="{{ ids[i] }}" data-username="{{ usernames[i] }}" data-liked="{{ liked_status[i] }}">
+                        <i class="bi bi-heart-fill"></i>  Liked
                     </button>
                   </div>
+
+                    {%else %}
+                                      <div class="text-right">
+                    <button class="btn btn-outline-danger like-button" data-poem-id="{{ ids[i] }}" data-username="{{ usernames[i] }}" data-liked="{{ liked_status[i] }}">
+                        <i class="bi bi-heart"></i> Like
+                    </button>
+                  </div>
+                    {% endif %}
                 </div>
                 </div>
               </div>
@@ -234,6 +244,58 @@
     });
   });
 </script>
+
+  <script>
+   document.addEventListener('DOMContentLoaded', function () {
+      const likeButtons = document.querySelectorAll('.like-button');
+
+      likeButtons.forEach(button => {
+         button.addEventListener('click', function () {
+            const poemId = this.getAttribute('data-poem-id');
+            const username = this.getAttribute('data-username');
+            const likedStatus = JSON.parse(this.getAttribute('data-liked'));
+
+            // Toggle the liked status
+            const newLikedStatus = !likedStatus;
+
+            // Update the button appearance
+            this.setAttribute('data-liked', newLikedStatus);
+                     if (newLikedStatus) {
+            // User liked the poem
+            this.innerHTML = '<i class="bi bi-heart-fill"></i> Liked';
+            this.classList.add('really-like');
+         } else {
+            // User unliked the poem
+            this.innerHTML = '<i class="bi bi-heart"></i> Like';
+            this.classList.remove('really-like');
+         }
+            // Send the like status to the Flask route
+            fetch('/like_poem', {
+               method: 'POST',
+               headers: {
+                  'Content-Type': 'application/json',
+               },
+               body: JSON.stringify({
+                  poem_id: poemId,
+                  liked: newLikedStatus,
+               }),
+            })
+               .then(response => response.json())
+               .then(data => {
+                  if (data.success) {
+                     console.log('Like status updated successfully.');
+                  } else {
+                     console.error('Failed to update like status.');
+                  }
+               })
+               .catch(error => console.error('Error:', error));
+         });
+      });
+   });
+</script>
+
+
+
   </body>
 
 </html>

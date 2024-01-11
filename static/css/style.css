@@ -27,6 +27,16 @@ h6 {
 .contactcard{
 width:40%;
 }
+.title-box{
+width:300px;
+border-radius:5px;
+height:45px;
+}
+.title-label{
+color:white;
+font-size:25px;
+
+}
 /*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/
@@ -1023,6 +1033,11 @@ color:black;
 }
 .like-button{
 font-size:14px;
+}
+.really-like{
+background-color:#dc3545 !important;
+color:white !important;
+border:1px solid #dc3545 !important;
 }
 
 .filter-active{

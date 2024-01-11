@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, flash, redirect, session # flask: like library, python programme, connects frontend & backend
+from flask import Flask, render_template, request,jsonify, url_for, flash, redirect, session # flask: like library, python programme, connects frontend & backend
 import sqlite3 #library that connects python & database
 import bcrypt
 from datetime import timedelta, datetime
@@ -129,13 +129,19 @@ def poem_writing_haiku():
 			content = "\n".join(lines) # "line1\nline2\nline3\n"
 			today_date = datetime.today()
 			conn = sqlite3.connect("static/database.db")
+			title = request.form.get('title')
 			cursor = conn.cursor()
 			type = "haiku"
-			cursor.execute("Insert INTO Poem (username, content, date,type) VALUES (?,?,?,?)",(username,content,today_date,type))
+
+			cursor.execute('SELECT MAX(id) FROM Poem')
+
+
+			largest_id = cursor.fetchone()[0]
+			cursor.execute("Insert INTO Poem (username, content, date,title,type,id) VALUES (?,?,?,?,?,?)",(username,content,today_date,title,type,largest_id+1))
 			conn.commit()
 			conn.close()
 
-			return redirect(url_for('index'),isLogin=isLogin)
+			return redirect(url_for('board'))
 		else:
 			flash("Wrong!")
 			return render_template('poem_writing_haiku.html',isLogin=isLogin)
@@ -171,6 +177,35 @@ def poem_writing_free():
 		else:
 			isLogin=True
 		return render_template('poem_writing_haiku.html',isLogin=isLogin)
+
+@app.route('/like_poem', methods=['POST'])
+def like_poem():
+	data = request.json
+	username = session["username"]
+	poem_id = data.get('poem_id')
+	liked_status = data.get('liked')
+	if username:
+		conn = sqlite3.connect("static/database.db")
+		cursor = conn.cursor()
+
+		cursor.execute("SELECT * FROM Likes WHERE username = ? AND poem_id = ?", (username, poem_id))
+		existing_like = cursor.fetchone()
+
+		if existing_like:
+			cursor.execute("UPDATE Likes SET liked = ? WHERE username = ? AND poem_id = ?",
+						   (0, username, poem_id))
+		else:
+			cursor.execute("INSERT INTO Likes (username, poem_id, liked) VALUES (?, ?, ?)",
+						   (username, poem_id, 1))
+
+		conn.commit()
+		conn.close()
+
+		return jsonify({'success': True})
+	else:
+		return jsonify({'success': False, 'error': 'User not logged in'})
+
+
 @app.route('/poem_writing_sonnet', methods=['GET','POST'])
 def poem_writing_sonnet():
 	if "username" not in session:
@@ -204,33 +239,54 @@ def poem_writing_acrostic():
 		return render_template('poem_writing_acrostic.html')
 @app.route("/board", methods=['GET', 'POST'])
 def board():
-	isLogin=False
+	isLogin = False
+
 	if request.method == "POST":
 		pass
 	else:
-		isLogin=True
+		isLogin = True
 		conn = sqlite3.connect('static/database.db')
 		cursor = conn.cursor()
-		cursor.execute("Select * from Poem")
-		rows = cursor.fetchall() # [("scott","poem...","2023-12-12","Title","haiku"),row2,row3,row4......] #, row1 = ("scott","poem...","2023-12-12","Title","haiku")
-		usernames = [] # ["scott","alice"]
-		contents = [] # ["poem...","poem2..."]
-		dates = [] # ["2023-12-12","2022-10-10"]
+
+		# Modify your query to join Poem with Likes
+		query = """
+			SELECT P.username, P.content, P.date, P.title, P.type,P.id,
+				   COALESCE(L.liked, 0) AS liked
+			FROM Poem P
+			LEFT JOIN Likes L ON P.id = L.poem_id AND L.username = ?
+		"""
+		cursor.execute(query, (session.get("username"),))
+		rows = cursor.fetchall()
+
+		usernames = []  # ["scott", "alice"]
+		contents = []  # ["poem...", "poem2..."]
+		dates = []  # ["2023-12-12", "2022-10-10"]
 		titles = []
 		types = []
+		likes = []
+		ids = []
+
 		for row in rows:
 			usernames.append(row[0])
 			contents.append(row[1])
 			dates.append(row[2])
 			titles.append(row[3])
 			types.append(row[4].title())
+			likes.append(row[6])
 
+			ids.append(row[5])
+		print(likes)
+		print(ids)
 		if "username" not in session:
-			isLogin=False
+			isLogin = False
 			return redirect(url_for('login'))
 		else:
-			isLogin=True
-		return render_template('board.html', usernames=usernames, contents=contents,dates=dates,titles=titles,types=types, num_poems = len(usernames),isLogin=isLogin)
+			isLogin = True
+
+		return render_template('board.html',ids=ids, usernames=usernames, contents=contents,
+							   dates=dates, titles=titles, types=types, liked_status=likes,
+							   num_poems=len(usernames), isLogin=isLogin)
+
 @app.route("/statistics", methods=['GET', 'POST'])
 def statistis():
 	if request.method == "POST":
