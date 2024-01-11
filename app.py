@@ -288,7 +288,7 @@ def board():
 							   num_poems=len(usernames), isLogin=isLogin)
 
 @app.route("/statistics", methods=['GET', 'POST'])
-def statistis():
+def statistics():
 	if request.method == "POST":
 		pass
 	else:

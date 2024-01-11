@@ -55,6 +55,8 @@
             </ul>
           </li>
           <li><a class="nav-link scrollto" href="{{url_for('board')}}">Board</a></li>
+          <li><a class="nav-link scrollto" href="{{url_for('statistics')}}">Statistics</a></li>
+
           {% if isLogin %}
             <li><a class="nav-link scrollto" href="{{url_for('logout')}}">Logout</a></li>
           {% else %}

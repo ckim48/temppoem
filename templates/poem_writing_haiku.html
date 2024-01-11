@@ -26,18 +26,20 @@
           </div>
 
           <nav id="navbar" class="navbar">
-         <ul>
-          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+        <ul>
+          <li><a class="nav-link scrollto" href="#hero">Home</a></li>
           <li><a class="nav-link scrollto" href="{{url_for('index')}}#about">About</a></li>
-          <li class="dropdown"><a href="{{url_for('poem_writing_haiku')}}"><span>Write Poem</span> <i class="bi bi-chevron-down"></i></a>
+          <li class="dropdown active"><a class="active" href="{{url_for('bwrite')}}"><span>Write Poem</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="{{url_for('poem_writing_haiku')}}">Haiku</a></li>
               <li><a href="{{url_for('poem_writing_sonnet')}}">Sonnet</a></li>
               <li><a href="{{url_for('poem_writing_acrostic')}}">Acrostic</a></li>
-              <li><a href="#">Freestyle</a></li>
+              <li><a href="{{url_for('poem_writing_free')}}">Freestyle</a></li>
             </ul>
           </li>
           <li><a class="nav-link scrollto" href="{{url_for('board')}}">Board</a></li>
+          <li><a class="nav-link scrollto" href="{{url_for('statistics')}}">Statistics</a></li>
+
           {% if isLogin %}
             <li><a class="nav-link scrollto" href="{{url_for('logout')}}">Logout</a></li>
           {% else %}
