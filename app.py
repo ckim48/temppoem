@@ -164,17 +164,21 @@ def logout():
 	session.clear()
 	return redirect(url_for('login')) # sends user to /login
 
-@app.route('/poem_writing_haiku', methods=['GET','POST'])
+@app.route('/poem_writing_haiku', methods=['GET', 'POST'])
 def poem_writing_haiku():
 	isLogin = False
+	lines = []
+	title = ""
+
 	if request.method == "POST":
-		isLogin=True
-		lines = request.form.getlist("line") #["line1", "line2","line3"]
-		print(lines)
+		isLogin = True
+		lines = request.form.getlist("line")
+		title = request.form.get('title')
+
 		result = haiku_is_standard(lines)
 		if result:
 			username = session["username"]
-			content = "\n".join(lines) # "line1\nline2\nline3\n"
+			content = "\n".join(lines)  # "line1\nline2\nline3\n"
 			today_date = datetime.today()
 			conn = sqlite3.connect("static/database.db")
 			title = request.form.get('title')
@@ -183,23 +187,23 @@ def poem_writing_haiku():
 
 			cursor.execute('SELECT MAX(id) FROM Poem')
 
-
 			largest_id = cursor.fetchone()[0]
-			cursor.execute("Insert INTO Poem (username, content, date,title,type,id) VALUES (?,?,?,?,?,?)",(username,content,today_date,title,type,largest_id+1))
+			cursor.execute("Insert INTO Poem (username, content, date,title,type,id) VALUES (?,?,?,?,?,?)",
+						   (username, content, today_date, title, type, largest_id + 1))
 			conn.commit()
 			conn.close()
 
 			return redirect(url_for('board'))
 		else:
 			flash("Wrong!")
-			return render_template('poem_writing_haiku.html',isLogin=isLogin)
 
 	else:
 		if "username" not in session:
 			return redirect(url_for('login'))
 		else:
-			isLogin=True
-		return render_template('poem_writing_haiku.html',isLogin=isLogin)
+			isLogin = True
+
+	return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title)
 
 @app.route('/poem_writing_free', methods=['GET','POST'])
 def poem_writing_free():

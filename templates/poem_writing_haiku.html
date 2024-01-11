@@ -67,17 +67,18 @@
                       <!-- Initial input and button -->
                 <div class="themebox-container d-flex justify-content-center mb-3">
                     <label for="title" class="form-label title-label me-2">Title:</label>
-                    <input class="title-box me-5" name="title" placeholder="">
+                    <input class="title-box me-5" name="title" placeholder="" value="{{ title | default('') }}">
                 </div>
 
                       <div class="input-wrapper d-flex align-items-center">
-                        <input class="word-box me-3 text-center ms-input" name="line" placeholder="Enter a line">
+<input class="word-box me-3 text-center ms-input" name="line" placeholder="Enter a line" value="{{ lines[0] | default('') }}">
+
+                          </div>
+                                              <div class="input-wrapper d-flex align-items-center">
+<input class="word-box me-3 text-center ms-input mt-3" name="line" placeholder="Enter a line" value="{{ lines[1] | default('') }}">
                       </div>
                                               <div class="input-wrapper d-flex align-items-center">
-                        <input class="word-box me-3 text-center ms-input mt-3" name="line" placeholder="Enter a line">
-                      </div>
-                                              <div class="input-wrapper d-flex align-items-center">
-                        <input class="word-box me-3 text-center ms-input mt-3" name="line" placeholder="Enter a line">
+<input class="word-box me-3 text-center ms-input mt-3" name="line" placeholder="Enter a line" value="{{ lines[2] | default('') }}">                      </div>
                       </div>
                     </div>
 
@@ -159,6 +160,36 @@ document.addEventListener("click", function(event) {
     box_current += 1;
   }
 });
+</script>
+
+
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI/tZ1a9vpd5+gL9eBOVayTc8UKLHr45aY1Pgpjc=" crossorigin="anonymous"></script>
+
+<script>
+        $("form").submit(function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            var form_data = $(this).serialize(); // Serialize form data
+            var form = $(this);
+
+            $.ajax({
+                type: "POST",
+                url: form.attr("action"),
+                data: form_data,
+                success: function (response) {
+                    // Handle the response from the server
+                    console.log(response);
+                },
+                error: function (error) {
+                    console.log("Error:", error);
+                    // Retain input values on error
+                    form.find("input[name='line']").each(function () {
+                        $(this).val($(this).val());
+                    });
+                }
+            });
+        });
+    });
 </script>
 
 </body>
