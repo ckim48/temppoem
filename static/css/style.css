@@ -47,7 +47,7 @@ font-size:25px;
   right: 15px;
   bottom: 15px;
   z-index: 996;
-  background: #1bac91;
+  background: #A2AFF6;
   width: 40px;
   height: 40px;
   border-radius: 4px;
@@ -1076,6 +1076,7 @@ background:#A2AFF6 !important;
 color:white !important;
 }
 .poem-card{
+height: 210px;
 background-color:#ECEFFE;
 border: 2px solid #BECDFB;
 transition: transform 0.3s ease-in-out;
