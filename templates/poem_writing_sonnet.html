@@ -7,15 +7,16 @@
     <link rel="stylesheet" href="../static/css/style.css">
     <!-- Option 1: Include in HTML -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-      <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
     <title>Sonnet | Write Poem</title>
+    <link href="../static/img/book.png" rel="icon">
+    <link href="../static/img/apple-touch-icon.png" rel="apple-touch-icon">
 </head>
 
-<body>
+<body  class="sonnetback">
     <header id="header" class="fixed-top d-flex align-items-center">
         <div class="container d-flex justify-content-between">
 
@@ -24,25 +25,29 @@
           </div>
 
           <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="{{url_for('index')}}#about">About</a></li>
+          <li class="dropdown active"><a class="active" href="{{url_for('bwrite')}}"><span>Write Poem</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-              <li><a class="nav-link scrollto" href="#about">About</a></li>
-              <li class="dropdown"><a href="#"><span>Write Poem</span> <i class="bi bi-chevron-down"></i></a>
-                <ul>
-                  <li><a href="{{url_for('poem_writing_haiku')}}">Haiku</a></li>
-                  <li><a href="{{url_for('poem_writing_sonnet')}}">Sonnet</a></li>
-                  <li><a href="{{url_for('poem_writing_acrostic')}}">Acrostic</a></li>
-                  <li><a href="#">Freestyle</a></li>
-                </ul>
-              </li>
-              <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-              {% if isLogin %}
-                <li><a class="nav-link scrollto" href="{{url_for('logout')}}">Logout</a></li>
-              {% else %}
-                <li><a class="nav-link scrollto" href="{{url_for('login')}}">Login</a></li>
-              {% endif %}
-
+              <li><a href="{{url_for('poem_writing_haiku')}}">Haiku</a></li>
+              <li><a href="{{url_for('poem_writing_sonnet')}}">Sonnet</a></li>
+              <li><a href="{{url_for('poem_writing_acrostic')}}">Acrostic</a></li>
+              <li><a href="{{url_for('poem_writing_free')}}">Freestyle</a></li>
             </ul>
+          </li>
+          <li><a class="nav-link scrollto" href="{{url_for('board')}}">Board</a></li>
+                      <li><a class="nav-link scrollto" href="{{url_for('mypage')}}">My Poem</a></li>
+
+          <li><a class="nav-link scrollto" href="{{url_for('statistics')}}">Statistics</a></li>
+
+          {% if isLogin %}
+            <li><a class="nav-link scrollto" href="{{url_for('logout')}}">Logout</a></li>
+          {% else %}
+            <li><a class="nav-link scrollto" href="{{url_for('login')}}">Login</a></li>
+          {% endif %}
+
+        </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
           </nav><!-- .navbar -->
 
@@ -50,26 +55,31 @@
       </header>
 
     <div class="container poemwrite">
-        <div class="d-flex justify-content-center bigmargin mb-4">
-            <h1 class="haiku_heading text-center me-2 ms-4">Sonnet</h1>
-            <a class="info-icon mt-2" data-bs-toggle="modal" data-bs-target="#haiku_insturction"><i class="bi bi-question-circle"></i></a>
-        </div>
+        <h1 class="mb-4 bigmargin acrostic_heading text-center">Sonnet</h1>
         <div> <!-- x physically shown-->
-            <form action="/poem_writing" method ="POST">
-                <div class="wordbox-container">
-                    <input  class="word-box me-3" name ="line" placeholder="Enter a line">
-
+            <form action="/poem_writing_acrostic" method = "POST">
+                <div class="themebox-container d-flex justify-content-center mb-3">
+                    <label for="theme" class="form-label title-label me-2 color-black">Title:</label>
+                    <input class="title-box me-5" name="theme" placeholder="" value="{{ title | default('') }}">
                 </div>
-                 <button id="add-btn" class="btn btn-primary mt-3"><i class="bi bi-patch-plus"></i></button>
-                 <button type="submit" class="btn btn-primary mt-3">Submit</button>
-                {% with messages = get_flashed_messages() %}
-                    {% if messages%}
-						<div class="alert alert-danger" role="alert">
-							Wrong Poem!
-						</div>
-					{% endif %}
-                {% endwith %}
 
+                    <div class="wordbox-container d-flex justify-content-center flex-column align-items-center">
+                      <!-- Initial input and button -->
+                      <div class="input-wrapper d-flex align-items-center">
+                        <input class="word-box me-3 text-center ms-input" name="line" placeholder="Enter a line">
+                        <button  type="button" class="btn btn-primary text-center add-btn"><i class="bi bi-patch-plus"></i></button>
+                      </div>
+                    </div>
+                <div class="d-flex justify-content-end mt-end"">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            {% with messages = get_flashed_messages() %}
+                {% if messages%}
+                    <div class="alert alert-danger mt-3" role="alert">
+                        Wrong poem!
+                    </div>
+                {% endif %}
+            {% endwith %}
             </form>
 
         </div>
@@ -77,27 +87,46 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 <script>
-    var box_limit = 7;
-    var box_current = 1;
 
-    // ByClassName: ["wordbox-container", "wordbox-container"] (list)
-    var word_container = document.getElementsByClassName("wordbox-container")[0];
-    <!--    storing word-box in line 15 in var wordbox-->
-    var addbtn = document.getElementById("add-btn");
+var box_limit = 7;
+var box_current = 1;
+var word_container = document.querySelector(".wordbox-container");
 
-    addbtn.addEventListener("click", function() {
-        event.preventDefault();
-        if (box_current < box_limit) {
-            var newBox = document.createElement("input"); <!--creating input tag-->
-            newBox.setAttribute('placeholder',"Enter a line")
-            newBox.setAttribute('name','line')
-            newBox.classList.add("word-box", "mt-3"); <!--adding class-->
-            word_container.appendChild(newBox) <!--appending to word_container-->
-            box_current += 1;
-        }
-    });
-    <!--executed (do something) when clicked-->
+document.addEventListener("click", function(event) {
+  var clickedElement = event.target;
+  if ((clickedElement.classList.contains('bi-patch-plus')||clickedElement.classList.contains('add-btn')) && box_current < box_limit) {
+
+    var newInputWrapper = document.createElement('div');
+    newInputWrapper.classList.add('input-wrapper', 'd-flex', 'align-items-center','mt-3');
+
+    var newBox = document.createElement("input");
+    newBox.setAttribute('placeholder', "Enter a line");
+    newBox.setAttribute('name', 'line');
+    newBox.classList.add("word-box", "me-3", "text-center", "ms-input");
+
+    var newButton = document.createElement("button");
+    newButton.setAttribute('type','button');
+
+    newButton.classList.add("btn", "btn-primary", "text-center", "add-btn");
+    newButton.innerHTML = '<i class="bi bi-patch-plus"></i>';
+
+    newInputWrapper.appendChild(newBox);
+    newInputWrapper.appendChild(newButton);
+
+    word_container.append(newInputWrapper);
+
+    if (clickedElement.classList.contains('add-btn')) {
+      clickedElement.style.visibility = 'hidden'; // Hide the clicked "Add" button
+    } else if (clickedElement.classList.contains('bi-patch-plus')) {
+      var parentDiv = clickedElement.closest('.input-wrapper');
+      var addBtn = parentDiv.querySelector('.add-btn');
+      addBtn.style.visibility = 'hidden'; // Hide the "Add" button associated with the clicked icon
+    }
+    box_current += 1;
+  }
+});
 </script>
+  <script src="../static/js/main.js"></script>
 
 </body>
 </html>

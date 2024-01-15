@@ -927,6 +927,12 @@ body a:hover {
 		width: 600px;
 	}
 }
+@media (max-width: 700px) {
+	.word-box {
+		width: 490px;
+	}
+}
+
 @media (max-width: 500px) {
 	.word-box {
 		width: 350px;
@@ -990,9 +996,33 @@ font-size:20px;
     background-position: center;
     height: 100vh;
 }
-
-
-
+.color-black{
+color:black;
+}
+.acrosticback {
+    background-image: url("../img/acrostic.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    height: 100vh;
+}
+.freeback {
+    background-image: url("../img/free.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    height: 100vh;
+}
+.sonnetback {
+    background-image: url("../img/sonnet.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    height: 100vh;
+}
 .board-top{
     margin-top: 120px;
 }

@@ -7,18 +7,17 @@
     <link rel="stylesheet" href="../static/css/style.css">
     <!-- Option 1: Include in HTML -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-      <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
-
-    <link href="../static/img/book.png" rel="icon">
-  <link href="../static/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
     <title>Free | Write Poem</title>
+    <link href="../static/img/book.png" rel="icon">
+    <link href="../static/img/apple-touch-icon.png" rel="apple-touch-icon">
 </head>
 
-<body class="haikuback">
-    <header id="header" class="fixed-top d-flex align-items-center">
+<body  class="freeback">
+       <header id="header" class="fixed-top d-flex align-items-center">
         <div class="container d-flex justify-content-between">
 
           <div class="logo">
@@ -26,18 +25,22 @@
           </div>
 
           <nav id="navbar" class="navbar">
-         <ul>
-          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+        <ul>
+          <li><a class="nav-link scrollto" href="#hero">Home</a></li>
           <li><a class="nav-link scrollto" href="{{url_for('index')}}#about">About</a></li>
-          <li class="dropdown"><a href="{{url_for('poem_writing_haiku')}}"><span>Write Poem</span> <i class="bi bi-chevron-down"></i></a>
+          <li class="dropdown active"><a class="active" href="{{url_for('bwrite')}}"><span>Write Poem</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="{{url_for('poem_writing_haiku')}}">Haiku</a></li>
               <li><a href="{{url_for('poem_writing_sonnet')}}">Sonnet</a></li>
               <li><a href="{{url_for('poem_writing_acrostic')}}">Acrostic</a></li>
-              <li><a href="#">Freestyle</a></li>
+              <li><a href="{{url_for('poem_writing_free')}}">Freestyle</a></li>
             </ul>
           </li>
           <li><a class="nav-link scrollto" href="{{url_for('board')}}">Board</a></li>
+                      <li><a class="nav-link scrollto" href="{{url_for('mypage')}}">My Poem</a></li>
+
+          <li><a class="nav-link scrollto" href="{{url_for('statistics')}}">Statistics</a></li>
+
           {% if isLogin %}
             <li><a class="nav-link scrollto" href="{{url_for('logout')}}">Logout</a></li>
           {% else %}
@@ -52,13 +55,14 @@
       </header>
 
     <div class="container poemwrite">
-        <div class="d-flex justify-content-center mb-3 bigmargin"> <!-- d-flex: align elements inside div -->
-            <h1 class="haiku_heading text-center me-3 ms-4">Free Style</h1>
-            <a class="info-icon mt-2" data-bs-toggle="modal" data-bs-target="#haiku_instruction"> <i class="bi bi-patch-question"></i> </a>
-        </div>
-
+        <h1 class="mb-4 bigmargin acrostic_heading text-center">Free Style</h1>
         <div> <!-- x physically shown-->
-            <form action="/poem_writing_haiku" method ="POST">
+            <form action="/poem_writing_acrostic" method = "POST">
+                <div class="themebox-container d-flex justify-content-center mb-3">
+                    <label for="theme" class="form-label title-label me-2 color-black">Title:</label>
+                    <input class="title-box me-5" name="theme" placeholder="" value="{{ title | default('') }}">
+                </div>
+
                     <div class="wordbox-container d-flex justify-content-center flex-column align-items-center">
                       <!-- Initial input and button -->
                       <div class="input-wrapper d-flex align-items-center">
@@ -66,48 +70,25 @@
                         <button  type="button" class="btn btn-primary text-center add-btn"><i class="bi bi-patch-plus"></i></button>
                       </div>
                     </div>
-
-                <div class=" d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary mt-end btn-primary2">Submit</button>
+                <div class="d-flex justify-content-end mt-end"">
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
-                {% with messages = get_flashed_messages() %}
-                    {% if messages%}
-            <div id ="alert-message" class="alert alert-danger" role="alert">
-              Wrong Poem!
-            </div>
-          {% endif %}
-                {% endwith %}
-
+            {% with messages = get_flashed_messages() %}
+                {% if messages%}
+                    <div class="alert alert-danger mt-3" role="alert">
+                        Wrong poem!
+                    </div>
+                {% endif %}
+            {% endwith %}
             </form>
 
         </div>
     </div>
 
-
-    <!-- Modal -->
-<div class="modal fade mt-haiku-info" id="haiku_instruction" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center ms-2">
-        <h5 class="modal-title mx-auto" id="exampleModalLongTitle">Haiku Rules</h5>
-            <a class="close-modal" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x"></i></a>
-      </div>
-      <div class="modal-body">
-        <ul>
-            <li>The poem consists of 3 lines.</li>
-            <li>The first line is 5 syllables.</li>
-            <li>The second line is 7 syllables.</li>
-            <li>The third line is 5 syllables.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 <script>
 
-var box_limit = 3;
+var box_limit = 7;
 var box_current = 1;
 var word_container = document.querySelector(".wordbox-container");
 
@@ -121,7 +102,6 @@ document.addEventListener("click", function(event) {
     var newBox = document.createElement("input");
     newBox.setAttribute('placeholder', "Enter a line");
     newBox.setAttribute('name', 'line');
-
     newBox.classList.add("word-box", "me-3", "text-center", "ms-input");
 
     var newButton = document.createElement("button");
@@ -146,6 +126,5 @@ document.addEventListener("click", function(event) {
   }
 });
 </script>
-
 </body>
-</html
+</html>

@@ -172,7 +172,7 @@ def poem_writing_haiku():
 
 	if request.method == "POST":
 		isLogin = True
-		lines = request.form.getlist("line")
+		lines = request.form.getlist("lines")
 		title = request.form.get('title')
 
 		result = haiku_is_standard(lines)
@@ -211,24 +211,27 @@ def poem_writing_free():
 	if request.method == "POST":
 		isLogin=True
 		lines = request.form.getlist("line") #["line1", "line2","line3"]
-
+		title = request.form.get("title")
 		username = session["username"]
 		content = "\n".join(lines) # "line1\nline2\nline3\n"
 		today_date = datetime.today()
 		conn = sqlite3.connect("static/database.db")
 		cursor = conn.cursor()
 		type = "free"
-		cursor.execute("Insert INTO Poem (username, content, date) VALUES (?,?,?,?)",(username,content,today_date,type))
+		cursor.execute('SELECT MAX(id) FROM Poem')
+
+		largest_id = cursor.fetchone()[0]
+		cursor.execute("Insert INTO Poem (username, content, date,title,type,id) VALUES (?,?,?,?,?,?)",
+					   (username, content, today_date, title, type, largest_id + 1))
 		conn.commit()
 		conn.close()
-
 		return redirect(url_for('index'),isLogin=isLogin)
 	else:
 		if "username" not in session:
 			return redirect(url_for('login'))
 		else:
 			isLogin=True
-		return render_template('poem_writing_haiku.html',isLogin=isLogin)
+		return render_template('poem_writing_free.html',isLogin=isLogin)
 
 @app.route('/like_poem', methods=['POST'])
 def like_poem():
@@ -258,37 +261,120 @@ def like_poem():
 		return jsonify({'success': False, 'error': 'User not logged in'})
 
 
-@app.route('/poem_writing_sonnet', methods=['GET','POST'])
-def poem_writing_sonnet():
-	if "username" not in session:
-		return redirect(url_for('login'))
-	return render_template("poem_writing_sonnet.html")
+# @app.route('/poem_writing_sonnet', methods=['GET','POST'])
+# def poem_writing_sonnet():
+# 	if "username" not in session:
+# 		return redirect(url_for('login'))
+# 	return render_template("poem_writing_sonnet.html")
+
 @app.route('/poem_writing_acrostic', methods=['GET', 'POST'])
 def poem_writing_acrostic():
+	isLogin = False
+	lines = []
+	title = ""
+
 	if request.method == "POST":
-		lines = request.form.getlist("line") #["line1", "line2","line3"]
-		theme = request.form.get('theme')
-		result = is_acroustic(theme,lines)
+		isLogin = True
+		lines = request.form.getlist("line")
+		title = request.form.get('title')
+
+		result = haiku_is_standard(lines)
 		if result:
 			username = session["username"]
-			content = "\n".join(lines) # "line1\nline2\nline3\n"
+			content = "\n".join(lines)  # "line1\nline2\nline3\n"
 			today_date = datetime.today()
 			conn = sqlite3.connect("static/database.db")
+			title = request.form.get('title')
 			cursor = conn.cursor()
 			type = "acrostic"
-			cursor.execute("Insert INTO Poem (username, content, date, type) VALUES (?,?,?,?)",(username,content,today_date, type))
+
+			cursor.execute('SELECT MAX(id) FROM Poem')
+
+			largest_id = cursor.fetchone()[0]
+			cursor.execute("Insert INTO Poem (username, content, date,title,type,id) VALUES (?,?,?,?,?,?)",
+						   (username, content, today_date, title, type, largest_id + 1))
 			conn.commit()
 			conn.close()
 
-			return redirect(url_for('index'))
+			return redirect(url_for('board'))
 		else:
 			flash("Wrong!")
-			return render_template('poem_writing_acrostic.html')
 
 	else:
 		if "username" not in session:
 			return redirect(url_for('login'))
-		return render_template('poem_writing_acrostic.html')
+		else:
+			isLogin = True
+
+	return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title)
+
+
+@app.route('/poem_writing_sonnet', methods=['GET', 'POST'])
+def poem_writing_sonnet():
+	isLogin = False
+	lines = []
+	title = ""
+
+	if request.method == "POST":
+		isLogin = True
+		lines = request.form.getlist("line")
+		title = request.form.get('title')
+
+		result = haiku_is_standard(lines)
+		if result:
+			username = session["username"]
+			content = "\n".join(lines)  # "line1\nline2\nline3\n"
+			today_date = datetime.today()
+			conn = sqlite3.connect("static/database.db")
+			title = request.form.get('title')
+			cursor = conn.cursor()
+			type = "sonnet"
+
+			cursor.execute('SELECT MAX(id) FROM Poem')
+
+			largest_id = cursor.fetchone()[0]
+			cursor.execute("Insert INTO Poem (username, content, date,title,type,id) VALUES (?,?,?,?,?,?)",
+						   (username, content, today_date, title, type, largest_id + 1))
+			conn.commit()
+			conn.close()
+
+			return redirect(url_for('board'))
+		else:
+			flash("Wrong!")
+
+	else:
+		if "username" not in session:
+			return redirect(url_for('login'))
+		else:
+			isLogin = True
+
+	return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title)
+# @app.route('/poem_writing_acrostic', methods=['GET', 'POST'])
+# def poem_writing_acrostic():
+# 	if request.method == "POST":
+# 		lines = request.form.getlist("lines") #["line1", "line2","line3"]
+# 		theme = request.form.get('theme')
+# 		result = is_acroustic(theme,lines)
+# 		if result:
+# 			username = session["username"]
+# 			content = "\n".join(lines) # "line1\nline2\nline3\n"
+# 			today_date = datetime.today()
+# 			conn = sqlite3.connect("static/database.db")
+# 			cursor = conn.cursor()
+# 			type = "acrostic"
+# 			cursor.execute("Insert INTO Poem (username, content, date, type) VALUES (?,?,?,?)",(username,content,today_date, type))
+# 			conn.commit()
+# 			conn.close()
+#
+# 			return redirect(url_for('index'))
+# 		else:
+# 			flash("Wrong!")
+# 			return render_template('poem_writing_acrostic.html')
+#
+# 	else:
+# 		if "username" not in session:
+# 			return redirect(url_for('login'))
+# 		return render_template('poem_writing_acrostic.html')
 @app.route("/board", methods=['GET', 'POST'])
 def board():
 	isLogin = False
