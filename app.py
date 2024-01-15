@@ -430,6 +430,7 @@ def statistics():
 	if request.method == "POST":
 		pass
 	else:
+		isLogin = False
 		conn = sqlite3.connect("static/database.db")
 		cursor = conn.cursor()
 
@@ -442,6 +443,7 @@ def statistics():
 
 		if "username" in session:
 			username = session["username"]
+			isLogin = True
 		else:
 			username = ""
 
@@ -452,7 +454,7 @@ def statistics():
 			poem_type, count = type
 			user_dic[poem_type] = count
 
-		return render_template('statistics.html', poem_dic = poem_dic, user_dic = user_dic)
+		return render_template('statistics.html', poem_dic = poem_dic, user_dic = user_dic, isLogin=isLogin)
 
 # Main function (Python syntax)
 if __name__ == '__main__':
