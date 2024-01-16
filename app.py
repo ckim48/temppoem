@@ -235,30 +235,46 @@ def poem_writing_free():
 
 @app.route('/like_poem', methods=['POST'])
 def like_poem():
-	data = request.json
-	username = session["username"]
-	poem_id = data.get('poem_id')
-	liked_status = data.get('liked')
-	if username:
-		conn = sqlite3.connect("static/database.db")
-		cursor = conn.cursor()
+    data = request.json
+    username = session.get("username")
+    poem_id = data.get('poem_id')
+    liked_status = data.get('liked')
 
-		cursor.execute("SELECT * FROM Likes WHERE username = ? AND poem_id = ?", (username, poem_id))
-		existing_like = cursor.fetchone()
+    if username:
+        conn = sqlite3.connect("static/database.db")
+        cursor = conn.cursor()
 
-		if existing_like:
-			cursor.execute("UPDATE Likes SET liked = ? WHERE username = ? AND poem_id = ?",
-						   (0, username, poem_id))
-		else:
-			cursor.execute("INSERT INTO Likes (username, poem_id, liked) VALUES (?, ?, ?)",
-						   (username, poem_id, 1))
+        try:
+            cursor.execute("SELECT * FROM Likes WHERE username = ? AND poem_id = ?", (username, poem_id))
+            existing_like_entry = cursor.fetchone()
 
-		conn.commit()
-		conn.close()
+            if existing_like_entry:
+                cursor.execute("UPDATE Likes SET liked = ? WHERE username = ? AND poem_id = ?",
+                               (int(liked_status), username, poem_id))
+            else:
+                cursor.execute("INSERT INTO Likes (username, poem_id, liked) VALUES (?, ?, ?)",
+                               (username, poem_id, int(liked_status)))
 
-		return jsonify({'success': True})
-	else:
-		return jsonify({'success': False, 'error': 'User not logged in'})
+            if liked_status == 1:
+                cursor.execute("UPDATE Poem SET numLikes = numLikes + 1 WHERE id = ?", (poem_id,))
+            else:
+                cursor.execute("UPDATE Poem SET numLikes = numLikes - 1 WHERE id = ?", (poem_id,))
+
+            conn.commit()
+
+            cursor.execute("SELECT numLikes FROM Poem WHERE id = ?", (poem_id,))
+            updated_like_count = cursor.fetchone()[0]
+
+            return jsonify({'success': True, 'like_count': updated_like_count})
+
+        except sqlite3.Error as e:
+            conn.rollback()
+            return jsonify({'success': False, 'error': str(e)})
+
+        finally:
+            conn.close()
+    else:
+        return jsonify({'success': False, 'error': 'User not logged in'})
 
 
 # @app.route('/poem_writing_sonnet', methods=['GET','POST'])
@@ -394,8 +410,9 @@ def board():
 			LEFT JOIN Likes L ON P.id = L.poem_id AND L.username = ?
 		"""
 		cursor.execute(query, (session.get("username"),))
-		rows = cursor.fetchall()
 
+		rows = cursor.fetchall()
+		num_poems = len(rows)
 		usernames = []  # ["scott", "alice"]
 		contents = []  # ["poem...", "poem2..."]
 		dates = []  # ["2023-12-12", "2022-10-10"]
@@ -417,6 +434,8 @@ def board():
 			ids.append(row[5])
 		print(likes)
 		print(ids)
+
+		print("AAAAA",num_poems)
 		if "username" not in session:
 			isLogin = False
 			return redirect(url_for('login'))
@@ -425,7 +444,7 @@ def board():
 
 		return render_template('board.html',ids=ids, usernames=usernames, contents=contents,
 							   dates=dates, titles=titles, types=types, liked_status=likes,
-							   num_poems=len(usernames), num_likes = num_likes,isLogin=isLogin)
+							   num_poems=num_poems, num_likes = num_likes,isLogin=isLogin)
 
 @app.route("/statistics", methods=['GET', 'POST'])
 def statistics():

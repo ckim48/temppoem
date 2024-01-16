@@ -1065,10 +1065,20 @@ color:black;
 .like-button{
 font-size:14px;
 }
-.really-like{
-background-color:#dc3545 !important;
+.btn-outline-danger{
+background-color:white !important;
+color:#B255E3 !important;
+border:1px solid #B255E3 !important;
+}
+.btn-outline-danger:hover{
+background-color:#B255E3 !important;
 color:white !important;
-border:1px solid #dc3545 !important;
+border:1px solid #B255E3 !important;
+}
+.really-like{
+background-color:#B255E3 !important;
+color:white !important;
+border:1px solid #B255E3 !important;
 }
 
 .filter-active{
