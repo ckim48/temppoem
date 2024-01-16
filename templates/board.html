@@ -98,7 +98,7 @@
                   <h5 class="card-title"><span class="title">{{titles[i]}}</span> - <span class="board-poemtype type">{{types[i]}}</span></h5>
                   <h6 class="card-subtitle mb-2 text-muted">{{usernames[i]}} - <span class="date">{{dates[i][0:10]}}</span></h6>
 
-                  <p class="card-text">{{contents[i][0:100]}}.....{{ids[i]}}</p>
+                  <p class="card-text">{{contents[i][0:60]}}.....{{ids[i]}}</p>
 
                 <div class="d-flex justify-content-between">
                   <a class="card-link" data-bs-toggle="modal" data-bs-target="#poemModal" data-title="{{titles[i]}}" data-type="{{types[i]}}" data-username="{{usernames[i]}}" data-date="{{dates[i][0:10]}}" data-content="{{contents[i]}}">
@@ -106,15 +106,15 @@
 </a>
                     {% if liked_status[i] == 1 %}
                   <div class="text-right">
-                    <button class="btn btn-outline-danger like-button really-like" data-poem-id="{{ ids[i] }}" data-username="{{ usernames[i] }}" data-liked="{{ liked_status[i] }}">
-                        <i class="bi bi-heart-fill"></i>  Liked
+                    <button class="mt-3 btn btn-outline-danger like-button really-like" data-poem-id="{{ ids[i] }}" data-username="{{ usernames[i] }}" data-liked="{{ liked_status[i] }}">
+                        <i class="bi bi-heart-fill"></i> {{num_likes[i]}} Likes
                     </button>
                   </div>
 
                     {%else %}
                                       <div class="text-right">
-                    <button class="btn btn-outline-danger like-button" data-poem-id="{{ ids[i] }}" data-username="{{ usernames[i] }}" data-liked="{{ liked_status[i] }}">
-                        <i class="bi bi-heart"></i> Like
+                    <button class="mt-3 btn btn-outline-danger like-button" data-poem-id="{{ ids[i] }}" data-username="{{ usernames[i] }}" data-liked="{{ liked_status[i] }}">
+                        <i class="bi bi-heart"></i> {{num_likes[i]}} Likes
                     </button>
                   </div>
                     {% endif %}
@@ -278,7 +278,7 @@
             this.setAttribute('data-liked', newLikedStatus);
                      if (newLikedStatus) {
             // User liked the poem
-            this.innerHTML = '<i class="bi bi-heart-fill"></i> Liked';
+            this.innerHTML = '<i class="bi bi-heart-fill"></i> Like';
             this.classList.add('really-like');
          } else {
             // User unliked the poem

@@ -1236,6 +1236,7 @@ transition: transform 0.3s ease-in-out;
   font-size: 15px;
   line-height: 28px;
   margin-bottom: 0;
+  color:#656565;
 }
 
 .featured-services .icon-box:hover .title a,

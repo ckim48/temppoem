@@ -72,10 +72,20 @@
 
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex flex-column justify-content-center align-items-center">
-    <div class="container text-center text-md-left" data-aos="fade-up">
-      <h1>Welcome to Poetry World</h1>
-      <h2>Our website is designed to help you get immersed in the world of poetry, <br> allowing you to compose your own fabulous poems.</h2>
-      <a href="{{url_for('bwrite')}}" class="btn-get-started scrollto">Get started</a>
+    <div class="container text-center text-md-left">
+      <h1  data-aos="fade-up">Welcome to Poetry World</h1>
+      <h2  data-aos="fade-in" data-aos-delay="1000" data-aos-duration="1200">Our website is designed to help you get immersed in the world of poetry, <br> allowing you to compose your own fabulous poems.</h2>
+      <div data-aos="fade-in" data-aos-delay="2000" data-aos-duration="1200">
+
+        {% if isLogin %}
+                                <a  href="{{url_for('bwrite')}}" class="btn-get-started scrollto">Get started</a>
+
+
+        {% else %}
+ <a  href="{{url_for('bwrite')}}" class="btn-get-started scrollto me-2">Get started</a>
+              <a  href="{{url_for('login')}}" class="btn-get-started scrollto ms-2">Login</a>
+        {% endif %}
+      </div>
 
     </div>
   </section><!-- End Hero -->
@@ -141,6 +151,8 @@
               <span>01</span>
               <h4>Writing</h4>
               <p>Users can write the poem in four different styles: Haiku, Acrostic, Sonnet, and Freestyle</p>
+                                                      <a class="test-now mt-4" href="{{url_for('bwrite')}}"style="display: block; text-align: right;"><i class="bi bi-chevron-right"></i> Create </a>
+
             </div>
           </div>
 
@@ -149,6 +161,8 @@
               <span>02</span>
               <h4>Sharing</h4>
               <p>Users can share their poem with the diverse communities.</p>
+                                                                    <a class="test-now mt-4" href="{{url_for('board')}}"style="display: block; text-align: right;"><i class="bi bi-chevron-right"></i> Create </a>
+
             </div>
           </div>
 
@@ -157,6 +171,8 @@
               <span>03</span>
               <h4>Analyzing</h4>
               <p>Users have the ability to view the popular styles of poems and the trending topics.</p>
+                                                                  <a class="test-now mt-4" href="{{url_for('statistics')}}"style="display: block; text-align: right;"><i class="bi bi-chevron-right"></i> Create </a>
+
             </div>
           </div>
 

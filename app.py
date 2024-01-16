@@ -388,7 +388,7 @@ def board():
 
 		# Modify your query to join Poem with Likes
 		query = """
-			SELECT P.username, P.content, P.date, P.title, P.type,P.id,
+			SELECT P.username, P.content, P.date, P.title, P.type,P.id, P.numLikes,
 				   COALESCE(L.liked, 0) AS liked
 			FROM Poem P
 			LEFT JOIN Likes L ON P.id = L.poem_id AND L.username = ?
@@ -403,6 +403,7 @@ def board():
 		types = []
 		likes = []
 		ids = []
+		num_likes = []
 
 		for row in rows:
 			usernames.append(row[0])
@@ -410,7 +411,8 @@ def board():
 			dates.append(row[2])
 			titles.append(row[3])
 			types.append(row[4].title())
-			likes.append(row[6])
+			likes.append(row[7])
+			num_likes.append(row[6])
 
 			ids.append(row[5])
 		print(likes)
@@ -423,7 +425,7 @@ def board():
 
 		return render_template('board.html',ids=ids, usernames=usernames, contents=contents,
 							   dates=dates, titles=titles, types=types, liked_status=likes,
-							   num_poems=len(usernames), isLogin=isLogin)
+							   num_poems=len(usernames), num_likes = num_likes,isLogin=isLogin)
 
 @app.route("/statistics", methods=['GET', 'POST'])
 def statistics():
@@ -453,7 +455,7 @@ def statistics():
 		for type in types:
 			poem_type, count = type
 			user_dic[poem_type] = count
-
+		print(user_dic)
 		return render_template('statistics.html', poem_dic = poem_dic, user_dic = user_dic, isLogin=isLogin)
 
 # Main function (Python syntax)
