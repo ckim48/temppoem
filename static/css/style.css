@@ -985,6 +985,15 @@ body {
 .info-icon:hover {
   color: gray;
 }
+
+.info-icon2 {
+  font-size: 24px;
+  color: black;
+}
+
+.info-icon2:hover {
+  color: gray;
+}
 .close-modal{
 font-size:20px;
 }
