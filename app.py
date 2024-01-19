@@ -172,7 +172,7 @@ def poem_writing_haiku():
 
 	if request.method == "POST":
 		isLogin = True
-		lines = request.form.getlist("lines")
+		lines = request.form.getlist("line")
 		title = request.form.get('title')
 
 		result = haiku_is_standard(lines)
@@ -225,7 +225,7 @@ def poem_writing_free():
 					   (username, content, today_date, title, type, largest_id + 1))
 		conn.commit()
 		conn.close()
-		return redirect(url_for('index'),isLogin=isLogin)
+		return redirect(url_for('index'))
 	else:
 		if "username" not in session:
 			return redirect(url_for('login'))
@@ -334,6 +334,8 @@ def poem_writing_sonnet():
 	if request.method == "POST":
 		isLogin = True
 		lines = request.form.getlist("line")
+		for i in lines:
+			print("ABCCCCCCCC"+i)
 		title = request.form.get('title')
 
 		result = haiku_is_standard(lines)

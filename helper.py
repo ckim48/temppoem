@@ -37,16 +37,19 @@ def cnt_sent_syll(sentence):
     return total_syll
 
 def haiku_is_standard(poem):
-    first_ln_syll = cnt_sent_syll(poem[0])
-    second_ln_syll = cnt_sent_syll(poem[1])
-    third_ln_syll = cnt_sent_syll(poem[2])
-    if first_ln_syll != 5:
-        return False
-    elif second_ln_syll != 7:
-        return False
-    elif third_ln_syll != 5:
-        return False
-    return True
+    if len(poem) == 3:
+        first_ln_syll = cnt_sent_syll(poem[0])
+        second_ln_syll = cnt_sent_syll(poem[1])
+        third_ln_syll = cnt_sent_syll(poem[2])
+        if first_ln_syll != 5:
+            return False
+        elif second_ln_syll != 7:
+            return False
+        elif third_ln_syll != 5:
+            return False
+        return True
+    else:
+        return True
 def is_acroustic(theme, poem):
     threshold = 0.1
     # return true, if first letter of each line match to each letter in theme
