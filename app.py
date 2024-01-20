@@ -470,7 +470,7 @@ def statistics():
 		else:
 			username = ""
 
-		cursor.execute("SELECT type, COUNT(type) From Poem where username = ?  GROUP BY type",(username,))
+		cursor.execute("SELECT type, COUNT(type) From Poem GROUP BY type")
 		types = cursor.fetchall()
 		user_dic = {} # {"acrostic" : 1, "haiku" :2, "sonnet": 1}
 		for type in types:
