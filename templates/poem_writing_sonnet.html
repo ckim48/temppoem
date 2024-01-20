@@ -61,6 +61,13 @@
         </div>
         <div> <!-- x physically shown-->
             <form action="/poem_writing_sonnet" method = "POST">
+                            {% with messages = get_flashed_messages() %}
+                {% if messages%}
+                    <div class="alert alert-danger mt-3" role="alert">
+                        Wrong poem!
+                    </div>
+                {% endif %}
+            {% endwith %}
                 <div class="themebox-container d-flex justify-content-center mb-3">
                     <label for="theme" class="form-label title-label me-2 color-black">Title:</label>
                     <input class="title-box me-5" name="theme" placeholder="" value="{{ title | default('') }}">
@@ -69,20 +76,66 @@
                     <div class="wordbox-container d-flex justify-content-center flex-column align-items-center">
                       <!-- Initial input and button -->
                       <div class="input-wrapper d-flex align-items-center">
-                        <input class="word-box me-3 text-center ms-input" name="line" placeholder="Enter a line">
-                        <button  type="button" class="btn btn-primary text-center add-btn"><i class="bi bi-patch-plus"></i></button>
-                      </div>
+<input class="word-box me-3 text-center ms-input mb-2" name="line" placeholder="Enter a line" value="{{ lines[0] | default('') }}">
+
+                          </div>
+                                              <div class="input-wrapper d-flex align-items-center">
+<input class="word-box me-3 text-center ms-input mb-2" name="line" placeholder="Enter a line" value="{{ lines[1] | default('') }}">
+
+                          </div>
+                                              <div class="input-wrapper d-flex align-items-center">
+<input class="word-box me-3 text-center ms-input mb-2" name="line" placeholder="Enter a line" value="{{ lines[2] | default('') }}">
+
+                          </div>
+                                              <div class="input-wrapper d-flex align-items-center">
+<input class="word-box me-3 text-center ms-input mb-2" name="line" placeholder="Enter a line" value="{{ lines[3] | default('') }}">
+
+                          </div>
+                                              <div class="input-wrapper d-flex align-items-center">
+<input class="word-box me-3 text-center ms-input mb-2" name="line" placeholder="Enter a line" value="{{ lines[4] | default('') }}">
+
+                          </div>
+                                              <div class="input-wrapper d-flex align-items-center">
+<input class="word-box me-3 text-center ms-input mb-2" name="line" placeholder="Enter a line" value="{{ lines[5] | default('') }}">
+
+                          </div>
+                                              <div class="input-wrapper d-flex align-items-center">
+<input class="word-box me-3 text-center ms-input mb-2" name="line" placeholder="Enter a line" value="{{ lines[6] | default('') }}">
+
+                          </div>
+                                              <div class="input-wrapper d-flex align-items-center">
+<input class="word-box me-3 text-center ms-input mb-2" name="line" placeholder="Enter a line" value="{{ lines[7] | default('') }}">
+
+                          </div>
+                                              <div class="input-wrapper d-flex align-items-center">
+<input class="word-box me-3 text-center ms-input mb-2" name="line" placeholder="Enter a line" value="{{ lines[8] | default('') }}">
+
+                          </div>
+                                              <div class="input-wrapper d-flex align-items-center">
+<input class="word-box me-3 text-center ms-input mb-2" name="line" placeholder="Enter a line" value="{{ lines[9] | default('') }}">
+
+                          </div>
+                                              <div class="input-wrapper d-flex align-items-center">
+<input class="word-box me-3 text-center ms-input mb-2" name="line" placeholder="Enter a line" value="{{ lines[10] | default('') }}">
+
+                          </div>
+                                              <div class="input-wrapper d-flex align-items-center">
+<input class="word-box me-3 text-center ms-input mb-2" name="line" placeholder="Enter a line" value="{{ lines[11] | default('') }}">
+
+                          </div>
+                                              <div class="input-wrapper d-flex align-items-center">
+<input class="word-box me-3 text-center ms-input mb-2" name="line" placeholder="Enter a line" value="{{ lines[12] | default('') }}">
+
+                          </div>
+                                              <div class="input-wrapper d-flex align-items-center">
+<input class="word-box me-3 text-center ms-input mb-2" name="line" placeholder="Enter a line" value="{{ lines[13] | default('') }}">
+
+                          </div>
                     </div>
                 <div class="d-flex justify-content-end mt-end"">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
-            {% with messages = get_flashed_messages() %}
-                {% if messages%}
-                    <div class="alert alert-danger mt-3" role="alert">
-                        Wrong poem!
-                    </div>
-                {% endif %}
-            {% endwith %}
+
             </form>
 
         </div>

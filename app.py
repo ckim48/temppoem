@@ -2,7 +2,7 @@ from flask import Flask, render_template, request,jsonify, url_for, flash, redir
 import sqlite3 #library that connects python & database
 import bcrypt
 from datetime import timedelta, datetime
-from helper import haiku_is_standard, is_acroustic
+from helper import haiku_is_standard, is_acroustic, is_sonnet
 
 app = Flask(__name__)
 app.secret_key = "randommessage"
@@ -292,9 +292,9 @@ def poem_writing_acrostic():
 	if request.method == "POST":
 		isLogin = True
 		lines = request.form.getlist("line")
-		title = request.form.get('title')
+		title = request.form.get('theme')
 
-		result = haiku_is_standard(lines)
+		result = is_acroustic(title,lines)
 		if result:
 			username = session["username"]
 			content = "\n".join(lines)  # "line1\nline2\nline3\n"
@@ -338,7 +338,7 @@ def poem_writing_sonnet():
 			print("ABCCCCCCCC"+i)
 		title = request.form.get('title')
 
-		result = haiku_is_standard(lines)
+		result = is_sonnet(lines)
 		if result:
 			username = session["username"]
 			content = "\n".join(lines)  # "line1\nline2\nline3\n"
