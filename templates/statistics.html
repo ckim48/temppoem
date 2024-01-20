@@ -130,24 +130,22 @@
 
     });
 
-    data_login = [1,2,3,4,5,6,7,8,9,10,11,12];
-    label_login = [1,2,3,4,5,6,7,8,9,10,11,12];
-    var ctx_login = document.getElementById('loginLine').getContext('2d');
-    var line1 = new Chart(ctx_login, {
-        type: 'line',
-        data: {
-          labels: label_login,
-          datasets: [{
-            label: "Number of Active Users",
-            data: data_login,
-            borderColor: 'black',
-            borderWidth: 1
-          }]
-        },
-        options:{
-          responsive: true
-        }
-    });
+         var ctx_login = document.getElementById('loginLine').getContext('2d');
+        var line1 = new Chart(ctx_login, {
+            type: 'line',
+            data: {
+                labels: {{ labels | tojson | safe }},
+                datasets: [{
+                    label: "Number of Logins",
+                    data: {{ values | tojson | safe }},
+                    borderColor: 'black',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
 
 
         var data_wordBar = {

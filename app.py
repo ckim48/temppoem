@@ -150,6 +150,13 @@ def login():
 
 		if bcrypt.checkpw(input_password, hashed_password): # 1010 == 1010
 			session["username"] = username # session = {"username": test1}
+			login_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+			conn = sqlite3.connect('static/database.db')
+			cursor = conn.cursor()
+			cursor.execute("INSERT INTO Login_logs (username, date) VALUES (?, ?)", (username, login_date))
+			conn.commit()
+			conn.close()
 			return redirect(url_for('index')) #index = homepage
 		else:
 			flash("Invalid username or password!")
@@ -472,12 +479,22 @@ def statistics():
 
 		cursor.execute("SELECT type, COUNT(type) From Poem GROUP BY type")
 		types = cursor.fetchall()
+		conn.close()
 		user_dic = {} # {"acrostic" : 1, "haiku" :2, "sonnet": 1}
 		for type in types:
 			poem_type, count = type
 			user_dic[poem_type] = count
 		print(user_dic)
-		return render_template('statistics.html', poem_dic = poem_dic, user_dic = user_dic, isLogin=isLogin)
+
+		conn = sqlite3.connect('static/database.db')
+		cursor = conn.cursor()
+		cursor.execute("SELECT strftime('%m', date) as month, COUNT(*) FROM Login_logs GROUP BY month ORDER BY month;")
+		login_data = cursor.fetchall()
+		conn.close()
+
+		labels = [str(data[0]) for data in login_data]
+		values = [data[1] for data in login_data]
+		return render_template('statistics.html', poem_dic = poem_dic, user_dic = user_dic, isLogin=isLogin,labels=labels,values=values)
 
 # Main function (Python syntax)
 if __name__ == '__main__':
