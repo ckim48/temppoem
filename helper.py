@@ -21,11 +21,6 @@ def cnt_word_syll(word): #count syllables for a single word
 
 #regular expression: pattern matching (eg. email has @, ., etc.)
 def cnt_sent_syll(sentence):
-    # ^ => not
-    # \w => alphabets & digits
-    # \s => whitespace (space)
-    #re.sub("pattern","new word", given sent) -> sub: substitute
-    #-> find "patterns" from given sent and replace them to "new word"
     cleaned_sent = re.sub("[^\w\s]", "", sentence)
     list_words = cleaned_sent.split() # ["Hello", "my", "name", "is", "Serena"]
 
@@ -35,7 +30,7 @@ def cnt_sent_syll(sentence):
         total_syll += num
     return total_syll
 
-def haiku_is_standard(poem):
+def haiku_is_standard(poem): # #["elephant is big",line2,line3]
     if len(poem) == 3:
         first_ln_syll = cnt_sent_syll(poem[0])
         second_ln_syll = cnt_sent_syll(poem[1])
@@ -48,7 +43,7 @@ def haiku_is_standard(poem):
             return False
         return True
     else:
-        return True
+        return False
 def is_acroustic(theme, poem):
     threshold = 0.1
     # return true, if first letter of each line match to each letter in theme
@@ -123,7 +118,7 @@ def words_rhyme(word1, word2):
 
 # POEM -> poem
 # Poem --> poem
-def match_theme(theme, lines): #lines = ["bring out yoru bat","and your ball..",",,,,"]
+def match_theme(theme, lines): #theme:bat   #lines = ["bring out yoru bat","nd your ball..",",,,,"]
     theme = theme.lower()
     theme_index = 0
     for line in lines:
@@ -163,6 +158,7 @@ def isSimilar_theme(theme, lines):
         return 0
 
     average_similarity = similarity_score / number_word
+    print(average_similarity)
     return average_similarity
 
 # 0.3

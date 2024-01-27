@@ -973,7 +973,12 @@ body {
   right: 70px;
 }
 
-
+.btn-outline-primary{
+color: #CC95DD !important;
+}
+.btn-outline-primary:hover{
+color: darkgray !important;
+}
 .ms-input{
     margin-left: 55px;
 }

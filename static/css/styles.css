@@ -14,7 +14,12 @@
 .login-box {
 	max-width: 400px;
 }
-
+.btn-outline-primary{
+color: #A2AFF6 !important;
+}
+.btn-outline-primary:hover{
+color: drakgray !important;
+}
 .signup-box {
 	max-width: 600px;
 }

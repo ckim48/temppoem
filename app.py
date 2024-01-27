@@ -179,7 +179,7 @@ def poem_writing_haiku():
 
 	if request.method == "POST":
 		isLogin = True
-		lines = request.form.getlist("line")
+		lines = request.form.getlist("line") #[line1,line2,line3]
 		title = request.form.get('title')
 
 		result = haiku_is_standard(lines)
@@ -495,7 +495,25 @@ def statistics():
 		labels = [str(data[0]) for data in login_data]
 		values = [data[1] for data in login_data]
 		return render_template('statistics.html', poem_dic = poem_dic, user_dic = user_dic, isLogin=isLogin,labels=labels,values=values)
+@app.route("/edit_poem", methods=['GET', 'POST'])
+def edit_poem():
+    if request.method == 'POST':
+        poem_id = request.json.get('poem_id')
+        title = request.json.get('title')
+        content = request.json.get('content')
 
+        try:
+            conn = sqlite3.connect('static/database.db')
+            cursor = conn.cursor()
+
+            cursor.execute("UPDATE POEM SET title=?, content=? WHERE id=?", (title,  content, poem_id))
+
+            conn.commit()
+            conn.close()
+
+            return jsonify(success=True)
+        except Exception as e:
+            return jsonify(success=False, error=str(e))
 # Main function (Python syntax)
 if __name__ == '__main__':
 	app.run(debug=True)
