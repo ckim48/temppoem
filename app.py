@@ -226,13 +226,13 @@ def poem_writing_free():
 	if request.method == "POST":
 		isLogin=True
 		lines = request.form.getlist("line") #["line1", "line2","line3"]
-		title = request.form.get("title")
+		title = request.form.get("theme")
 		username = session["username"]
 		content = "\n".join(lines) # "line1\nline2\nline3\n"
 		today_date = datetime.today()
 		conn = sqlite3.connect("static/database.db")
 		cursor = conn.cursor()
-		type = "theme"
+		type = "free"
 		cursor.execute('SELECT MAX(id) FROM Poem')
 
 		largest_id = cursor.fetchone()[0]
