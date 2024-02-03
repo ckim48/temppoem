@@ -174,8 +174,10 @@ def logout():
 
 @app.route('/tube', methods=['GET']) # if user presses /logout
 def tube():
-	return render_template('tube.html')
-
+	isLogin = False
+	if "username" in session:
+		isLogin = True
+	return render_template('tube.html', isLogin = isLogin) # html var = python var
 
 @app.route('/poem_writing_haiku', methods=['GET', 'POST'])
 def poem_writing_haiku():
