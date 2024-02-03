@@ -15,7 +15,8 @@
     <header id="header" class="fixed-top d-flex align-items-center">
         <div class="container d-flex justify-content-between">
           <div class="logo">
-            <h1><a href="{{url_for('index')}}">Poem</a></h1>
+            <h1><a href="{{url_for('index')}}">Verse Vista
+</a></h1>
           </div>
           <nav id="navbar" class="navbar">
             <ul>
@@ -31,7 +32,9 @@
               <li><a class="nav-link scrollto" href="{{url_for('board')}}">Community</a></li>
               <li><a class="nav-link scrollto" href="{{url_for('mypage')}}">My Poem</a></li>
               <li><a class="nav-link scrollto" href="{{url_for('statistics')}}">Statistics</a></li>
-              {% if isLogin %}
+                        <li><a class="nav-link scrollto" href="{{url_for('statistics')}}">Media</a></li>
+
+                {% if isLogin %}
                 <li><a class="nav-link scrollto" href="{{url_for('logout')}}">Logout</a></li>
               {% else %}
                 <li><a class="nav-link scrollto" href="{{url_for('login')}}">Login</a></li>

@@ -13,14 +13,14 @@ def cnt_word_syll(word): #count syllables for a single word
 
     syllable_cnt = 0
     if phonetics != None:
-        for phoneme in phonetics[0]: #'EH1'
+        for phoneme in phonetics[0]: #['EH1', 'L', 'AH0', 'F', 'AH0', 'N', 'T']
             for char in phoneme:
                 if char.isdigit(): #guaranteed that digit is only attached to vowel
                     syllable_cnt += 1
     return syllable_cnt
 
 #regular expression: pattern matching (eg. email has @, ., etc.)
-def cnt_sent_syll(sentence):
+def cnt_sent_syll(sentence): # elephant is big
     cleaned_sent = re.sub("[^\w\s]", "", sentence)
     list_words = cleaned_sent.split() # ["Hello", "my", "name", "is", "Serena"]
 
@@ -44,7 +44,7 @@ def haiku_is_standard(poem): # #["elephant is big",line2,line3]
         return True
     else:
         return False
-def is_acroustic(theme, poem):
+def is_acroustic(theme, poem): #bat, b a t
     threshold = 0.1
     # return true, if first letter of each line match to each letter in theme
     if not match_theme(theme,poem):
@@ -118,12 +118,11 @@ def words_rhyme(word1, word2):
 
 # POEM -> poem
 # Poem --> poem
-def match_theme(theme, lines): #theme:bat   #lines = ["bring out yoru bat","nd your ball..",",,,,"]
+def match_theme(theme, lines): #theme:bat   #lines = ["bring out yoru bat","and your ball..",",,,,"]
     theme = theme.lower()
     theme_index = 0
     for line in lines:
         if line[0].islower() == None:
-            print("HECK")
             return False
 
         line = line.lower()

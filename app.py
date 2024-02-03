@@ -171,6 +171,12 @@ def logout():
 	session.clear()
 	return redirect(url_for('login')) # sends user to /login
 
+
+@app.route('/tube', methods=['GET']) # if user presses /logout
+def tube():
+	return render_template('tube.html')
+
+
 @app.route('/poem_writing_haiku', methods=['GET', 'POST'])
 def poem_writing_haiku():
 	isLogin = False
@@ -195,8 +201,8 @@ def poem_writing_haiku():
 			cursor.execute('SELECT MAX(id) FROM Poem')
 
 			largest_id = cursor.fetchone()[0]
-			cursor.execute("Insert INTO Poem (username, content, date,title,type,id) VALUES (?,?,?,?,?,?)",
-						   (username, content, today_date, title, type, largest_id + 1))
+			cursor.execute("Insert INTO Poem (username, content, date,title,type,id,numLikes) VALUES (?,?,?,?,?,?,?)",
+						   (username, content, today_date, title, type, largest_id + 1,0))
 			conn.commit()
 			conn.close()
 
@@ -224,12 +230,12 @@ def poem_writing_free():
 		today_date = datetime.today()
 		conn = sqlite3.connect("static/database.db")
 		cursor = conn.cursor()
-		type = "free"
+		type = "theme"
 		cursor.execute('SELECT MAX(id) FROM Poem')
 
 		largest_id = cursor.fetchone()[0]
-		cursor.execute("Insert INTO Poem (username, content, date,title,type,id) VALUES (?,?,?,?,?,?)",
-					   (username, content, today_date, title, type, largest_id + 1))
+		cursor.execute("Insert INTO Poem (username, content, date,title,type,id,numLikes) VALUES (?,?,?,?,?,?,?)",
+					   (username, content, today_date, title, type, largest_id + 1,0))
 		conn.commit()
 		conn.close()
 		return redirect(url_for('index'))
@@ -307,15 +313,15 @@ def poem_writing_acrostic():
 			content = "\n".join(lines)  # "line1\nline2\nline3\n"
 			today_date = datetime.today()
 			conn = sqlite3.connect("static/database.db")
-			title = request.form.get('title')
+			title = request.form.get('theme')
 			cursor = conn.cursor()
 			type = "acrostic"
 
 			cursor.execute('SELECT MAX(id) FROM Poem')
 
 			largest_id = cursor.fetchone()[0]
-			cursor.execute("Insert INTO Poem (username, content, date,title,type,id) VALUES (?,?,?,?,?,?)",
-						   (username, content, today_date, title, type, largest_id + 1))
+			cursor.execute("Insert INTO Poem (username, content, date,title,type,id,numLikes) VALUES (?,?,?,?,?,?,?)",
+						   (username, content, today_date, title, type, largest_id + 1,0))
 			conn.commit()
 			conn.close()
 
@@ -343,7 +349,7 @@ def poem_writing_sonnet():
 		lines = request.form.getlist("line")
 		for i in lines:
 			print("ABCCCCCCCC"+i)
-		title = request.form.get('title')
+		title = request.form.get('theme')
 
 		result = is_sonnet(lines)
 		if result:
@@ -358,8 +364,8 @@ def poem_writing_sonnet():
 			cursor.execute('SELECT MAX(id) FROM Poem')
 
 			largest_id = cursor.fetchone()[0]
-			cursor.execute("Insert INTO Poem (username, content, date,title,type,id) VALUES (?,?,?,?,?,?)",
-						   (username, content, today_date, title, type, largest_id + 1))
+			cursor.execute("Insert INTO Poem (username, content, date,title,type,id,numLikes) VALUES (?,?,?,?,?,?,?)",
+						   (username, content, today_date, title, type, largest_id + 1,0))
 			conn.commit()
 			conn.close()
 

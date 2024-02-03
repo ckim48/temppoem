@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Poetry World</title>
+    <title>Verse Vista
+</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
     <!-- Favicons -->
@@ -29,7 +30,8 @@
         <div class="container d-flex justify-content-between">
 
           <div class="logo">
-            <h1><a href="{{url_for('index')}}">Poem</a></h1>
+            <h1><a href="{{url_for('index')}}">Verse Vista
+</a></h1>
           </div>
 
           <nav id="navbar" class="navbar">
@@ -47,6 +49,7 @@
                       <li><a class="nav-link scrollto active" href="{{url_for('mypage')}}">My Poem</a></li>
 
           <li><a class="nav-link scrollto" href="{{url_for('statistics')}}">Statistics</a></li>
+          <li><a class="nav-link scrollto" href="{{url_for('statistics')}}">Media</a></li>
 
           {% if isLogin %}
             <li><a class="nav-link scrollto" href="{{url_for('logout')}}">Logout</a></li>
@@ -111,7 +114,7 @@
 </div>
                           <h6 class="card-subtitle mb-2 text-muted">{{usernames[i]}} - <span class="date">{{dates[i][0:10]}}</span></h6>
 
-                          <p class="card-text">{{contents[i][0:100]}}.....{{ids[i]}}</p>
+                          <p class="card-text">{{contents[i][0:30]}}</p>
 
                         <div class="d-flex justify-content-between">
                           <a class="card-link" data-bs-toggle="modal" data-bs-target="#poemModal" data-title="{{titles[i]}}" data-type="{{types[i]}}" data-username="{{usernames[i]}}" data-date="{{dates[i][0:10]}}" data-content="{{contents[i]}}">

@@ -986,6 +986,9 @@ color: darkgray !important;
   font-size: 24px;
   color: #FFF;
 }
+mymy-5{
+margin-top: 400px !important;
+}
 
 .info-icon:hover {
   color: gray;
@@ -1203,6 +1206,13 @@ transition: transform 0.3s ease-in-out;
     margin-bottom: 20px;
   }
 }
+
+@media (max-width: 600px) {
+  iframe {
+    width: 380px;
+  }
+}
+
 
 
 .featured-services .icon-box {
