@@ -351,6 +351,13 @@ def poem_writing_acrostic():
 		isLogin = True
 		lines = request.form.getlist("line")
 		title = request.form.get('theme')
+		for i in lines:
+			if len(lines) == len(title) and len(i) == 0:
+				isLine = True
+				print(lines)
+				flash("Wrong!")
+				return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title,
+									   isLine=isLine)
 		if not isSimilar_theme(title,lines):
 			isMatch = True
 			flash("Wrong!")
@@ -383,8 +390,11 @@ def poem_writing_acrostic():
 
 			return redirect(url_for('board'))
 		else:
+			isWrong = True
 			flash("Wrong!")
-
+			print("TESSSS")
+			print(isWrong)
+			return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title, isWrong = isWrong)
 	else:
 		if "username" not in session:
 			return redirect(url_for('login'))
