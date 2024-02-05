@@ -67,6 +67,21 @@
                 {% if messages%}
                     <div class="alert alert-danger mt-3" role="alert">
                         Wrong poem!
+                                        <ul>
+                    {% if isBad%}
+                    <li>Do not use any harmful words!</li>
+                    {% endif %}
+                                                                                    {% if isMatch%}
+                    <li>Please match the title with your contents of poem!</li>
+                    {% endif %}
+                                            {% if isLine%}
+                    <li>Sonnet needs to have 14 lines!</li>
+                    {% endif %}
+
+                                                                                        {% if isWrong%}
+                    <li>Please check your rhymes!</li>
+                    {% endif %}
+                </ul>
                     </div>
                 {% endif %}
             {% endwith %}

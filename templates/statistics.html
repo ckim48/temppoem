@@ -76,12 +76,22 @@
                     </div>
                   </div>
               </div>
-              <div class="col-md-6 mt-5 mt-md-0" >
+<!--              <div class="col-md-6 mt-5 mt-md-0" >-->
+<!--                <div class="card data-card mx-auto">-->
+<!--                    <div class="card-body">-->
+<!--                        <h3 class="text-center">Acticvity</h3>-->
+<!--                        <p class="text-center">Description</p>-->
+<!--                        <canvas id="loginLine"  height="250" width="400"> </canvas>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--              </div>-->
+
+                            <div class="col-md-6 mt-5 mt-md-0" >
                 <div class="card data-card mx-auto">
                     <div class="card-body">
-                        <h3 class="text-center">Acticvity</h3>
+                        <h3 class="text-center">Sentiments</h3>
                         <p class="text-center">Description</p>
-                        <canvas id="loginLine"  height="250" width="400"> </canvas>
+                        <canvas id="sentimentChart"  class="mx-auto"> </canvas>
                     </div>
                   </div>
               </div>
@@ -132,22 +142,6 @@
 
     });
 
-         var ctx_login = document.getElementById('loginLine').getContext('2d');
-        var line1 = new Chart(ctx_login, {
-            type: 'line',
-            data: {
-                labels: {{ labels | tojson | safe }},
-                datasets: [{
-                    label: "Number of Logins",
-                    data: {{ values | tojson | safe }},
-                    borderColor: 'black',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true
-            }
-        });
 
 
         var data_wordBar = {
@@ -234,6 +228,22 @@
                 }
             }
         });
+
+
+                    var ctx5 = document.getElementById('sentimentChart').getContext('2d');
+            var data = {
+                labels: ['Positive', 'Neutral', 'Negative'],
+                datasets: [{
+                    data: [{{ sentiment_counts.positive }}, {{ sentiment_counts.neutral }}, {{ sentiment_counts.negative }}],
+                    backgroundColor: ['#36a2eb', '#ffce56', '#ff6384'],
+                }]
+            };
+
+            var myPieChart = new Chart(ctx5, {
+                type: 'pie',
+                data: data,
+            });
+
   </script>
     <script src="../static/js/main.js"></script>
 

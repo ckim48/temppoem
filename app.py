@@ -2,8 +2,9 @@ from flask import Flask, render_template, request,jsonify, url_for, flash, redir
 import sqlite3 #library that connects python & database
 import bcrypt
 from datetime import timedelta, datetime
-from helper import haiku_is_standard, is_acroustic, is_sonnet
+from helper import haiku_is_standard, is_acroustic, is_sonnet, isSimilar_theme
 from profanity import profanity
+from textblob import TextBlob
 
 app = Flask(__name__)
 app.secret_key = "randommessage"
@@ -195,6 +196,11 @@ def poem_writing_haiku():
 		isLogin = True
 		lines = request.form.getlist("line") #[line1,line2,line3]
 		title = request.form.get('title')
+		if not isSimilar_theme(title,lines):
+			isMatch = True
+			flash("Wrong!")
+			return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title, isMatch=isMatch)
+
 		for line in lines:
 			if contains_profanity(line):
 				isBad = True
@@ -222,7 +228,10 @@ def poem_writing_haiku():
 
 			return redirect(url_for('board'))
 		else:
+			isSyll = True
 			flash("Wrong!")
+			return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title,isSyll=isSyll)
+
 
 	else:
 		if "username" not in session:
@@ -239,6 +248,11 @@ def poem_writing_free():
 		isLogin=True
 		lines = request.form.getlist("line") #["line1", "line2","line3"]
 		title = request.form.get("theme")
+		if not isSimilar_theme(title,lines):
+			isMatch = True
+			flash("Wrong!")
+			return render_template('poem_writing_free.html', isLogin=isLogin, lines=lines, title=title, isMatch=isMatch)
+
 		for line in lines:
 			if contains_profanity(line):
 				isBad = True
@@ -254,8 +268,9 @@ def poem_writing_free():
 		cursor.execute('SELECT MAX(id) FROM Poem')
 
 		largest_id = cursor.fetchone()[0]
-		cursor.execute("Insert INTO Poem (username, content, date,title,type,id,numLikes) VALUES (?,?,?,?,?,?,?)",
-					   (username, content, today_date, title, type, largest_id + 1,0))
+		sentiment = get_sentiment(' '.join(lines))
+		cursor.execute("Insert INTO Poem (username, content, date,title,type,id,numLikes,sentiment) VALUES (?,?,?,?,?,?,?)",
+					   (username, content, today_date, title, type, largest_id + 1,0,sentiment))
 		conn.commit()
 		conn.close()
 		return redirect(url_for('index'))
@@ -315,7 +330,17 @@ def like_poem():
 # 	if "username" not in session:
 # 		return redirect(url_for('login'))
 # 	return render_template("poem_writing_sonnet.html")
+def get_sentiment(text):
+    blob = TextBlob(text)
 
+    polarity = blob.sentiment.polarity
+
+    if polarity > 0:
+        return 1  # Positive sentiment
+    elif polarity == 0:
+        return 0  # Neutral sentiment
+    else:
+        return -1  # Negative sentiment
 @app.route('/poem_writing_acrostic', methods=['GET', 'POST'])
 def poem_writing_acrostic():
 	isLogin = False
@@ -326,6 +351,11 @@ def poem_writing_acrostic():
 		isLogin = True
 		lines = request.form.getlist("line")
 		title = request.form.get('theme')
+		if not isSimilar_theme(title,lines):
+			isMatch = True
+			flash("Wrong!")
+			return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title, isMatch=isMatch)
+
 		for line in lines:
 			if contains_profanity(line):
 				isBad = True
@@ -343,10 +373,11 @@ def poem_writing_acrostic():
 			type = "acrostic"
 
 			cursor.execute('SELECT MAX(id) FROM Poem')
-
+			sentiment = get_sentiment(' '.join(lines))
 			largest_id = cursor.fetchone()[0]
-			cursor.execute("Insert INTO Poem (username, content, date,title,type,id,numLikes) VALUES (?,?,?,?,?,?,?)",
-						   (username, content, today_date, title, type, largest_id + 1,0))
+
+			cursor.execute("Insert INTO Poem (username, content, date,title,type,id,numLikes,sentiment) VALUES (?,?,?,?,?,?,?)",
+						   (username, content, today_date, title, type, largest_id + 1,0,sentiment))
 			conn.commit()
 			conn.close()
 
@@ -372,9 +403,21 @@ def poem_writing_sonnet():
 	if request.method == "POST":
 		isLogin = True
 		lines = request.form.getlist("line")
+		print(lines)
 		for i in lines:
-			print("ABCCCCCCCC"+i)
+			if len(i) == 0:
+				isLine = True
+				flash("Wrong!")
+				return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title,
+									   isLine=isLine)
+
 		title = request.form.get('theme')
+
+		if not isSimilar_theme(title,lines):
+			isMatch = True
+			flash("Wrong!")
+			return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title, isMatch=isMatch)
+
 		for line in lines:
 			if contains_profanity(line):
 				isBad = True
@@ -394,14 +437,18 @@ def poem_writing_sonnet():
 			cursor.execute('SELECT MAX(id) FROM Poem')
 
 			largest_id = cursor.fetchone()[0]
-			cursor.execute("Insert INTO Poem (username, content, date,title,type,id,numLikes) VALUES (?,?,?,?,?,?,?)",
-						   (username, content, today_date, title, type, largest_id + 1,0))
+			sentiment = get_sentiment(' '.join(lines))
+			cursor.execute("Insert INTO Poem (username, content, date,title,type,id,numLikes,sentiment) VALUES (?,?,?,?,?,?,?)",
+						   (username, content, today_date, title, type, largest_id + 1,0,sentiment))
 			conn.commit()
 			conn.close()
 
 			return redirect(url_for('board'))
 		else:
 			flash("Wrong!")
+			isWrong = True
+			return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title, isWrong=isWrong)
+
 
 	else:
 		if "username" not in session:
@@ -530,7 +577,21 @@ def statistics():
 
 		labels = [str(data[0]) for data in login_data]
 		values = [data[1] for data in login_data]
-		return render_template('statistics.html', poem_dic = poem_dic, user_dic = user_dic, isLogin=isLogin,labels=labels,values=values)
+		connection = sqlite3.connect('static/database.db')
+		cursor = connection.cursor()
+
+		cursor.execute('SELECT sentiment FROM Poem')
+		sentiments = cursor.fetchall()
+		sentiment_counts = {'positive': 0, 'neutral': 0, 'negative': 0}
+		for sentiment in sentiments:
+			if sentiment[0] == 1:
+				sentiment_counts['positive'] += 1
+			elif sentiment[0] == 0:
+				sentiment_counts['neutral'] += 1
+			elif sentiment[0] == -1:
+				sentiment_counts['negative'] += 1
+		connection.close()
+		return render_template('statistics.html', poem_dic = poem_dic, user_dic = user_dic, isLogin=isLogin,labels=labels,values=values, sentiment_counts=sentiment_counts)
 @app.route("/edit_poem", methods=['GET', 'POST'])
 def edit_poem():
     if request.method == 'POST':

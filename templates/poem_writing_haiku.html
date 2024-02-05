@@ -94,6 +94,14 @@
                     {% if isBad%}
                     <li>Do not use any harmful words!</li>
                     {% endif %}
+
+                                        {% if isMatch%}
+                    <li>Please match the title with your contents of poem!</li>
+                    {% endif %}
+                       {% if  isSyll %}
+                    <li>Please check the number of syllables for each line!</li>
+                    {% endif %}
+
                 </ul>
             </div>
           {% endif %}

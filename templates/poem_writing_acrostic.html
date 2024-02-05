@@ -69,6 +69,14 @@
                     {% if messages%}
                         <div class="alert alert-danger mt-3" role="alert">
                             Wrong poem!
+                                            <ul>
+                    {% if isBad%}
+                    <li>Do not use any harmful words!</li>
+                    {% endif %}
+                                                                                        {% if isMatch%}
+                    <li>Please match the theme with your contents of poem!</li>
+                    {% endif %}
+                </ul>
                         </div>
                     {% endif %}
                 {% endwith %}
