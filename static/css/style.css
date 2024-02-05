@@ -10,6 +10,10 @@ a {
   color: #1bac91;
   text-decoration: none;
 }
+.icon-img{
+
+  width:40%;
+}
 
 a:hover {
   color: #22d8b6;

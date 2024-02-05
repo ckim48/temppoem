@@ -3,6 +3,7 @@ import sqlite3 #library that connects python & database
 import bcrypt
 from datetime import timedelta, datetime
 from helper import haiku_is_standard, is_acroustic, is_sonnet
+from profanity import profanity
 
 app = Flask(__name__)
 app.secret_key = "randommessage"
@@ -179,6 +180,11 @@ def tube():
 		isLogin = True
 	return render_template('tube.html', isLogin = isLogin) # html var = python var
 
+
+
+
+def contains_profanity(text):
+    return profanity.contains_profanity(text)
 @app.route('/poem_writing_haiku', methods=['GET', 'POST'])
 def poem_writing_haiku():
 	isLogin = False
@@ -189,6 +195,12 @@ def poem_writing_haiku():
 		isLogin = True
 		lines = request.form.getlist("line") #[line1,line2,line3]
 		title = request.form.get('title')
+		for line in lines:
+			if contains_profanity(line):
+				isBad = True
+				flash("Wrong!")
+				return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad)
+
 
 		result = haiku_is_standard(lines)
 		if result:
@@ -227,6 +239,12 @@ def poem_writing_free():
 		isLogin=True
 		lines = request.form.getlist("line") #["line1", "line2","line3"]
 		title = request.form.get("theme")
+		for line in lines:
+			if contains_profanity(line):
+				isBad = True
+				flash("Wrong!")
+				return render_template('poem_writing_free.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad)
+
 		username = session["username"]
 		content = "\n".join(lines) # "line1\nline2\nline3\n"
 		today_date = datetime.today()
@@ -308,6 +326,11 @@ def poem_writing_acrostic():
 		isLogin = True
 		lines = request.form.getlist("line")
 		title = request.form.get('theme')
+		for line in lines:
+			if contains_profanity(line):
+				isBad = True
+				flash("Wrong!")
+				return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad)
 
 		result = is_acroustic(title,lines)
 		if result:
@@ -352,6 +375,11 @@ def poem_writing_sonnet():
 		for i in lines:
 			print("ABCCCCCCCC"+i)
 		title = request.form.get('theme')
+		for line in lines:
+			if contains_profanity(line):
+				isBad = True
+				flash("Wrong!")
+				return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad)
 
 		result = is_sonnet(lines)
 		if result:

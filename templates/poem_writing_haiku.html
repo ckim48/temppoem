@@ -90,6 +90,11 @@
                     {% if messages%}
             <div id ="alert-message" class="alert alert-danger mt-4" role="alert">
               Wrong Poem!
+                <ul>
+                    {% if isBad%}
+                    <li>Do not use any harmful words!</li>
+                    {% endif %}
+                </ul>
             </div>
           {% endif %}
                 {% endwith %}
