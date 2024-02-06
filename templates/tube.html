@@ -29,7 +29,7 @@
         <div class="container d-flex justify-content-between">
 
           <div class="logo">
-            <h1><a href="{{url_for('index')}}">Poem</a></h1>
+            <h1><a href="{{url_for('index')}}">Copula</a></h1>
           </div>
 
           <nav id="navbar" class="navbar">
@@ -37,10 +37,11 @@
           <li><a class="nav-link scrollto" href="{{url_for('index')}}#about">About</a></li>
           <li class="dropdown"><a href="{{url_for('bwrite')}}"><span>Write Poem</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              <li><a href="{{url_for('poem_writing_haiku')}}">Haiku</a></li>
-              <li><a href="{{url_for('poem_writing_sonnet')}}">Sonnet</a></li>
               <li><a href="{{url_for('poem_writing_acrostic')}}">Acrostic</a></li>
               <li><a href="{{url_for('poem_writing_free')}}">Freestyle</a></li>
+
+              <li><a href="{{url_for('poem_writing_haiku')}}">Haiku</a></li>
+              <li><a href="{{url_for('poem_writing_sonnet')}}">Sonnet</a></li>
             </ul>
           </li>
           <li><a class="nav-link scrollto" href="{{url_for('board')}}">Community</a></li>
