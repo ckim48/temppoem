@@ -185,7 +185,7 @@ def tube():
 
 
 def contains_profanity(text):
-    return profanity.contains_profanity(text)
+	return profanity.contains_profanity(text)
 @app.route('/poem_writing_haiku', methods=['GET', 'POST'])
 def poem_writing_haiku():
 	isLogin = False
@@ -283,46 +283,46 @@ def poem_writing_free():
 
 @app.route('/like_poem', methods=['POST'])
 def like_poem():
-    data = request.json
-    username = session.get("username")
-    poem_id = data.get('poem_id')
-    liked_status = data.get('liked')
+	data = request.json
+	username = session.get("username")
+	poem_id = data.get('poem_id')
+	liked_status = data.get('liked')
 
-    if username:
-        conn = sqlite3.connect("static/database.db")
-        cursor = conn.cursor()
+	if username:
+		conn = sqlite3.connect("static/database.db")
+		cursor = conn.cursor()
 
-        try:
-            cursor.execute("SELECT * FROM Likes WHERE username = ? AND poem_id = ?", (username, poem_id))
-            existing_like_entry = cursor.fetchone()
+		try:
+			cursor.execute("SELECT * FROM Likes WHERE username = ? AND poem_id = ?", (username, poem_id))
+			existing_like_entry = cursor.fetchone()
 
-            if existing_like_entry:
-                cursor.execute("UPDATE Likes SET liked = ? WHERE username = ? AND poem_id = ?",
-                               (int(liked_status), username, poem_id))
-            else:
-                cursor.execute("INSERT INTO Likes (username, poem_id, liked) VALUES (?, ?, ?)",
-                               (username, poem_id, int(liked_status)))
+			if existing_like_entry:
+				cursor.execute("UPDATE Likes SET liked = ? WHERE username = ? AND poem_id = ?",
+							   (int(liked_status), username, poem_id))
+			else:
+				cursor.execute("INSERT INTO Likes (username, poem_id, liked) VALUES (?, ?, ?)",
+							   (username, poem_id, int(liked_status)))
 
-            if liked_status == 1:
-                cursor.execute("UPDATE Poem SET numLikes = numLikes + 1 WHERE id = ?", (poem_id,))
-            else:
-                cursor.execute("UPDATE Poem SET numLikes = numLikes - 1 WHERE id = ?", (poem_id,))
+			if liked_status == 1:
+				cursor.execute("UPDATE Poem SET numLikes = numLikes + 1 WHERE id = ?", (poem_id,))
+			else:
+				cursor.execute("UPDATE Poem SET numLikes = numLikes - 1 WHERE id = ?", (poem_id,))
 
-            conn.commit()
+			conn.commit()
 
-            cursor.execute("SELECT numLikes FROM Poem WHERE id = ?", (poem_id,))
-            updated_like_count = cursor.fetchone()[0]
+			cursor.execute("SELECT numLikes FROM Poem WHERE id = ?", (poem_id,))
+			updated_like_count = cursor.fetchone()[0]
 
-            return jsonify({'success': True, 'like_count': updated_like_count})
+			return jsonify({'success': True, 'like_count': updated_like_count})
 
-        except sqlite3.Error as e:
-            conn.rollback()
-            return jsonify({'success': False, 'error': str(e)})
+		except sqlite3.Error as e:
+			conn.rollback()
+			return jsonify({'success': False, 'error': str(e)})
 
-        finally:
-            conn.close()
-    else:
-        return jsonify({'success': False, 'error': 'User not logged in'})
+		finally:
+			conn.close()
+	else:
+		return jsonify({'success': False, 'error': 'User not logged in'})
 
 
 # @app.route('/poem_writing_sonnet', methods=['GET','POST'])
@@ -331,16 +331,68 @@ def like_poem():
 # 		return redirect(url_for('login'))
 # 	return render_template("poem_writing_sonnet.html")
 def get_sentiment(text):
-    blob = TextBlob(text)
+	blob = TextBlob(text)
 
-    polarity = blob.sentiment.polarity
+	polarity = blob.sentiment.polarity
 
-    if polarity > 0:
-        return 1  # Positive sentiment
-    elif polarity == 0:
-        return 0  # Neutral sentiment
-    else:
-        return -1  # Negative sentiment
+	if polarity > 0:
+		return 1  # Positive sentiment
+	elif polarity == 0:
+		return 0  # Neutral sentiment
+	else:
+		return -1  # Negative sentiment
+def execute_query(query, params=None, fetchone=False):
+	conn = sqlite3.connect('static/database.db')
+	cursor = conn.cursor()
+
+	if params:
+		cursor.execute(query, params)
+	else:
+		cursor.execute(query)
+
+	if fetchone:
+		result = cursor.fetchone()
+	else:
+		result = cursor.fetchall()
+
+	conn.commit()
+	conn.close()
+
+	return result
+@app.route('/add_comment', methods=['POST'])
+def add_comment():
+	data = request.get_json()
+	poem_id = data.get('poem_id')
+	comment_text = data.get('text')
+	username = session['username']
+	query = "INSERT INTO Comment (username, comment, poem_id, date) VALUES (?, ?, ?, ?)"
+	params = (username, comment_text, poem_id, datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S'))
+	execute_query(query, params)
+
+
+	return jsonify({'comment': {'username': username, 'text': comment_text, 'date': datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')}})
+
+
+@app.route('/get_comments/<poem_id>')
+def get_comments(poem_id):
+    # Retrieve comments for the specified poem_id from the Comment table
+    query = "SELECT username, comment, date FROM Comment WHERE poem_id = ?"
+    params = (poem_id,)
+    comments = execute_query(query, params, fetchone=False)
+
+    formatted_comments = []
+    for comment in comments:
+        # Format the comment based on the username
+        username, text, date = comment  # Unpack the tuple
+        if username == 'admin':
+            formatted_comment = {'username': f'<span class="bi bi-shield-fill"></span> <strong>{username}</strong>', 'text': text, 'date': date}
+        else:
+            formatted_comment = {'username': username, 'text': text, 'date': date}
+
+        formatted_comments.append(formatted_comment)
+
+    return jsonify({'comments': formatted_comments})
+
 @app.route('/poem_writing_acrostic', methods=['GET', 'POST'])
 def poem_writing_acrostic():
 	isLogin = False
@@ -604,23 +656,23 @@ def statistics():
 		return render_template('statistics.html', poem_dic = poem_dic, user_dic = user_dic, isLogin=isLogin,labels=labels,values=values, sentiment_counts=sentiment_counts)
 @app.route("/edit_poem", methods=['GET', 'POST'])
 def edit_poem():
-    if request.method == 'POST':
-        poem_id = request.json.get('poem_id')
-        title = request.json.get('title')
-        content = request.json.get('content')
+	if request.method == 'POST':
+		poem_id = request.json.get('poem_id')
+		title = request.json.get('title')
+		content = request.json.get('content')
 
-        try:
-            conn = sqlite3.connect('static/database.db')
-            cursor = conn.cursor()
+		try:
+			conn = sqlite3.connect('static/database.db')
+			cursor = conn.cursor()
 
-            cursor.execute("UPDATE POEM SET title=?, content=? WHERE id=?", (title,  content, poem_id))
+			cursor.execute("UPDATE POEM SET title=?, content=? WHERE id=?", (title,  content, poem_id))
 
-            conn.commit()
-            conn.close()
+			conn.commit()
+			conn.close()
 
-            return jsonify(success=True)
-        except Exception as e:
-            return jsonify(success=False, error=str(e))
+			return jsonify(success=True)
+		except Exception as e:
+			return jsonify(success=False, error=str(e))
 # Main function (Python syntax)
 if __name__ == '__main__':
 	app.run(debug=True)

@@ -92,9 +92,9 @@
           <div class="row poem-container">
             {% for i in range(num_poems) %}
               {% if i < 4 %}
-                <div class="col-md-6 col-lg-3 poem-item filter-{{types[i]}} mt-4 mt-md-4" data-title="{{titles[i]}}" data-date="{{dates[i][0:10]}}" data-type="{{types[i]}}">
+                <div class="col-md-6 col-lg-3 poem-item filter-{{types[i]}} mt-4 mt-md-4" data-title="{{titles[i]}}" data-date="{{dates[i][0:10]}}" data-type="{{types[i]}}"data-poem-id="{{ ids[i] }}">
               {% else %}
-                <div class="col-md-6 col-lg-3 poem-item filter-{{types[i]}} mt-4 mt-md-4 mt-lg-4"data-title="{{titles[i]}}"  data-date="{{ dates[i][0:10]}}" data-type="{{types[i]}}">
+                <div class="col-md-6 col-lg-3 poem-item filter-{{types[i]}} mt-4 mt-md-4 mt-lg-4"data-title="{{titles[i]}}"  data-date="{{ dates[i][0:10]}}" data-type="{{types[i]}}"data-poem-id="{{ ids[i] }}">
               {% endif %}
               <div class="card poem-card mx-auto" style="width: 18rem;">
                 <div class="card-body">
@@ -104,7 +104,7 @@
                   <p class="card-text">{{contents[i][0:50]}}.....</p>
 
                 <div class="d-flex justify-content-between">
-                  <a class="card-link" data-bs-toggle="modal" data-bs-target="#poemModal" data-title="{{titles[i]}}" data-type="{{types[i]}}" data-username="{{usernames[i]}}" data-date="{{dates[i][0:10]}}" data-content="{{contents[i]}}">
+                  <a class="card-link" data-bs-toggle="modal" data-bs-target="#poemModal" data-poem-id="{{ ids[i] }}" data-title="{{titles[i]}}" data-type="{{types[i]}}" data-username="{{usernames[i]}}" data-date="{{dates[i][0:10]}}" data-content="{{contents[i]}}">
   More
 </a>
                     {% if liked_status[i] == 1 %}
@@ -161,6 +161,19 @@
         <!-- Poem details content goes here -->
         <h6 class="modal-subtitle mb-2 text-muted"><span class="username"></span> - <span class="date"></span></h6>
         <p class="modal-text"></p>
+
+            <div id="comments-section">
+    <h5 class="mt-4">Comments</h5>
+    <ul id="comments-list"></ul>
+
+    <!-- Add Comment Form -->
+    <form id="comment-form" class="mt-3">
+      <div class="mb-3">
+        <label for="comment-text" class="form-label">Your Comment:</label>
+        <textarea class="form-control" id="comment-text" rows="3" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Add Comment</button>
+    </form>
       </div>
 <!--      <div class="modal-footer">-->
 <!--        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">-->
@@ -244,25 +257,85 @@
   </script>
 
   <script>
-  document.addEventListener('DOMContentLoaded', function () {
-
+document.addEventListener('DOMContentLoaded', function () {
     const moreButtons = document.querySelectorAll('.card-link');
+    const commentForm = document.getElementById('comment-form');
+    const commentsList = document.getElementById('comments-list');
+    let selectedPoemId = null;
 
     moreButtons.forEach(button => {
-      button.addEventListener('click', function () {
-      console.log("check")
-        const title = this.getAttribute('data-title');
-        const type = this.getAttribute('data-type');
-        const username = this.getAttribute('data-username');
-        const date = this.getAttribute('data-date');
-        const content = this.getAttribute('data-content').replace(/\n/g, '<br>');
+        button.addEventListener('click', function () {
+            const title = this.getAttribute('data-title');
+            const type = this.getAttribute('data-type');
+            const username = this.getAttribute('data-username');
+            const date = this.getAttribute('data-date');
+            const content = this.getAttribute('data-content').replace(/\n/g, '<br>');
 
-        document.querySelector('#poemModal .modal-title').innerHTML = `${title} - ${type}`;
-        document.querySelector('#poemModal .modal-subtitle').innerHTML = `${username} - ${date}`;
-        document.querySelector('#poemModal .modal-text').innerHTML = content;
-      });
+            // Display poem details
+            document.querySelector('#poemModal .modal-title').innerHTML = `${title} - ${type}`;
+            document.querySelector('#poemModal .modal-subtitle').innerHTML = `${username} - ${date}`;
+            document.querySelector('#poemModal .modal-text').innerHTML = content;
+            selectedPoemId = this.getAttribute('data-poem-id');
+
+            // Fetch and display comments for the selected poem
+            fetch(`/get_comments/${selectedPoemId}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Clear existing comments before rendering new ones
+                    commentsList.innerHTML = '';
+                    // Display comments in the modal
+                    renderComments(data.comments);
+                })
+                .catch(error => console.error('Error:', error));
+        });
     });
-  });
+
+    commentForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const poemId = selectedPoemId;
+        const commentText = document.getElementById('comment-text').value;
+
+        fetch('/add_comment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                poem_id: poemId,
+                text: commentText,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Fetch and display updated comments for the selected poem
+            fetch(`/get_comments/${poemId}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Clear existing comments before rendering new ones
+                    commentsList.innerHTML = '';
+                    // Display updated comments in the modal
+                    renderComments(data.comments);
+                })
+                .catch(error => console.error('Error:', error));
+
+            // Clear the comment input
+            document.getElementById('comment-text').value = '';
+        })
+        .catch(error => console.error('Error:', error));
+    });
+
+function renderComments(comments) {
+    comments.forEach(comment => {
+        const li = document.createElement('li');
+        const usernameText = comment.username === 'admin' ? `<span class="bi bi-shield-fill"></span> <strong>${comment.username}</strong>` : comment.username;
+        li.innerHTML = `${usernameText}: ${comment.text}`;
+        commentsList.appendChild(li);
+    });
+}
+});
+
+
 </script>
 
   <script>

@@ -1323,3 +1323,6 @@ color:white;
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+.bi-shield-fill{
+font-size:13px !important;
+}
