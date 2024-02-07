@@ -94,39 +94,108 @@ def check_syllabus(poem):
     return True
 
 
+import re
+from nltk.corpus import cmudict
+
+
 def get_last_word_pronunciation(word):
+    if word is None:
+        return None
     d = cmudict.dict()
     try:
-        return d[word.lower()][0][-1]
+        pronunciation = d[word.lower()]
+        # Get the pronunciation of the last syllable
+        last_syllable_pronunciation = pronunciation[0][-1]
+        return last_syllable_pronunciation
     except KeyError:
         return None
 
-
 def is_rhyme_pair(word1, word2):
-    return get_last_word_pronunciation(word1) == get_last_word_pronunciation(word2)
-
+    pronunciation1 = get_last_word_pronunciation(word1)
+    pronunciation2 = get_last_word_pronunciation(word2)
+    if pronunciation1 is None or pronunciation2 is None:
+        return True  # Treat as a rhyme if either word is not found
+    return pronunciation1 == pronunciation2
 
 def has_rhyme_scheme(lines):
-    lines = [re.sub("[^\w\s']", "", line.lower()) for line in lines]
-    words = [line.split() for line in lines]
+    #lines = [re.sub("[^\w\s']", "", line.lower()) for line in lines]
+    last_words_pronunciations = []
+    # for i, line in enumerate(sonnet_29):
+    #     last_word = re.findall(r'\b\w+\b', line)[-1]  # Extract the last word
+    #     print(f"Line {i + 1}: {last_word} -> {get_last_word_pronunciation(last_word)}")
+    words = []
+    for i, line in enumerate(lines):
+        last_word = re.findall(r'\b\w+\b', line)[-1]  # Extract the last word
+        words.append(last_word)
+        print(last_word)
+        last_words_pronunciations.append(get_last_word_pronunciation(last_word))
 
-    for i in range(0, len(words), 4):
-        if i + 7 <= len(words):
-            if not is_rhyme_pair(words[i][-1], words[i + 2][-1]) or \
-                    not is_rhyme_pair(words[i + 1][-1], words[i + 3][-1]) or \
-                    not is_rhyme_pair(words[i + 4][-1], words[i + 6][-1]) or \
-                    not is_rhyme_pair(words[i + 5][-1], words[i + 7][-1]):
-                return False
+    # last_words_pronunciations = [get_last_word_pronunciation(line[-1]) for line in words]
+    print(words)
+    print(len(words))
+    print(len(last_words_pronunciations))
+    if not is_rhyme_pair(last_words_pronunciations[0], last_words_pronunciations[2]):
+        return False
+    if not is_rhyme_pair(last_words_pronunciations[1], last_words_pronunciations[3]):
+        return False
+    if not is_rhyme_pair(last_words_pronunciations[4], last_words_pronunciations[6]):
+        return False
+    if not is_rhyme_pair(last_words_pronunciations[5], last_words_pronunciations[7]):
+        return False
+    if not is_rhyme_pair(last_words_pronunciations[8], last_words_pronunciations[10]):
+        return False
+    if not is_rhyme_pair(last_words_pronunciations[9], last_words_pronunciations[11]):
+        return False
+    if not is_rhyme_pair(last_words_pronunciations[-2], last_words_pronunciations[-1]):
+        return False
 
     return True
-
 
 def is_sonnet(poem):
-    if check_syllabus(poem) == False:
-        return False
-    if has_rhyme_scheme(poem) == False:
+    if has_rhyme_scheme(poem) is False:
         return False
     return True
+
+sonnet_18 = [
+    "Shall I compare thee to a summer's day?",
+    "Thou art more lovely and more temperate:",
+    "Rough winds do shake the darling buds of May,",
+    "And summer's lease hath all too short a date:",
+    "Sometime too hot the eye of heaven shines,",
+    "And often is his gold complexion dimmed;",
+    "And every fair from fair sometime declines,",
+    "By chance or nature's changing course untrimmed;",
+    "But thy eternal summer shall not fade",
+    "Nor lose possession of that fair thou ow'st;",
+    "Nor shall Death brag thou wanderest in his shade,",
+    "When in eternal lines to time thou grow'st:",
+    "So long as men can breathe or eyes can see,",
+    "So long lives this, and this gives life to thee."
+]
+sonnet_29 = [
+    "When, in disgrace with fortune and men's eyes,",
+    "I all alone beweep my outcast state,",
+    "And trouble deaf heaven with my bootless cries,",
+    "And look upon myself, and curse my fate,",
+    "Wishing me like to one more rich in hope,",
+    "Featured like him, like him with friends possessed,",
+    "Desiring this man's art and that man's scope,",
+    "With what I most enjoy contented least;",
+    "Yet in these thoughts myself almost despising,",
+    "Haply I think on thee, and then my state,",
+    "Like to the lark at break of day arising",
+    "From sullen earth, sings hymns at heaven's gate;",
+    "For thy sweet love remembered such wealth brings",
+    "That then I scorn to change my state with kings."
+]
+
+for i, line in enumerate(sonnet_18):
+    last_word = re.findall(r'\b\w+\b', line)[-1]  # Extract the last word
+    print(f"Line {i+1}: {last_word} -> {get_last_word_pronunciation(last_word)}")
+
+print(is_sonnet(sonnet_18))
+
+
 def words_rhyme(word1, word2):
     pronounce_dict = cmudict.dict()
     word1 = word1.lower()
