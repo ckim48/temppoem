@@ -75,11 +75,11 @@
                 <h4>Filter </h4>
                 <ul class="poem-filters">
                   <span class="minor"><li data-filter = "*">ALL</li></span>
-                    <li data-filter = ".filter-Acrostic">ACROSTIC</li>
+                    <li data-filter = ".filter-Acrostic">Acrostic</li>
                     <li data-filter = ".filter-Free">Free</li>
-                  <li data-filter = ".filter-Haiku">HAIKU</li>
+                  <li data-filter = ".filter-Haiku">Haiku</li>
 
-                  <li data-filter = ".filter-Sonnet">SONNET</li>
+                  <li data-filter = ".filter-Sonnet">Sonnet</li>
                 </ul>
             </div>
             <div class="col-lg-6 d-flex">
@@ -95,9 +95,9 @@
           <div class="row poem-container">
             {% for i in range(num_poems) %}
               {% if i < 4 %}
-                <div class="col-md-6 col-lg-3 poem-item filter-{{types[i]}} mt-4 mt-md-4" data-title="{{titles[i]}}" data-date="{{dates[i][0:10]}}" data-type="{{types[i]}}"data-poem-id="{{ ids[i] }}">
+                <div class="col-md-6 col-lg-3 poem-item filter-{{types[i]}} mt-3 mt-md-4" data-title="{{titles[i]}}" data-date="{{dates[i][0:10]}}" data-type="{{types[i]}}"data-poem-id="{{ ids[i] }}">
               {% else %}
-                <div class="col-md-6 col-lg-3 poem-item filter-{{types[i]}} mt-4 mt-md-4 mt-lg-4"data-title="{{titles[i]}}"  data-date="{{ dates[i][0:10]}}" data-type="{{types[i]}}"data-poem-id="{{ ids[i] }}">
+                <div class="col-md-6 col-lg-3 poem-item filter-{{types[i]}} mt-3 mt-md-4 mt-lg-4"data-title="{{titles[i]}}"  data-date="{{ dates[i][0:10]}}" data-type="{{types[i]}}"data-poem-id="{{ ids[i] }}">
               {% endif %}
               <div class="card poem-card mx-auto" style="width: 18rem;">
                 <div class="card-body">
