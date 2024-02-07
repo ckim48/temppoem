@@ -11,14 +11,41 @@ def cnt_word_syll(word): #count syllables for a single word
     word = word.lower() #change to lower case
     phonetics = pronounce_dict.get(word) #[['EH1', 'L', 'AH0', 'F', 'AH0', 'N', 'T']]
 
+
     syllable_cnt = 0
     if phonetics != None:
+        print("SYLLABELS_WORD for", word,"is", phonetics[0])
         for phoneme in phonetics[0]: #['EH1', 'L', 'AH0', 'F', 'AH0', 'N', 'T']
             for char in phoneme:
                 if char.isdigit(): #guaranteed that digit is only attached to vowel
-                    syllable_cnt += 1
+                    if phoneme != 'AW1':
+                        syllable_cnt += 1
+    else:
+        syllable_cnt = simple_syllable_count(word)
+        #print("SYLLABELS_WORD for", word, "is", syllable_cnt )
+    print("Total SYLLABELS_WORD for", word, "is", syllable_cnt)
     return syllable_cnt
+def simple_syllable_count(word):
 
+    vowels = "aeiouy"
+    count = 0
+    prev_char_vowel = False  # Flag to track if the previous character was a vowel
+    for char in word:
+        if char in vowels:
+
+            if not prev_char_vowel:
+                count += 1
+            prev_char_vowel = True
+        else:
+            prev_char_vowel = False
+
+    if word.endswith("e") and count > 1:
+        count -= 1
+
+    if word.endswith("s") or word.endswith("es"):
+        count -= 1
+
+    return max(count, 1)
 #regular expression: pattern matching (eg. email has @, ., etc.)
 def cnt_sent_syll(sentence): # elephant is big
     cleaned_sent = re.sub("[^\w\s]", "", sentence)
@@ -28,6 +55,8 @@ def cnt_sent_syll(sentence): # elephant is big
     for word in list_words:
         num = cnt_word_syll(word)
         total_syll += num
+
+
     return total_syll
 
 def haiku_is_standard(poem): # #["elephant is big",line2,line3]
@@ -35,6 +64,8 @@ def haiku_is_standard(poem): # #["elephant is big",line2,line3]
         first_ln_syll = cnt_sent_syll(poem[0])
         second_ln_syll = cnt_sent_syll(poem[1])
         third_ln_syll = cnt_sent_syll(poem[2])
+        print("SYLLABELS",first_ln_syll,second_ln_syll,third_ln_syll)
+
         if first_ln_syll != 5:
             return False
         elif second_ln_syll != 7:
