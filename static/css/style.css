@@ -1232,7 +1232,15 @@ transition: transform 0.3s ease-in-out;
 
 
 @media (max-width: 768px) {
-
+.data-card{
+width: 350px;
+height: 450px;
+}
+.mt-end{
+  position: fixed;
+  bottom: 30px;
+  right: 20px;
+}
   .info-box {
     margin-bottom: 20px;
   }
