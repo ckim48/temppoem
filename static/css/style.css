@@ -81,6 +81,31 @@ font-size:25px;
   [data-aos-delay] {
     transition-delay: 0 !important;
   }
+  .bi-patch-plus{
+  font-size:12px !importants;
+  }
+      .title-label{
+    color:white;
+    font-size:18px;
+
+    }
+        .title-box{
+    width:250px;
+    border-radius:5px;
+    height:31px;
+    }
+    .small-btn{
+        font-size: 14px !important;
+        margin-right:20px;
+    }
+.ms-input{
+margin-left:0px !important;
+}
+.word-box {
+    width: 350px !important;
+    height: 38px !important;
+    font-size: 16px !important;
+}
 }
 
 /*--------------------------------------------------------------
@@ -938,24 +963,14 @@ body a:hover {
 		width: 600px;
 	}
 }
-@media (max-width: 700px) {
-	.word-box {
-		width: 490px;
-	}
-}
 
-@media (max-width: 500px) {
-	.word-box {
-		width: 350px;
-	}
-}
 
 .btn-primary {
 
     background-color: #A2AFF6;
     border-color: darkgray;
     font-family: 'Nanum Myeongjo', serif;
-    font-size: 18px;
+    font-size: 15px;
 }
 .btn-primary2 {
     padding: 7px 33px 7px 33px;

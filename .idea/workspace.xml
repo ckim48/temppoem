@@ -10,13 +10,11 @@
       <change beforePath="$PROJECT_DIR$/static/database.db" beforeDir="false" afterPath="$PROJECT_DIR$/static/database.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/board.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/board.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/bwrite.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/bwrite.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/mypage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/mypage.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/poem_writing_acrostic.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/poem_writing_acrostic.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/poem_writing_free.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/poem_writing_free.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/poem_writing_haiku.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/poem_writing_haiku.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/poem_writing_sonnet.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/poem_writing_sonnet.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/statistics.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/statistics.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/tube.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/tube.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
