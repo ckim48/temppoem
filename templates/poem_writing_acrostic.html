@@ -57,7 +57,7 @@
             <form action="/poem_writing_acrostic" method="POST">
                 <div class="themebox-container d-flex justify-content-center mb-3">
                     <label for="theme" class="form-label title-label me-2 color-black">Theme:</label>
-                    <input class="title-box me-5" name="theme" placeholder="" value="{{ title | default('') }}">
+                    <input class="title-box me-2 me-md-5" name="theme" placeholder="" value="{{ title | default('') }}">
                     <button type="button" class="btn btn-primary small-btn" onclick="createInputBoxes()">Confirm</button>
                 </div>
                 <div class="wordbox-container d-flex justify-content-center flex-column align-items-center" id="wordbox-container">

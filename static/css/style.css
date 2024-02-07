@@ -86,25 +86,29 @@ font-size:25px;
   }
       .title-label{
     color:white;
-    font-size:18px;
+    font-size:17px;
 
     }
         .title-box{
-    width:250px;
+    width:130px;
     border-radius:5px;
     height:31px;
     }
     .small-btn{
-        font-size: 14px !important;
+        font-size: 13px !important;
         margin-right:20px;
     }
 .ms-input{
 margin-left:0px !important;
 }
 .word-box {
-    width: 350px !important;
+    width: 340px !important;
     height: 38px !important;
     font-size: 16px !important;
+}
+.word-box2{
+    width: 290px !important;
+
 }
 }
 
