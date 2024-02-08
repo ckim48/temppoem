@@ -207,37 +207,45 @@
     }
   };
 
-  window.addEventListener('load', () => {
-    poemContainer = select('.poem-container');
-    if (poemContainer) {
-      poemIsotope = new Isotope(poemContainer, {
-        itemSelector: '.poem-item',
-        layoutMode: 'fitRows',
-        getSortData: {
-          date: '[data-date]',
-          title: '[data-title]',
-          type: '[data-type]'
+
+window.addEventListener('load', () => {
+  poemContainer = select('.poem-container');
+  if (poemContainer) {
+    poemIsotope = new Isotope(poemContainer, {
+      itemSelector: '.poem-item',
+      layoutMode: 'fitRows',
+      getSortData: {
+        date: '[data-date]',
+        title: function(itemElem) {
+          // Convert both title and filter value to lowercase for case-insensitive comparison
+          return itemElem.getAttribute('data-title').toLowerCase();
+        },
+        type: '[data-type]'
+      }
+    });
+    poemFilters = select('.poem-filters li', true);
+    on('click', '.poem-filters li', function (e) {
+      e.preventDefault();
+      poemFilters.forEach(function (el) {
+        el.classList.remove('filter-active');
+      });
+      this.classList.add('filter-active');
+
+      // Convert filter value to lowercase
+      const filterValue = this.getAttribute('data-filter').toLowerCase();
+
+      // Filter items
+      poemIsotope.arrange({
+        filter: function (itemElem) {
+          // Convert data attribute value to lowercase
+          const itemType = itemElem.getAttribute('data-type').toLowerCase();
+          // Check if the item matches the filter value
+          return itemType === filterValue || filterValue === '*';
         }
       });
-      poemFilters = select('.poem-filters li', true);
-      on('click', '.poem-filters li', function (e) {
-
-        e.preventDefault();
-        poemFilters.forEach(function (el) {
-          el.classList.remove('filter-active');
-        });
-        this.classList.add('filter-active');
-        poemIsotope.arrange({
-          filter: this.getAttribute('data-filter')
-        });
-
-      }, true);
-
-
-
-
-    }
-  });
+    }, true);
+  }
+});
 </script>
 
   <script>

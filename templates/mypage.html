@@ -320,7 +320,7 @@ function renderComments(comments) {
         const type = this.getAttribute('data-type');
         const username = this.getAttribute('data-username');
         const date = this.getAttribute('data-date');
-        const content = this.getAttribute('data-content');
+          const content = this.getAttribute('data-content').replace(/\n/g, '<br>');
 
         document.querySelector('#poemModal .modal-title').innerHTML = `${title} - ${type}`;
         document.querySelector('#poemModal .modal-subtitle').innerHTML = `${username} - ${date}`;

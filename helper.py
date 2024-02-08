@@ -189,11 +189,11 @@ sonnet_29 = [
     "That then I scorn to change my state with kings."
 ]
 
-for i, line in enumerate(sonnet_18):
-    last_word = re.findall(r'\b\w+\b', line)[-1]  # Extract the last word
-    print(f"Line {i+1}: {last_word} -> {get_last_word_pronunciation(last_word)}")
-
-print(is_sonnet(sonnet_18))
+# for i, line in enumerate(sonnet_18):
+#     last_word = re.findall(r'\b\w+\b', line)[-1]  # Extract the last word
+#     print(f"Line {i+1}: {last_word} -> {get_last_word_pronunciation(last_word)}")
+#
+# print(is_sonnet(sonnet_18))
 
 
 def words_rhyme(word1, word2):
