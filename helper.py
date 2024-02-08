@@ -76,7 +76,7 @@ def haiku_is_standard(poem): # #["elephant is big",line2,line3]
     else:
         return False
 def is_acroustic(theme, poem): #bat, b a t
-    threshold = 0.1
+    threshold = 0.11
     # return true, if first letter of each line match to each letter in theme
     if not match_theme(theme,poem):
         print("NO Theme")

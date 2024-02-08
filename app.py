@@ -196,7 +196,7 @@ def poem_writing_haiku():
 		isLogin = True
 		lines = request.form.getlist("line") #[line1,line2,line3]
 		title = request.form.get('title')
-		if not isSimilar_theme(title,lines):
+		if isSimilar_theme(title,lines) < 0.11:
 			isMatch = True
 			flash("Wrong!")
 			return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title, isMatch=isMatch)
@@ -249,7 +249,7 @@ def poem_writing_free():
 		isLogin=True
 		lines = request.form.getlist("line") #["line1", "line2","line3"]
 		title = request.form.get("theme")
-		if not isSimilar_theme(title,lines):
+		if isSimilar_theme(title,lines) < 0.11:
 			isMatch = True
 			flash("Wrong!")
 			return render_template('poem_writing_free.html', isLogin=isLogin, lines=lines, title=title, isMatch=isMatch)
@@ -411,7 +411,7 @@ def poem_writing_acrostic():
 				flash("Wrong!")
 				return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title,
 									   isLine=isLine)
-		if not isSimilar_theme(title,lines):
+		if isSimilar_theme(title,lines) < 0.11:
 			isMatch = True
 			flash("Wrong!")
 			return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title, isMatch=isMatch)

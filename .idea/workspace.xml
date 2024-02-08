@@ -7,6 +7,9 @@
     <list default="true" id="fa0aba1d-b87c-46ac-b72e-fbbc3df54aa6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/helper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/database.db" beforeDir="false" afterPath="$PROJECT_DIR$/static/database.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/poem_writing_free.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/poem_writing_free.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
