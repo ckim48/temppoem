@@ -215,6 +215,7 @@ def poem_writing_haiku():
 			today_date = datetime.today()
 			conn = sqlite3.connect("static/database.db")
 			title = request.form.get('title')
+			title = title.strip()
 			cursor = conn.cursor()
 			type = "haiku"
 
@@ -428,6 +429,7 @@ def poem_writing_acrostic():
 			today_date = datetime.today()
 			conn = sqlite3.connect("static/database.db")
 			title = request.form.get('theme')
+			title = title.strip()
 			cursor = conn.cursor()
 			type = "acrostic"
 
@@ -495,7 +497,7 @@ def poem_writing_sonnet():
 			title = request.form.get('title')
 			cursor = conn.cursor()
 			type = "sonnet"
-
+			title = title.strip()
 			cursor.execute('SELECT MAX(id) FROM Poem')
 
 			largest_id = cursor.fetchone()[0]
