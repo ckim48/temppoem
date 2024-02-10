@@ -8,7 +8,6 @@ from textblob import TextBlob
 
 app = Flask(__name__)
 app.secret_key = "randommessage"
-session = {} # if user logins, session = {"username" : "test2"}; if user x login, session = {}
 app.permanent_session_lifetime = timedelta(seconds=3600)
 
 
@@ -215,7 +214,8 @@ def poem_writing_haiku():
 			today_date = datetime.today()
 			conn = sqlite3.connect("static/database.db")
 			title = request.form.get('title')
-			title = title.strip()
+			if title is not None:
+			    title = title.strip()
 			cursor = conn.cursor()
 			type = "haiku"
 
@@ -266,6 +266,8 @@ def poem_writing_free():
 		conn = sqlite3.connect("static/database.db")
 		cursor = conn.cursor()
 		type = "free"
+		if title is not None:
+			    title = title.strip()
 		cursor.execute('SELECT MAX(id) FROM Poem')
 
 		largest_id = cursor.fetchone()[0]
@@ -274,7 +276,7 @@ def poem_writing_free():
 					   (username, content, today_date, title, type, largest_id + 1,0,sentiment))
 		conn.commit()
 		conn.close()
-		return redirect(url_for('index'))
+		return redirect(url_for('board'))
 	else:
 		if "username" not in session:
 			return redirect(url_for('login'))
@@ -429,7 +431,8 @@ def poem_writing_acrostic():
 			today_date = datetime.today()
 			conn = sqlite3.connect("static/database.db")
 			title = request.form.get('theme')
-			title = title.strip()
+			if title is not None:
+			    title = title.strip()
 			cursor = conn.cursor()
 			type = "acrostic"
 
@@ -494,10 +497,11 @@ def poem_writing_sonnet():
 			content = "\n".join(lines)  # "line1\nline2\nline3\n"
 			today_date = datetime.today()
 			conn = sqlite3.connect("static/database.db")
-			title = request.form.get('title')
+			title = request.form.get('theme')
 			cursor = conn.cursor()
 			type = "sonnet"
-			title = title.strip()
+			if title is not None:
+			    title = title.strip()
 			cursor.execute('SELECT MAX(id) FROM Poem')
 
 			largest_id = cursor.fetchone()[0]
