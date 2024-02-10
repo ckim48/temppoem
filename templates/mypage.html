@@ -258,7 +258,9 @@
         layoutMode: 'fitRows',
         getSortData: {
           date: '[data-date]',
-          title: '[data-title]',
+                          title: function(itemElem) {
+        return itemElem.getAttribute('data-title').toLowerCase();
+      },
           type: '[data-type]'
         }
       });

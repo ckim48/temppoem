@@ -5,6 +5,9 @@ from datetime import timedelta, datetime
 from helper import haiku_is_standard, is_acroustic, is_sonnet, isSimilar_theme
 from profanity import profanity
 from textblob import TextBlob
+from collections import Counter
+import re
+from nltk.corpus import stopwords
 
 app = Flask(__name__)
 app.secret_key = "randommessage"
@@ -648,6 +651,24 @@ def statistics():
 		connection = sqlite3.connect('static/database.db')
 		cursor = connection.cursor()
 
+
+		cursor.execute("SELECT content FROM Poem")
+		poems = cursor.fetchall()
+
+		conn.close()
+
+		stop_words = set(stopwords.words('english'))
+		words = []
+		for poem in poems:
+			words.extend([word for word in re.findall(r'\b\w+\b', poem[0].lower()) if word not in stop_words])
+
+		word_freq = Counter(words)
+
+		top_words = word_freq.most_common(7)
+
+		labels_word = [word[0] for word in top_words]
+		frequencies = [word[1] for word in top_words]
+
 		cursor.execute('SELECT sentiment FROM Poem')
 		sentiments = cursor.fetchall()
 		sentiment_counts = {'positive': 0, 'neutral': 0, 'negative': 0}
@@ -658,8 +679,14 @@ def statistics():
 				sentiment_counts['neutral'] += 1
 			elif sentiment[0] == -1:
 				sentiment_counts['negative'] += 1
+		cursor.execute(
+			"SELECT username, SUM(numLikes) FROM Poem GROUP BY username ORDER BY SUM(numLikes) DESC LIMIT 5")
+		top_users = cursor.fetchall()
+		top_users_dict = {username: total_likes for username, total_likes in top_users}
+		labels_username = [user[0] for user in top_users]
+		number_likes = [user[1] for user in top_users]
 		connection.close()
-		return render_template('statistics.html', poem_dic = poem_dic, user_dic = user_dic, isLogin=isLogin,labels=labels,values=values, sentiment_counts=sentiment_counts)
+		return render_template('statistics.html', poem_dic = poem_dic, user_dic = user_dic, isLogin=isLogin,labels=labels,values=values, sentiment_counts=sentiment_counts, labels_word=labels_word, frequencies=frequencies,labels_username=labels_username,number_likes=number_likes)
 @app.route("/edit_poem", methods=['GET', 'POST'])
 def edit_poem():
 	if request.method == 'POST':
@@ -679,6 +706,30 @@ def edit_poem():
 			return jsonify(success=True)
 		except Exception as e:
 			return jsonify(success=False, error=str(e))
+
+@app.route('/statword')
+def statword():
+    conn = sqlite3.connect('static/database.db')
+    c = conn.cursor()
+
+    c.execute("SELECT content FROM Poem")
+    poems = c.fetchall()
+
+    conn.close()
+
+    words = []
+    for poem in poems:
+        words.extend(re.findall(r'\b\w+\b', poem[0].lower()))
+
+    word_freq = Counter(words)
+
+    top_words = word_freq.most_common(7)
+
+    labels = [word[0] for word in top_words]
+    frequencies = [word[1] for word in top_words]
+
+    return render_template('statistics.html', labels=labels, frequencies=frequencies)
+
 # Main function (Python syntax)
 if __name__ == '__main__':
 	app.run(debug=True)
