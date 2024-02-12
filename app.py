@@ -8,6 +8,7 @@ from textblob import TextBlob
 from collections import Counter
 import re
 from nltk.corpus import stopwords
+from nltk.corpus import cmudict
 
 app = Flask(__name__)
 app.secret_key = "randommessage"
@@ -153,7 +154,7 @@ def login():
 		conn.close()
 
 		if bcrypt.checkpw(input_password, hashed_password): # 1010 == 1010
-			session["username"] = username # session = {"username": test1}
+			session["username"] = username #
 			login_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 			conn = sqlite3.connect('static/database.db')
@@ -165,7 +166,7 @@ def login():
 		else:
 			flash("Invalid username or password!")
 			return render_template('login.html')
-	else: #if method == GET #accessing login page
+	else: 
 		if "username" in session:
 			return redirect(url_for('index'))
 		return render_template('login.html')
@@ -463,7 +464,19 @@ def poem_writing_acrostic():
 
 	return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title)
 
+# Function to check if a word has a stress pattern of stress, unstress, stress
+def has_stress_pattern(word):
+    d = cmudict.dict()
 
+    if word.lower() in d:
+        pronunciation = d[word.lower()][0]
+
+        stress_pattern = ''.join(['S' if re.search(r'\d', phoneme) else 'U' for phoneme in pronunciation])
+
+        if re.search(r'SUS', stress_pattern):
+            return True
+
+    return False
 @app.route('/poem_writing_sonnet', methods=['GET', 'POST'])
 def poem_writing_sonnet():
 	isLogin = False
@@ -473,7 +486,17 @@ def poem_writing_sonnet():
 	if request.method == "POST":
 		isLogin = True
 		lines = request.form.getlist("line")
-		print(lines)
+
+		if request.form.get('toggleStress') == "checked":
+			print("ABC")
+			for line in lines:
+				words = line.strip().split()
+				for word in words:
+					if not has_stress_pattern(word):
+						isStress = True
+						flash("Wrong!")
+						return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title,isStress=isStress)
+
 		for i in lines:
 			if len(i) == 0:
 				isLine = True

@@ -81,6 +81,10 @@
                     <li>Sonnet needs to have 14 lines!</li>
                     {% endif %}
 
+                                                                                        {% if isStress%}
+                    <li>Check your stress pattern!</li>
+                    {% endif %}
+
                                                                                         {% if isWrong%}
                     <li>Please check your rhymes!</li>
                     {% endif %}
@@ -91,6 +95,14 @@
                 <div class="themebox-container d-flex justify-content-center mb-3">
                     <label for="theme" class="form-label title-label me-2 color-black">Title:</label>
                     <input class="title-box me-5" name="theme" placeholder="" value="{{ title | default('') }}">
+                </div>
+                <div class="d-flex justify-content-center mb-3">
+<span class="mt-1 me-3 color-block">Check Stress</span>
+        <label class="toggle-switch" for="toggleSwitch">
+            <input value="checked" id="checkbox" class="form-check-input" type="checkbox" name="toggleStress">
+            <span class="slider"></span>
+        </label>
+
                 </div>
 
                     <div class="wordbox-container d-flex justify-content-center flex-column align-items-center">
