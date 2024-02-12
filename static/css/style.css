@@ -1159,10 +1159,7 @@ transition: transform 0.3s ease-in-out;
 
     transform: translateY(-10px);
 }
-#typePie{
-    width: 70% !important;
-    height: auto !important;
-}
+
 
 .why-us .box {
   padding: 50px 30px;
