@@ -1016,6 +1016,10 @@ color: darkgray !important;
 .ms-input{
     margin-left: 55px;
 }
+.margin-info{
+    margin-top: 27px;
+    margin-left: 10px;
+}
 .info-icon {
   font-size: 24px;
   color: #FFF;
