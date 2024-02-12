@@ -141,6 +141,9 @@ def login():
 	if request.method == "POST": #submitting
 		username = request.form.get("username")
 		password = request.form.get("password")
+		if username == "" or username is None or password=="" or password is None:
+			flash("Invalid username or password!")
+			return render_template('login.html')
 		input_password = password.encode('utf-8')
 		conn = sqlite3.connect('static/database.db')
 		cursor = conn.cursor()

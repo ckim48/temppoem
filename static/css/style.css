@@ -1329,7 +1329,9 @@ color:black;
             transition: .4s;
             border-radius: 50%;
         }
-
+.btn-success:focus{
+    background-color:#A2AFF6 !important;
+}
         .toggle-switch input:checked + .slider:before {
             -webkit-transform: translateX(26px);
             -ms-transform: translateX(26px);

@@ -10,7 +10,9 @@
 	box-shadow: 0 0 10px rgba(0,0,0,0.1);
 /*	a - opacity*/
 }
-
+.btn-success:focus{
+    background-color:#A2AFF6 !important;
+}
 .login-box {
 	max-width: 400px;
 }
