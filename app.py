@@ -497,16 +497,17 @@ def poem_writing_sonnet():
 	if request.method == "POST":
 		isLogin = True
 		lines = request.form.getlist("line")
-
+		isStress = True
 		if request.form.get('toggleStress') == "checked":
 			print("ABC")
 			for line in lines:
 				words = line.strip().split()
 				for word in words:
-					if not has_stress_pattern(word):
-						isStress = True
-						flash("Wrong!")
-						return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title,isStress=isStress)
+					if has_stress_pattern(word):
+						isStress = False
+		if isStress == True:
+			flash("Wrong!")
+			return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title,isStress=isStress)
 
 		for i in lines:
 			if len(i) == 0:

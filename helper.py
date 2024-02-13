@@ -117,7 +117,7 @@ def is_rhyme_pair(pronunciation1, pronunciation2):
     # print("aa,",word2,pronunciation2)
     if pronunciation1 is None or pronunciation2 is None:
         return True  # Treat as a rhyme if either word is not found
-    if (pronunciation1 == "Z" and pronunciation2 =="S") or (pronunciation1 == "S" and pronunciation2 =="Z"):
+    if (pronunciation1 == "Z" and pronunciation2 =="S") or (pronunciation1 == "S" and pronunciation2 =="Z")or (pronunciation1 == "ER0" and pronunciation2 =="R")or (pronunciation1 == "R" and pronunciation2 =="ER0"):
         return True
 
     return pronunciation1 == pronunciation2
@@ -215,12 +215,27 @@ sonnet = [
     "But in this moment, let me linger here,",
     "Embraced by night, and free from doubt and fear."
 ]
+sonnet_73 = [
+    "That time of year thou mayst in me behold,",
+    "When yellow leaves, or none, or few, do hang",
+    "Upon those boughs which shake against the cold,",
+    "Bare ruined choirs, where late the sweet birds sang.",
+    "In me thou see'st the twilight of such day",
+    "As after sunset fadeth in the west;",
+    "Which by and by black night doth take away,",
+    "Death's second self, that seals up all in rest.",
+    "In me thou see'st the glowing of such fire,",
+    "That on the ashes of his youth doth lie,",
+    "As the death-bed whereon it must expire,",
+    "Consumed with that which it was nourished by.",
+    "This thou perceiv'st, which makes thy love more strong,",
+    "To love that well which thou must leave ere long."
+]
+for i, line in enumerate(sonnet_73):
+    last_word = re.findall(r'\b\w+\b', line)[-1]  # Extract the last word
+    print(f"Line {i+1}: {last_word} -> {get_last_word_pronunciation(last_word)}")
 
-# for i, line in enumerate(sonnet):
-#     last_word = re.findall(r'\b\w+\b', line)[-1]  # Extract the last word
-#     print(f"Line {i+1}: {last_word} -> {get_last_word_pronunciation(last_word)}")
-#
-# print(is_sonnet(sonnet))
+print(is_sonnet(sonnet_73))
 
 
 def words_rhyme(word1, word2):

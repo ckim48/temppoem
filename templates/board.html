@@ -101,7 +101,11 @@
               {% endif %}
               <div class="card poem-card mx-auto" style="width: 18rem;">
                 <div class="card-body">
+                    {% if titles[i]|length < 12 %}
                   <h5 class="card-title"><span class="title">{{titles[i]}}</span> - <span class="board-poemtype type">{{types[i]}}</span></h5>
+                    {% else %}
+                                      <h5 class="card-title"><span class="title">{{titles[i][0:12]}}...</span> - <span class="board-poemtype type">{{types[i]}}</span></h5>
+                    {% endif %}
                   <h6 class="card-subtitle mb-2 text-muted">{{usernames[i]}} - <span class="date">{{dates[i][0:10]}}</span></h6>
 
                             {% if contents[i][:45]|length < 25 %}
