@@ -231,8 +231,9 @@ def poem_writing_haiku():
 			cursor.execute('SELECT MAX(id) FROM Poem')
 
 			largest_id = cursor.fetchone()[0]
-			cursor.execute("Insert INTO Poem (username, content, date,title,type,id,numLikes) VALUES (?,?,?,?,?,?,?)",
-						   (username, content, today_date, title, type, largest_id + 1,0))
+			sentiment = get_sentiment(' '.join(lines))
+			cursor.execute("Insert INTO Poem (username, content, date,title,type,id,numLikes,sentiment) VALUES (?,?,?,?,?,?,?,?)",
+						   (username, content, today_date, title, type, largest_id + 1,0,sentiment))
 			conn.commit()
 			conn.close()
 
