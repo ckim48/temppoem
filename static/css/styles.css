@@ -10,6 +10,9 @@
 	box-shadow: 0 0 10px rgba(0,0,0,0.1);
 /*	a - opacity*/
 }
+.myloginimg{
+width:45%;
+}
 .btn-success:focus{
     background-color:#A2AFF6 !important;
 }
