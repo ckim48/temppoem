@@ -102,12 +102,12 @@ font-size:25px;
 margin-left:0px !important;
 }
 .word-box {
-    width: 340px !important;
+    width: 300px !important;
     height: 38px !important;
     font-size: 16px !important;
 }
 .word-box2{
-    width: 290px !important;
+    width: 270px !important;
 
 }
 }
@@ -1140,7 +1140,11 @@ border:1px solid #B255E3 !important;
 background:#A2AFF6 !important;
 color:white !important;
 }
+.myimgmr{
+margin-right:100px !important;
+}
 .poem-card{
+width: 17rem !important;
 height: 210px;
 background-color:#ECEFFE;
 border: 2px solid #BECDFB;
@@ -1241,7 +1245,15 @@ transition: transform 0.3s ease-in-out;
   font-size: 16px;
   color: #666;
 }
+@media (max-width: 1200px) {
+.mytext{
+font-size:14px !important;
+}
+.poem-card{
+width:14rem !important;
+}
 
+}
 
 @media (max-width: 768px) {
 .data-card{

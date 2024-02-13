@@ -200,18 +200,20 @@ def poem_writing_haiku():
 
 	if request.method == "POST":
 		isLogin = True
+		isMatch = False
+		isBad = False
 		lines = request.form.getlist("line") #[line1,line2,line3]
 		title = request.form.get('title')
 		if isSimilar_theme(title,lines) < 0.11:
 			isMatch = True
 			flash("Wrong!")
-			return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title, isMatch=isMatch)
+			# return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title, isMatch=isMatch)
 
 		for line in lines:
 			if contains_profanity(line):
 				isBad = True
 				flash("Wrong!")
-				return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad)
+				# return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad)
 
 
 		result = haiku_is_standard(lines)
@@ -238,7 +240,7 @@ def poem_writing_haiku():
 		else:
 			isSyll = True
 			flash("Wrong!")
-			return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title,isSyll=isSyll)
+			return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title,isSyll=isSyll,isMatch = isMatch, isBad = isBad)
 
 
 	else:
@@ -254,18 +256,21 @@ def poem_writing_free():
 	isLogin = False
 	if request.method == "POST":
 		isLogin=True
+		isMatch = False
+		isBad = False
 		lines = request.form.getlist("line") #["line1", "line2","line3"]
 		title = request.form.get("theme")
 		if isSimilar_theme(title,lines) < 0.11:
 			isMatch = True
 			flash("Wrong!")
-			return render_template('poem_writing_free.html', isLogin=isLogin, lines=lines, title=title, isMatch=isMatch)
+			# return render_template('poem_writing_free.html', isLogin=isLogin, lines=lines, title=title, isMatch=isMatch)
 
 		for line in lines:
 			if contains_profanity(line):
 				isBad = True
 				flash("Wrong!")
-				return render_template('poem_writing_free.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad)
+		if isMatch or isBad:
+				return render_template('poem_writing_free.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad, isMatch=isMatch )
 
 		username = session["username"]
 		content = "\n".join(lines) # "line1\nline2\nline3\n"
@@ -411,25 +416,28 @@ def poem_writing_acrostic():
 
 	if request.method == "POST":
 		isLogin = True
+		isLine = False
+		isMatch = False
+		isBad = False
 		lines = request.form.getlist("line")
 		title = request.form.get('theme')
 		for i in lines:
 			if len(lines) == len(title) and len(i) == 0:
 				isLine = True
 				print(lines)
-				flash("Wrong!")
-				return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title,
-									   isLine=isLine)
+				# flash("Wrong!")
+				# return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title,
+				# 					   isLine=isLine)
 		if isSimilar_theme(title,lines) < 0.11:
 			isMatch = True
 			flash("Wrong!")
-			return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title, isMatch=isMatch)
+			# return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title, isMatch=isMatch)
 
 		for line in lines:
 			if contains_profanity(line):
 				isBad = True
 				flash("Wrong!")
-				return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad)
+				# return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad)
 
 		result = is_acroustic(title,lines)
 		if result:
@@ -458,7 +466,7 @@ def poem_writing_acrostic():
 			flash("Wrong!")
 			print("TESSSS")
 			print(isWrong)
-			return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title, isWrong = isWrong)
+			return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title, isWrong = isWrong,isLine = isLine, isMatch=isMatch, isBad = isBad)
 	else:
 		if "username" not in session:
 			return redirect(url_for('login'))

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Copula
+    <title>Cosmos
 </title>
     <meta content="" name="description">
     <meta content="" name="keywords">
@@ -30,7 +30,7 @@
         <div class="container d-flex justify-content-between">
 
           <div class="logo">
-            <h1><a href="{{url_for('index')}}">Copula
+            <h1><a href="{{url_for('index')}}">Cosmos
 </a></h1>
           </div>
 
@@ -118,9 +118,13 @@
                             </div>
 </div>
                           <h6 class="card-subtitle mb-2 text-muted">{{usernames[i]}} - <span class="date">{{dates[i][0:10]}}</span></h6>
+                            {% if contents[i][:45]|length < 25 %}
+                          <p class="card-text mytext">{{contents[i][0:40]}} ...</p>
+                    <br>
+                            {% else %}
+                             <p class="card-text mytext">{{contents[i][0:40]}}...</p>
 
-                          <p class="card-text">{{contents[i][0:50]}}.....</p>
-
+                            {% endif %}
                         <div class="d-flex justify-content-between">
                           <a class="card-link" data-bs-toggle="modal" data-poem-id = "{{ids[i]}}" data-bs-target="#poemModal" data-title="{{titles[i]}}" data-type="{{types[i]}}" data-username="{{usernames[i]}}" data-date="{{dates[i][0:10]}}" data-content="{{contents[i]}}">
           More
@@ -152,33 +156,6 @@
                     {% endfor %}
 
                   </div>
-
-
-        </div>
-        </div>
-<div class="modal fade" id="poemModal" tabindex="-1" aria-labelledby="poemModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="poemModalLabel">Poem Details</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!-- Poem details content goes here -->
-        <h6 class="modal-subtitle mb-2 text-muted"><span class="username"></span> - <span class="date"></span></h6>
-        <p class="modal-text"></p>
-
-            <div id="comments-section">
-    <h5 class="mt-4">Comments</h5>
-    <ul id="comments-list"></ul>
-
-    <!-- Add Comment Form -->
-
-      </div>
-    </div>
-  </div>
-</div>
-
           <div class="modal fade" id="editPoemModal" tabindex="-1" role="dialog" aria-labelledby="editPoemModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -205,6 +182,33 @@
     </div>
 </div>
 
+        </div>
+        </div>
+<div class="modal fade" id="poemModal" tabindex="-1" aria-labelledby="poemModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="poemModalLabel">Poem Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Poem details content goes here -->
+        <h6 class="modal-subtitle mb-2 text-muted"><span class="username"></span> - <span class="date"></span></h6>
+        <p class="modal-text"></p>
+
+            <div id="comments-section">
+    <h5 class="mt-4">Comments</h5>
+    <ul id="comments-list"></ul>
+
+    <!-- Add Comment Form -->
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -224,8 +228,10 @@
     </div>
 </div>
       </main>
+
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/js/main.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
@@ -392,7 +398,6 @@ function renderComments(comments) {
 
 
 </script>
-  <script src="../static/js/main.js"></script>
 <script>
 $(document).ready(function () {
   $('.edit-button').each(function () {
@@ -408,6 +413,8 @@ $(document).ready(function () {
       $('#editPoemId').val(poemId);
 
       // Show the edit modal
+      console.log(poemId);
+        console.log(title);
       $('#editPoemModal').modal('show');
     });
   });

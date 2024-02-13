@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Copula</title>
+    <title>Cosmos</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
     <!-- Favicons -->
@@ -29,7 +29,7 @@
         <div class="container d-flex justify-content-between">
 
           <div class="logo">
-            <h1><a href="{{url_for('index')}}">Copula
+            <h1><a href="{{url_for('index')}}">Cosmos
 </a></h1>
           </div>
 
@@ -104,8 +104,13 @@
                   <h5 class="card-title"><span class="title">{{titles[i]}}</span> - <span class="board-poemtype type">{{types[i]}}</span></h5>
                   <h6 class="card-subtitle mb-2 text-muted">{{usernames[i]}} - <span class="date">{{dates[i][0:10]}}</span></h6>
 
-                  <p class="card-text">{{contents[i][0:50]}}.....</p>
+                            {% if contents[i][:45]|length < 25 %}
+                          <p class="card-text mytext">{{contents[i][0:40]}} ...</p>
+                    <br>
+                            {% else %}
+                             <p class="card-text mytext">{{contents[i][0:40]}}...</p>
 
+                            {% endif %}
                 <div class="d-flex justify-content-between">
                   <a class="card-link" data-bs-toggle="modal" data-bs-target="#poemModal" data-poem-id="{{ ids[i] }}" data-title="{{titles[i]}}" data-type="{{types[i]}}" data-username="{{usernames[i]}}" data-date="{{dates[i][0:10]}}" data-content="{{contents[i]}}">
   More
@@ -142,7 +147,7 @@
 
     <div class="container">
       <div class="copyright">
-        &copy; Copyright <strong><span>Copula
+        &copy; Copyright <strong><span>Cosmos
 </span></strong>. All Rights Reserved
       </div>
 

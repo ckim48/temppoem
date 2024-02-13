@@ -110,11 +110,16 @@ def get_last_word_pronunciation(word):
     except KeyError:
         return None
 
-def is_rhyme_pair(word1, word2):
-    pronunciation1 = get_last_word_pronunciation(word1)
-    pronunciation2 = get_last_word_pronunciation(word2)
+def is_rhyme_pair(pronunciation1, pronunciation2):
+    # pronunciation1 = get_last_word_pronunciation(word1)
+    # pronunciation2 = get_last_word_pronunciation(word2)
+    # print("AA",word1,pronunciation1)
+    # print("aa,",word2,pronunciation2)
     if pronunciation1 is None or pronunciation2 is None:
         return True  # Treat as a rhyme if either word is not found
+    if (pronunciation1 == "Z" and pronunciation2 =="S") or (pronunciation1 == "S" and pronunciation2 =="Z"):
+        return True
+
     return pronunciation1 == pronunciation2
 
 def has_rhyme_scheme(lines):
@@ -135,12 +140,18 @@ def has_rhyme_scheme(lines):
     print(len(words))
     print(len(last_words_pronunciations))
     if not is_rhyme_pair(last_words_pronunciations[0], last_words_pronunciations[2]):
+        print("FIRST")
         return False
     if not is_rhyme_pair(last_words_pronunciations[1], last_words_pronunciations[3]):
+        print("2")
         return False
     if not is_rhyme_pair(last_words_pronunciations[4], last_words_pronunciations[6]):
+        print("3")
+
         return False
     if not is_rhyme_pair(last_words_pronunciations[5], last_words_pronunciations[7]):
+        print("4")
+
         return False
     if not is_rhyme_pair(last_words_pronunciations[8], last_words_pronunciations[10]):
         return False
@@ -188,12 +199,28 @@ sonnet_29 = [
     "For thy sweet love remembered such wealth brings",
     "That then I scorn to change my state with kings."
 ]
+sonnet = [
+    "Amidst the whispers of the evening breeze,",
+    "Where shadows dance in moonlight's soft embrace,",
+    "A yearning heart finds solace, finds release,",
+    "In dreams that linger in this sacred space.",
+    "With each caress of night upon my brow,",
+    "I drift away to realms of endless flight,",
+    "Where stars above sing secrets, softly vow,",
+    "To guide me through the darkness of the night.",
+    "Oh, how I long to hold this fleeting dream,",
+    "To capture time within my trembling grasp,",
+    "Yet time, relentless, flows like a stream,",
+    "And slips away like sand within my clasp.",
+    "But in this moment, let me linger here,",
+    "Embraced by night, and free from doubt and fear."
+]
 
-# for i, line in enumerate(sonnet_18):
+# for i, line in enumerate(sonnet):
 #     last_word = re.findall(r'\b\w+\b', line)[-1]  # Extract the last word
 #     print(f"Line {i+1}: {last_word} -> {get_last_word_pronunciation(last_word)}")
 #
-# print(is_sonnet(sonnet_18))
+# print(is_sonnet(sonnet))
 
 
 def words_rhyme(word1, word2):
