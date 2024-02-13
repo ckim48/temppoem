@@ -498,14 +498,18 @@ def poem_writing_sonnet():
 		isLogin = True
 		lines = request.form.getlist("line")
 		isStress = True
+		count = 0
 		if request.form.get('toggleStress') == "checked":
-			print("ABC")
+			punctuation_pattern = r'[^\w\s]'
 			for line in lines:
-				words = line.strip().split()
+				line = line.strip()
+				clean_text = re.sub(punctuation_pattern, '', line)
+				words = clean_text.split()
 				for word in words:
 					if has_stress_pattern(word):
+						count+=1
 						isStress = False
-		if isStress == True:
+		if isStress == True and count >= 2:
 			flash("Wrong!")
 			return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title,isStress=isStress)
 

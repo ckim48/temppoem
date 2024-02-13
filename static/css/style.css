@@ -1140,9 +1140,7 @@ border:1px solid #B255E3 !important;
 background:#A2AFF6 !important;
 color:white !important;
 }
-.myimgmr{
-margin-right:100px !important;
-}
+
 .poem-card{
 width: 17rem !important;
 height: 210px;
@@ -1274,7 +1272,7 @@ color: #BECDFB !important;
 }
 @media (max-width: 600px) {
   iframe {
-    width: 380px;
+    width: 290px;
   }
 }
 
@@ -1413,6 +1411,10 @@ color:black;
   line-height: 28px;
   margin-bottom: 0;
   color:#656565;
+}
+.myimgmr{
+width: 45px !important;
+height: 45px !important;
 }
 
 .featured-services .icon-box:hover .title a,

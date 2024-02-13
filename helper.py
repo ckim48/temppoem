@@ -117,7 +117,7 @@ def is_rhyme_pair(pronunciation1, pronunciation2):
     # print("aa,",word2,pronunciation2)
     if pronunciation1 is None or pronunciation2 is None:
         return True  # Treat as a rhyme if either word is not found
-    if (pronunciation1 == "Z" and pronunciation2 =="S") or (pronunciation1 == "S" and pronunciation2 =="Z")or (pronunciation1 == "ER0" and pronunciation2 =="R")or (pronunciation1 == "R" and pronunciation2 =="ER0"):
+    if (pronunciation1 == "Z" and pronunciation2 =="S") or (pronunciation1 == "S" and pronunciation2 =="Z")or (pronunciation1 == "ER0" and pronunciation2 =="R")or (pronunciation1 == "R" and pronunciation2 =="ER0")or (pronunciation1 == "N" and pronunciation2 =="D")or (pronunciation1 == "D" and pronunciation2 =="N")or (pronunciation1 == "AY1" and pronunciation2 =="IY0")or (pronunciation1 == "IY0" and pronunciation2 =="AY1"):
         return True
 
     return pronunciation1 == pronunciation2
@@ -231,11 +231,104 @@ sonnet_73 = [
     "This thou perceiv'st, which makes thy love more strong,",
     "To love that well which thou must leave ere long."
 ]
-for i, line in enumerate(sonnet_73):
-    last_word = re.findall(r'\b\w+\b', line)[-1]  # Extract the last word
-    print(f"Line {i+1}: {last_word} -> {get_last_word_pronunciation(last_word)}")
+sonnet_custom = [
+    "In fields of gold, where whispers softly sing,",
+    "Beneath the moon's enchanting gentle light,",
+    "A solitary bird takes to the wing,",
+    "In silent flight, a creature of the night.",
+    "Through valleys deep, where shadows dance and play,",
+    "And rivers weave a tale of ancient lore,",
+    "The stars above, in endless cosmic sway,",
+    "Illuminate the path forevermore.",
+    "Upon the breeze, the fragrance of the rose,",
+    "Awakens memories of days long past,",
+    "Where love once bloomed, as tender as the prose,",
+    "That poets wrote, in verses meant to last.",
+    "And in this moment, captured by the pen,",
+    "We find the beauty that shall never end."
+]
+sonnet_another = [
+    "Beneath the canopy of emerald trees,",
+    "Where sunlight dances in a playful breeze,",
+    "A brook meanders, singing soft refrains,",
+    "Its melody a balm for weary pains.",
+    "Among the blooms that blush in hues divine,",
+    "A butterfly alights, a fleeting sign,",
+    "Of beauty fragile, transient as dew,",
+    "Yet vibrant, like the sky's eternal blue.",
+    "In twilight's embrace, the stars ignite,",
+    "A tapestry of dreams in darkest night,",
+    "Whispers of hope within the silent gloom,",
+    "A beacon guiding through the misty tomb.",
+    "Through nature's symphony, we find our way,",
+    "And in its song, discover light of day."
+]
+sonnet_shakespeare_another = [
+    "When I consider every thing that grows",
+    "Holds in perfection but a little moment,",
+    "That this huge stage presenteth nought but shows",
+    "Whereon the stars in secret influence comment;",
+    "When I perceive that men as plants increase,",
+    "Cheered and checked even by the self-same sky,",
+    "Vaunt in their youthful sap, at height decrease,",
+    "And wear their brave state out of memory;",
+    "Then the conceit of this inconstant stay",
+    "Sets you most rich in youth before my sight,",
+    "Where wasteful time debateth with decay,",
+    "To change your day of youth to sullied night;",
+    "And all in war with Time for love of you,",
+    "As he takes from you, I engraft you new."
+]
+sonnet_shakespeare_yet_another = [
+    "My mistress' eyes are nothing like the sun;",
+    "Coral is far more red than her lips' red;",
+    "If snow be white, why then her breasts are dun;",
+    "If hairs be wires, black wires grow on her head.",
+    "I have seen roses damasked, red and white,",
+    "But no such roses see I in her cheeks;",
+    "And in some perfumes is there more delight",
+    "Than in the breath that from my mistress reeks.",
+    "I love to hear her speak, yet well I know",
+    "That music hath a far more pleasing sound;",
+    "I grant I never saw a goddess go;",
+    "My mistress, when she walks, treads on the ground:",
+    "And yet, by heaven, I think my love as rare",
+    "As any she belied with false compare."
+]
+sonnet_shakespeare_last = [
+    "That time of year thou mayst in me behold,",
+    "When yellow leaves, or none, or few, do hang",
+    "Upon those boughs which shake against the cold,",
+    "Bare ruined choirs, where late the sweet birds sang.",
+    "In me thou see'st the twilight of such day",
+    "As after sunset fadeth in the west;",
+    "Which by and by black night doth take away,",
+    "Death's second self, that seals up all in rest.",
+    "In me thou see'st the glowing of such fire,",
+    "That on the ashes of his youth doth lie,",
+    "As the death-bed whereon it must expire,",
+    "Consumed with that which it was nourished by.",
+    "This thou perceiv'st, which makes thy love more strong,",
+    "To love that well which thou must leave ere long."
+]
+# for i, line in enumerate(sonnet_shakespeare_last):
+#     last_word = re.findall(r'\b\w+\b', line)[-1]  # Extract the last word
+#     print(f"Line {i+1}: {last_word} -> {get_last_word_pronunciation(last_word)}")
+#
+# print(is_sonnet(sonnet_shakespeare_last))
+def has_stress_pattern(word):
+    d = cmudict.dict()
 
-print(is_sonnet(sonnet_73))
+    if word.lower() in d:
+        pronunciation = d[word.lower()][0]
+
+        stress_pattern = ''.join(['S' if re.search(r'\d', phoneme) else 'U' for phoneme in pronunciation])
+
+        if re.search(r'SUS', stress_pattern):
+            return True
+
+    return False
+
 
 
 def words_rhyme(word1, word2):
