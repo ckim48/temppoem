@@ -57,6 +57,7 @@ def cnt_sent_syll(sentence): # elephant is big
 
     return total_syll
 
+
 def haiku_is_standard(poem): # #["elephant is big",line2,line3]
     if len(poem) == 3:
         first_ln_syll = cnt_sent_syll(poem[0])
@@ -73,6 +74,8 @@ def haiku_is_standard(poem): # #["elephant is big",line2,line3]
         return True
     else:
         return False
+# poem =["from underneath the","leaf pile, my invisible","brother is giggling"]
+# print(haiku_is_standard(poem))
 def is_acroustic(theme, poem): #bat, b a t
     threshold = 0.11
     # return true, if first letter of each line match to each letter in theme
