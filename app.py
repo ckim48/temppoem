@@ -256,6 +256,7 @@ def poem_writing_haiku():
 def poem_writing_free():
 	isLogin = False
 	if request.method == "POST":
+		print("CALLED")
 		isLogin=True
 		isMatch = False
 		count = 0
@@ -292,8 +293,8 @@ def poem_writing_free():
 				isBad = True
 				flash("Wrong!")
 		if isMatch or isBad or isFinal:
-				print("AABC")
-				return render_template('poem_writing_free.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad, isMatch=isMatch,isFinal=isFinal )
+				print("AABADAFAFAFDA")
+				return render_template('poem_writing_free.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad, isMatch=isMatch,isFinal=isFinal ), 300
 
 		username = session["username"]
 		content = "\n".join(lines) # "line1\nline2\nline3\n"
@@ -311,7 +312,8 @@ def poem_writing_free():
 					   (username, content, today_date, title, type, largest_id + 1,0,sentiment))
 		conn.commit()
 		conn.close()
-		return redirect(url_for('board'))
+		print("SSSSS")
+		return redirect(url_for('board')), 200
 	else:
 		if "username" not in session:
 			return redirect(url_for('login'))
@@ -489,7 +491,7 @@ def poem_writing_acrostic():
 			flash("Wrong!")
 			print("TESSSS")
 			print(isWrong)
-			return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title, isWrong = isWrong,isLine = isLine, isMatch=isMatch, isBad = isBad)
+			return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title, isWrong = isWrong,isLine = isLine, isMatch=isMatch, isBad = isBad )
 	else:
 		if "username" not in session:
 			return redirect(url_for('login'))

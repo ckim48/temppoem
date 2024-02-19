@@ -62,18 +62,28 @@
                     <input class="title-box me-2 me-md-5" name="theme" placeholder="" value="{{ title | default('') }}">
                     <button type="button" class="btn btn-primary small-btn" onclick="createInputBoxes()">Confirm</button>
                 </div>
+
                 <div class="wordbox-container d-flex justify-content-center flex-column align-items-center" id="wordbox-container">
-                    <div class="input-wrapper d-flex align-items-center">
+                        {% if lines %}
+                        {% for line in lines %}
+                            <div class="input-wrapper d-flex align-items-center mt-3">
+                                <input class="word-box me-3 text-center ms-input" name="line" placeholder="Enter a line" value="{{ line }}">
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                                        <div class="input-wrapper d-flex align-items-center">
                         <input class="word-box me-md-3 text-center ms-input" name="line" placeholder="Enter a line">
                     </div>
+                    {% endif %}
+
                 </div>
                        <div class="d-flex justify-content-end mt-end">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
                 {% with messages = get_flashed_messages() %}
                     {% if messages%}
-                        <div class="alert alert-danger mt-3" role="alert">
-                            Wrong poem! {{isWrong}}
+                        <div class="alert alert-danger d-block mx-auto mt-3 mb-5" role="alert">
+                            Wrong poem!
                                             <ul>
                     {% if isBad %}
                     <li>Do not use any harmful words!</li>
@@ -181,6 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
     </script>
+
   <script src="../static/js/main.js"></script>
 
 </body>

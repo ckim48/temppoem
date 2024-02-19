@@ -69,7 +69,7 @@
             <form action="/poem_writing_sonnet" method = "POST">
                             {% with messages = get_flashed_messages() %}
                 {% if messages%}
-                    <div class="alert alert-danger mt-3" role="alert">
+                    <div class="alert alert-danger d-block mx-auto mt-3 mb-" role="alert">
                         Wrong poem!
                                         <ul>
                     {% if isBad%}
@@ -280,6 +280,34 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
     </script>
+
+
+    <script>
+        $("form").submit(function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            var form_data = $(this).serialize(); // Serialize form data
+            var form = $(this);
+
+            $.ajax({
+                type: "POST",
+                url: form.attr("action"),
+                data: form_data,
+                success: function (response) {
+                    // Handle the response from the server
+                    console.log(response);
+                },
+                error: function (error) {
+                    console.log("Error:", error);
+                    // Retain input values on error
+                    form.find("input[name='line']").each(function () {
+                        $(this).val($(this).val());
+                    });
+                }
+            });
+        });
+    });
+</script>
   <script src="../static/js/main.js"></script>
 
 </body>

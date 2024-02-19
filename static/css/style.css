@@ -1407,7 +1407,9 @@ color:black;
 .featured-services .title a {
   color: #111;
 }
-
+.alert-danger{
+width:43% !important;
+}
 .featured-services .description {
   font-size: 15px;
   line-height: 28px;
