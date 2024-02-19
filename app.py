@@ -2,7 +2,7 @@ from flask import Flask, render_template, request,jsonify, url_for, flash, redir
 import sqlite3 #library that connects python & database
 import bcrypt
 from datetime import timedelta, datetime
-from helper import haiku_is_standard, is_acroustic, is_sonnet, isSimilar_theme
+from helper import haiku_is_standard, is_acroustic, is_sonnet, isSimilar_theme,cnt_word_syll
 from profanity import profanity
 from textblob import TextBlob
 from collections import Counter
@@ -258,9 +258,30 @@ def poem_writing_free():
 	if request.method == "POST":
 		isLogin=True
 		isMatch = False
+		count = 0
 		isBad = False
+		syll_count = 0
+		isStress = True
+		isFinal = False
 		lines = request.form.getlist("line") #["line1", "line2","line3"]
 		title = request.form.get("theme")
+		if request.form.get('toggleStress') == "checked":
+			punctuation_pattern = r'[^\w\s]'
+			for line in lines:
+				line = line.strip()
+				clean_text = re.sub(punctuation_pattern, '', line)
+				words = clean_text.split()
+				for word in words:
+					c = cnt_word_syll(word)
+					syll_count += c
+					if has_stress_pattern(word):
+						count+=1
+						isStress = False
+			if (isStress == True and count >= 2 ) or syll_count != 10 or syll_count != 9 or syll_count !=11:
+				flash("Wrong!")
+				isFinal = True
+			# return render_template('poem_writing_free.html', isLogin=isLogin, lines=lines, title=title,isStress=isStress)
+
 		if isSimilar_theme(title,lines) < 0.11:
 			isMatch = True
 			flash("Wrong!")
@@ -270,8 +291,8 @@ def poem_writing_free():
 			if contains_profanity(line):
 				isBad = True
 				flash("Wrong!")
-		if isMatch or isBad:
-				return render_template('poem_writing_free.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad, isMatch=isMatch )
+		if isMatch or isBad or isStress:
+				return render_template('poem_writing_free.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad, isMatch=isMatch,isFinal=isFinal )
 
 		username = session["username"]
 		content = "\n".join(lines) # "line1\nline2\nline3\n"
@@ -497,9 +518,14 @@ def poem_writing_sonnet():
 
 	if request.method == "POST":
 		isLogin = True
+		isFinal = False
 		lines = request.form.getlist("line")
 		isStress = True
+		isMatch = False
+		isBad = False
+		isLine = False
 		count = 0
+		syll_count = 0
 		if request.form.get('toggleStress') == "checked":
 			punctuation_pattern = r'[^\w\s]'
 			for line in lines:
@@ -507,32 +533,40 @@ def poem_writing_sonnet():
 				clean_text = re.sub(punctuation_pattern, '', line)
 				words = clean_text.split()
 				for word in words:
+					c = cnt_word_syll(word)
+					syll_count += c
 					if has_stress_pattern(word):
 						count+=1
 						isStress = False
-		if isStress == True and count >= 2:
-			flash("Wrong!")
-			return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title,isStress=isStress)
+			if (isStress == True and count >= 2) or  syll_count != 10 or syll_count != 9 or syll_count !=11:
+				isFinal = True
 
 		for i in lines:
 			if len(i) == 0:
 				isLine = True
 				flash("Wrong!")
-				return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title,
-									   isLine=isLine)
+				# return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title,
+				# 					   isLine=isLine)
 
 		title = request.form.get('theme')
 
 		if not isSimilar_theme(title,lines):
 			isMatch = True
 			flash("Wrong!")
-			return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title, isMatch=isMatch)
+			# return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title, isMatch=isMatch)
 
 		for line in lines:
 			if contains_profanity(line):
 				isBad = True
 				flash("Wrong!")
-				return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad)
+				# return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad)
+		if isBad or isMatch or isFinal or isLine:
+			print(isFinal)
+			print(isBad)
+			print(isMatch)
+			print(isLine)
+			print("ADSJFAAFJA")
+			return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title, isBad=isBad, isMatch=isMatch, isFinal = isFinal, isLine = isLine)
 
 		result = is_sonnet(lines)
 		if result:

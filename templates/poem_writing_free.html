@@ -70,7 +70,14 @@
                     <label for="theme" class="form-label title-label me-2 color-black">Title:</label>
                     <input class="title-box me-5" name="theme" placeholder="" value="{{ title | default('') }}">
                 </div>
+                <div class="d-flex justify-content-center mb-3">
+<span class="mt-1 me-3 color-block">Check Iambic</span>
+        <label class="toggle-switch" for="toggleSwitch">
+            <input value="checked" id="toggleSwitch" class="form-check-input" type="checkbox" name="toggleStress">
+            <span class="slider"></span>
+        </label>
 
+                </div>
                     <div class="wordbox-container d-flex justify-content-center flex-column align-items-center">
                       <!-- Initial input and button -->
                       <div class="input-wrapper d-flex align-items-center">
@@ -91,6 +98,10 @@
                     {% endif %}
                                                                                     {% if isMatch%}
                     <li>Please match the title with your contents of poem!</li>
+                    {% endif %}
+
+                                                                                        {% if isFinal%}
+                    <li>Check your stress pattern!</li>
                     {% endif %}
                 </ul>
                     </div>

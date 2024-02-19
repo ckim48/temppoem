@@ -14,7 +14,6 @@ def cnt_word_syll(word): #count syllables for a single word
 
     syllable_cnt = 0
     if phonetics != None:
-        print("SYLLABELS_WORD for", word,"is", phonetics[0])
         for phoneme in phonetics[0]: #['EH1', 'L', 'AH0', 'F', 'AH0', 'N', 'T']
             for char in phoneme:
                 if char.isdigit(): #guaranteed that digit is only attached to vowel
@@ -23,7 +22,6 @@ def cnt_word_syll(word): #count syllables for a single word
     else:
         syllable_cnt = simple_syllable_count(word)
         #print("SYLLABELS_WORD for", word, "is", syllable_cnt )
-    print("Total SYLLABELS_WORD for", word, "is", syllable_cnt)
     return syllable_cnt
 def simple_syllable_count(word):
 
