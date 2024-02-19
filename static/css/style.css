@@ -5,7 +5,9 @@
 body {
   color: #444444;
 }
-
+.small-font{
+  font-size: 14px !important;
+}
 a {
   color: #1bac91;
   text-decoration: none;
