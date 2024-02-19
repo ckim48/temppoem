@@ -291,7 +291,8 @@ def poem_writing_free():
 			if contains_profanity(line):
 				isBad = True
 				flash("Wrong!")
-		if isMatch or isBad or isStress:
+		if isMatch or isBad or isFinal:
+				print("AABC")
 				return render_template('poem_writing_free.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad, isMatch=isMatch,isFinal=isFinal )
 
 		username = session["username"]
@@ -760,6 +761,7 @@ def statistics():
 		labels_username = [user[0] for user in top_users]
 		number_likes = [user[1] for user in top_users]
 		connection.close()
+		print(labels_username)
 		return render_template('statistics.html', poem_dic = poem_dic, user_dic = user_dic, isLogin=isLogin,labels=labels,values=values, sentiment_counts=sentiment_counts, labels_word=labels_word, frequencies=frequencies,labels_username=labels_username,number_likes=number_likes)
 @app.route("/edit_poem", methods=['GET', 'POST'])
 def edit_poem():

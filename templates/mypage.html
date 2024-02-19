@@ -108,9 +108,11 @@
                       <div class="card poem-card mx-auto" style="width: 18rem;">
                         <div class="card-body">
                         <div class="d-flex">
-                            <h5 class="card-title">
-                                <span class="title">{{titles[i]}}</span> - <span class="board-poemtype type">{{types[i]}}</span>
-                            </h5>
+                    {% if titles[i]|length < 12 %}
+                  <h5 class="card-title"><span class="title">{{titles[i]}}</span> - <span class="board-poemtype type">{{types[i]}}</span></h5>
+                    {% else %}
+                                      <h5 class="card-title"><span class="title">{{titles[i][0:12]}}...</span> - <span class="board-poemtype type">{{types[i]}}</span></h5>
+                    {% endif %}
                             <div class="edit-button-container ms-auto">
                                 <button class="btn btn-outline-primary edit-button border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#editPoemModal" data-poem-id="{{ ids[i] }}" data-title="{{ titles[i] }}" data-type="{{ types[i] }}" data-content="{{ contents[i] }}">
                                     <i class="bi bi-pencil"></i> <!-- Edit icon -->

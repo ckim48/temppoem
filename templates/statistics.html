@@ -193,10 +193,10 @@ var data_wordBar = {
 
 
         var data_likeBar = {
-            labels: ['testtest', 'Kayla', 'Scott', 'Alice', 'None'],
+            labels: ["{{labels_username[0]}}", "{{labels_username[1]}}", "{{labels_username[2]}}", "{{labels_username[3]}}", "{{labels_username[4]}}"],
             datasets: [{
                 label: 'Number of Likes',
-                data: [10, 5, 3, 2, 1, 1, 0],
+                data: [{{number_likes[0]}}, {{number_likes[1]}}, {{number_likes[2]}}, {{number_likes[3]}}, {{number_likes[4]}}],
                 backgroundColor: [
                     'rgba(75, 192, 192, 0.2)',
                     'rgba(255, 99, 132, 0.2)',
