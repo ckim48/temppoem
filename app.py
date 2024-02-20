@@ -640,6 +640,7 @@ def poem_writing_sonnet():
 	title = ""
 
 	if request.method == "POST":
+		title = request.form.get('theme')
 		isLogin = True
 		isFinal = False
 		lines = request.form.getlist("line")
@@ -661,8 +662,12 @@ def poem_writing_sonnet():
 					if has_stress_pattern(word):
 						count+=1
 						isStress = False
-			if (isStress == True and count >= 2) or  syll_count != 10 or syll_count != 9 or syll_count !=11:
+			if (isStress == True and count >= 2) or syll_count != 10 or syll_count != 9 or syll_count !=11:
 				isFinal = True
+				flash("wrong")
+				print("soccer is fun")
+				return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title,
+									   isBad=isBad, isMatch=isMatch, isFinal=isFinal, isLine=isLine)
 
 		for i in lines:
 			if len(i) == 0:
@@ -684,6 +689,7 @@ def poem_writing_sonnet():
 				flash("Wrong!")
 				# return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad)
 		if isBad or isMatch or isFinal or isLine:
+			flash("wrong")
 			return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title, isBad=isBad, isMatch=isMatch, isFinal = isFinal, isLine = isLine)
 
 		result = is_sonnet(lines)
