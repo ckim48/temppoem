@@ -36,7 +36,6 @@ def mypage(): #index func calls render_template, showing login.html on website
 	if request.method == "POST":
 		pass
 	else:
-		isLogin = True
 		conn = sqlite3.connect('static/database.db')
 		cursor = conn.cursor()
 
@@ -553,8 +552,7 @@ def poem_writing_acrostic():
 		isEmpty = False
 		lines = request.form.getlist("line")
 		title = request.form.get('theme')
-		print("AAAA", lines)
-		print("BBBB", title)
+
 		for line in lines:
 			if line == "":
 				isEmpty = True
@@ -609,8 +607,7 @@ def poem_writing_acrostic():
 		else:
 			isWrong = True
 			flash("Wrong!")
-			print("TESSSS")
-			print(isWrong)
+
 			return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title, isWrong = isWrong,isLine = isLine, isMatch=isMatch, isBad = isBad )
 	else:
 		if "username" not in session:
@@ -665,7 +662,7 @@ def poem_writing_sonnet():
 			if (isStress == True and count >= 2) or syll_count != 10 or syll_count != 9 or syll_count !=11:
 				isFinal = True
 				flash("wrong")
-				print("soccer is fun")
+
 				return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title,
 									   isBad=isBad, isMatch=isMatch, isFinal=isFinal, isLine=isLine)
 
