@@ -98,6 +98,9 @@
                     {% if isBad%}
                     <li>Do not use any harmful words!</li>
                     {% endif %}
+                                                                                        {% if isEmpty %}
+                    <li>Please write a poem before you submit!</li>
+                    {% endif %}
 
                                         {% if isMatch%}
                     <li>Please match the title with your contents of poem!</li>

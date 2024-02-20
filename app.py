@@ -201,8 +201,20 @@ def poem_writing_haiku():
 		isLogin = True
 		isMatch = False
 		isBad = False
+		isEmpty = False
 		lines = request.form.getlist("line") #[line1,line2,line3]
 		title = request.form.get('title')
+		if len(lines)==0:
+			isEmpty = True
+			flash("Wrong")
+			return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title,
+								   isMatch=isMatch, isBad=isBad, isEmpty=isEmpty)
+		for line in lines:
+			if line == "":
+				isEmpty = True
+				flash("Wrong")
+				return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title,
+									   isMatch=isMatch, isBad=isBad,isEmpty=isEmpty)
 		if isSimilar_theme(title,lines) < 0.11:
 			isMatch = True
 			flash("Wrong!")
@@ -371,6 +383,18 @@ def poem_writing_free():
 		isFinal = False
 		lines = request.form.getlist("line") #["line1", "line2","line3"]
 		title = request.form.get("theme")
+		isEmpty = False
+		if len(lines)==0:
+			isEmpty = True
+			flash("Wrong")
+			return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title,
+								   isMatch=isMatch, isBad=isBad, isEmpty=isEmpty)
+		for line in lines:
+			if line == "":
+				isEmpty = True
+				flash("Wrong")
+				return render_template('poem_writing_free.html', isLogin=isLogin, lines=lines, title=title,
+									    isMatch=isMatch, isBad=isBad,isEmpty=isEmpty)
 		if request.form.get('toggleStress') == "checked":
 			punctuation_pattern = r'[^\w\s]'
 			for line in lines:
@@ -418,7 +442,7 @@ def poem_writing_free():
 		conn.commit()
 		conn.close()
 		print("SSSSS")
-		return redirect(url_for('board')), 200
+		return redirect(url_for('board'))
 	else:
 		if "username" not in session:
 			return redirect(url_for('login'))
@@ -552,7 +576,11 @@ def poem_writing_acrostic():
 		isEmpty = False
 		lines = request.form.getlist("line")
 		title = request.form.get('theme')
-
+		if len(lines)==0:
+			isEmpty = True
+			flash("Wrong")
+			return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title,
+								   isLine=isLine, isMatch=isMatch, isBad=isBad, isEmpty=isEmpty)
 		for line in lines:
 			if line == "":
 				isEmpty = True
@@ -647,6 +675,13 @@ def poem_writing_sonnet():
 		isLine = False
 		count = 0
 		syll_count = 0
+		isEmpty = False
+		for line in lines:
+			if line == "":
+				isEmpty = True
+				flash("Wrong")
+				return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title,
+									   isLine=isLine, isMatch=isMatch, isBad=isBad,isEmpty=isEmpty)
 		if request.form.get('toggleStress') == "checked":
 			punctuation_pattern = r'[^\w\s]'
 			for line in lines:
