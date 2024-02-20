@@ -224,7 +224,7 @@ def poem_writing_haiku():
 			conn = sqlite3.connect("static/database.db")
 			title = request.form.get('title')
 			if title is not None:
-			    title = title.strip()
+				title = title.strip()
 			cursor = conn.cursor()
 			type = "haiku"
 
@@ -251,6 +251,99 @@ def poem_writing_haiku():
 			isLogin = True
 
 	return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title)
+
+
+@app.route('/validate_poem_edit', methods=['POST'])
+def validate_poem_edit():
+	data = request.json
+	poem_type = data['type']
+	title = data['title']
+	content = data['content'].split("\n")
+	if poem_type == 'Haiku':
+		if isSimilar_theme(title, content) < 0.11:
+			return jsonify(success=False, message="Theme does not match.")
+		if any(contains_profanity(line) for line in content):
+			return jsonify(success=False, message="Contains prohibited content.")
+		if not haiku_is_standard(content):
+			return jsonify(success=False, message="Does not meet Haiku standards.")
+	if poem_type == 'Acrostic':
+		if any(line == "" for line in content):
+			return jsonify(success=False, message="All lines must be filled.")
+
+		if len(content) != len(title):
+			return jsonify(success=False, message="The number of lines must match the number of characters in the title.")
+
+		if isSimilar_theme(title, content) < 0.11:
+			return jsonify(success=False, message="Theme does not match closely enough.")
+
+		if any(contains_profanity(line) for line in content):
+			return jsonify(success=False, message="Contains inappropriate content.")
+
+		if not is_acroustic(title, content):
+			return jsonify(success=False, message="Does not meet Acrostic structure standards.")
+	if poem_type == 'Sonnet':
+		isStress = True
+		isFinal = False
+		isLine = False
+		count = 0
+		syll_count = 0
+		punctuation_pattern = r'[^\w\s]'
+
+		for line in content:
+			line = line.strip()
+			clean_text = re.sub(punctuation_pattern, '', line)
+			words = clean_text.split()
+			for word in words:
+				syll_count += cnt_word_syll(word)
+				if has_stress_pattern(word):
+					count += 1
+					isStress = False
+		if (isStress and count >= 2) or syll_count not in [10, 9, 11]:
+			isFinal = True
+
+		if any(len(i) == 0 for i in content):
+			isLine = True
+			return jsonify(success=False, message="All lines must be filled.")
+
+		if not isSimilar_theme(title, content):
+			return jsonify(success=False, message="Theme does not match closely enough.")
+
+		if any(contains_profanity(line) for line in content):
+			return jsonify(success=False, message="Contains inappropriate content.")
+
+		if isFinal or isLine:
+			return jsonify(success=False, message="Does not meet Sonnet structure standards.")
+
+		if not is_sonnet(content):
+			return jsonify(success=False, message="Does not comply with Sonnet requirements.")
+	if poem_type == 'Free':
+		isStress = True
+		count = 0
+		syll_count = 0
+		punctuation_pattern = r'[^\w\s]'
+
+		toggleStress = data.get('toggleStress', False)  # Adjust based on actual data structure
+		if toggleStress:
+			for line in content:
+				line = line.strip()
+				clean_text = re.sub(punctuation_pattern, '', line)
+				words = clean_text.split()
+				for word in words:
+					syll_count += cnt_word_syll(word)
+					if has_stress_pattern(word):
+						count += 1
+						isStress = False
+			if (isStress and count >= 2) or syll_count not in [10, 9, 11]:
+				return jsonify(success=False, message="Syllable count or stress pattern does not meet the requirements.")
+
+		if isSimilar_theme(title, content) < 0.11:
+			return jsonify(success=False, message="Theme does not match closely enough.")
+
+		if any(contains_profanity(line) for line in content):
+			return jsonify(success=False, message="Contains inappropriate content.")
+
+	return jsonify(success=True)
+
 
 @app.route('/poem_writing_free', methods=['GET','POST'])
 def poem_writing_free():
@@ -303,7 +396,7 @@ def poem_writing_free():
 		cursor = conn.cursor()
 		type = "free"
 		if title is not None:
-			    title = title.strip()
+				title = title.strip()
 		cursor.execute('SELECT MAX(id) FROM Poem')
 
 		largest_id = cursor.fetchone()[0]
@@ -415,23 +508,23 @@ def add_comment():
 
 @app.route('/get_comments/<poem_id>')
 def get_comments(poem_id):
-    # Retrieve comments for the specified poem_id from the Comment table
-    query = "SELECT username, comment, date FROM Comment WHERE poem_id = ?"
-    params = (poem_id,)
-    comments = execute_query(query, params, fetchone=False)
+	# Retrieve comments for the specified poem_id from the Comment table
+	query = "SELECT username, comment, date FROM Comment WHERE poem_id = ?"
+	params = (poem_id,)
+	comments = execute_query(query, params, fetchone=False)
 
-    formatted_comments = []
-    for comment in comments:
-        # Format the comment based on the username
-        username, text, date = comment  # Unpack the tuple
-        if username == 'admin':
-            formatted_comment = {'username': f'<span class="bi bi-shield-fill"></span> <strong>{username}</strong>', 'text': text, 'date': date}
-        else:
-            formatted_comment = {'username': username, 'text': text, 'date': date}
+	formatted_comments = []
+	for comment in comments:
+		# Format the comment based on the username
+		username, text, date = comment  # Unpack the tuple
+		if username == 'admin':
+			formatted_comment = {'username': f'<span class="bi bi-shield-fill"></span> <strong>{username}</strong>', 'text': text, 'date': date}
+		else:
+			formatted_comment = {'username': username, 'text': text, 'date': date}
 
-        formatted_comments.append(formatted_comment)
+		formatted_comments.append(formatted_comment)
 
-    return jsonify({'comments': formatted_comments})
+	return jsonify({'comments': formatted_comments})
 
 @app.route('/poem_writing_acrostic', methods=['GET', 'POST'])
 def poem_writing_acrostic():
@@ -446,6 +539,19 @@ def poem_writing_acrostic():
 		isBad = False
 		lines = request.form.getlist("line")
 		title = request.form.get('theme')
+		print("AAAA", lines)
+		print("BBBB", title)
+		for line in lines:
+			if line == "":
+				isLine = True
+				flash("Wrong")
+				return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title,
+									   isLine=isLine, isMatch=isMatch, isBad=isBad)
+		if len(lines[0]) == 0:
+			isLine = True
+			flash("Wrong")
+			return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title, isLine = isLine, isMatch=isMatch, isBad = isBad )
+
 		for i in lines:
 			if len(lines) == len(title) and len(i) == 0:
 				isLine = True
@@ -472,7 +578,7 @@ def poem_writing_acrostic():
 			conn = sqlite3.connect("static/database.db")
 			title = request.form.get('theme')
 			if title is not None:
-			    title = title.strip()
+				title = title.strip()
 			cursor = conn.cursor()
 			type = "acrostic"
 
@@ -502,17 +608,17 @@ def poem_writing_acrostic():
 
 # Function to check if a word has a stress pattern of stress, unstress, stress
 def has_stress_pattern(word):
-    d = cmudict.dict()
+	d = cmudict.dict()
 
-    if word.lower() in d:
-        pronunciation = d[word.lower()][0]
+	if word.lower() in d:
+		pronunciation = d[word.lower()][0]
 
-        stress_pattern = ''.join(['S' if re.search(r'\d', phoneme) else 'U' for phoneme in pronunciation])
+		stress_pattern = ''.join(['S' if re.search(r'\d', phoneme) else 'U' for phoneme in pronunciation])
 
-        if re.search(r'SUS', stress_pattern):
-            return True
+		if re.search(r'SUS', stress_pattern):
+			return True
 
-    return False
+	return False
 @app.route('/poem_writing_sonnet', methods=['GET', 'POST'])
 def poem_writing_sonnet():
 	isLogin = False
@@ -581,7 +687,7 @@ def poem_writing_sonnet():
 			cursor = conn.cursor()
 			type = "sonnet"
 			if title is not None:
-			    title = title.strip()
+				title = title.strip()
 			cursor.execute('SELECT MAX(id) FROM Poem')
 
 			largest_id = cursor.fetchone()[0]
@@ -787,26 +893,26 @@ def edit_poem():
 
 @app.route('/statword')
 def statword():
-    conn = sqlite3.connect('static/database.db')
-    c = conn.cursor()
+	conn = sqlite3.connect('static/database.db')
+	c = conn.cursor()
 
-    c.execute("SELECT content FROM Poem")
-    poems = c.fetchall()
+	c.execute("SELECT content FROM Poem")
+	poems = c.fetchall()
 
-    conn.close()
+	conn.close()
 
-    words = []
-    for poem in poems:
-        words.extend(re.findall(r'\b\w+\b', poem[0].lower()))
+	words = []
+	for poem in poems:
+		words.extend(re.findall(r'\b\w+\b', poem[0].lower()))
 
-    word_freq = Counter(words)
+	word_freq = Counter(words)
 
-    top_words = word_freq.most_common(7)
+	top_words = word_freq.most_common(7)
 
-    labels = [word[0] for word in top_words]
-    frequencies = [word[1] for word in top_words]
+	labels = [word[0] for word in top_words]
+	frequencies = [word[1] for word in top_words]
 
-    return render_template('statistics.html', labels=labels, frequencies=frequencies)
+	return render_template('statistics.html', labels=labels, frequencies=frequencies)
 
 # Main function (Python syntax)
 if __name__ == '__main__':

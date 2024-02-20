@@ -96,6 +96,9 @@ font-size:25px;
     border-radius:5px;
     height:31px;
     }
+    .new-color{
+        background-color: #BECDFB !important;
+    }
     .small-btn{
         font-size: 13px !important;
         margin-right:20px;
@@ -973,6 +976,23 @@ body a:hover {
 		width: 600px;
 	}
 }
+.btn-primary3 {
+
+    background-color: #AB87CD !important;
+    border-color: #AB87CD;
+    color: white;
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 15px;
+}
+.btn-primary3:hover {
+    background-color: #AB87CD !important;
+    border-color: #AB87CD;
+    color: white;
+    font-family: 'Nanum Myeongjo', serif;
+    font-size: 16px;
+}
+
+
 
 
 .btn-primary {
@@ -999,6 +1019,12 @@ body a:hover {
 }
 body {
     margin: 0;
+}
+.inp{
+font-weight:500;
+color:black;
+margin-top: -20px;
+margin-bottom: 40px;
 }
 .bigmargin{
     margin-top:100px;
@@ -1441,7 +1467,8 @@ height: 45px !important;
             background: rgba(0, 0, 0, 0.5); /* Dark overlay color */
             justify-content: center;
             align-items: center;
-            z-index: 1000;
+                z-index: 999999;
+
         }
 
         #loading-screen {

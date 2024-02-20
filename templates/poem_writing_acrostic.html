@@ -51,16 +51,17 @@
       </header>
 
     <div class="container poemwrite">
-        <div class="d-flex justify-content-center mb-3 bigmargin">
-            <h1 class="mb-4 bigmargin acrostic_heading text-center mt-3 mb-3">Acrostic</h1>
+        <div class="d-flex justify-content-center bigmargin">
+            <h1 class="mb-4 bigmargin acrostic_heading text-center mt-3 mb-3">Acrostic </h1>
             <a class="info-icon2 margin-info" data-bs-toggle="modal" data-bs-target="#haiku_instruction"> <i class="bi bi-patch-question"></i> </a>
         </div>
+        <h5 class="text-center inp">To begin writing a poem, enter your theme and press 'Generate Lines'.</h5>
         <div>
             <form action="/poem_writing_acrostic" method="POST">
-                <div class="themebox-container d-flex justify-content-center mb-3">
+                <div class="themebox-container d-flex justify-content-center mb-3 mt-3">
                     <label for="theme" class="form-label title-label me-2 color-black">Theme:</label>
                     <input class="title-box me-2 me-md-5" name="theme" placeholder="" value="{{ title | default('') }}">
-                    <button type="button" class="btn btn-primary small-btn" onclick="createInputBoxes()">Confirm</button>
+                    <button type="button" class="btn btn-primary3 small-btn" onclick="createInputBoxes()">Generate Lines</button>
                 </div>
 
                 <div class="wordbox-container d-flex justify-content-center flex-column align-items-center" id="wordbox-container">
@@ -71,9 +72,9 @@
                             </div>
                         {% endfor %}
                     {% else %}
-                                        <div class="input-wrapper d-flex align-items-center">
-                        <input class="word-box me-md-3 text-center ms-input" name="line" placeholder="Enter a line">
-                    </div>
+<!--                                        <div class="input-wrapper d-flex align-items-center">-->
+<!--                        <input class="word-box me-md-3 text-center ms-input" name="line" placeholder="Enter a line">-->
+<!--                    </div>-->
                     {% endif %}
 
                 </div>
@@ -88,7 +89,7 @@
                     {% if isBad %}
                     <li>Do not use any harmful words!</li>
                     {% endif %}
-                                                                                        {% if isLine %}
+                                                {% if isLine %}
                     <li>Acrostic requires to match the theme with your contents of poem!</li>
                     {% endif %}
 

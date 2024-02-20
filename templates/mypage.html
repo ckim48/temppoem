@@ -177,7 +177,8 @@
                         <textarea class="form-control" id="editPoemContent" rows="4" required></textarea>
                     </div>
                     <input type="hidden" id="editPoemId">
-                    <button type="button" class="btn btn-primary" onclick="updatePoem()">Save Changes</button>
+                    <input type="hidden" id="editPoemType">
+                    <button type="button" class="btn btn-primary change" onclick="updatePoem()">Save Changes</button>
                 </form>
             </div>
         </div>
@@ -230,7 +231,13 @@
     </div>
 </div>
       </main>
+    <div id="loading-overlay" style="display: none;">
+                <div id="loading-content">
+        <div id="loading-spinner"></div>
+        <h3 class="mt-3 color-white">We are currently analyzing your poem using NLP techniques; please wait for few seconds.</h3>
+    </div>
 
+    </div>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="../static/js/main.js"></script>
@@ -408,12 +415,13 @@ $(document).ready(function () {
       const poemId = $(this).data('poem-id');
       const title = $(this).data('title');
       const content = $(this).data('content');
+      const poemType = $(this).data('type');
 
       // Populate the edit modal with existing data
       $('#editPoemTitle').val(title);
       $('#editPoemContent').val(content);
       $('#editPoemId').val(poemId);
-
+      $('#editPoemType').val(poemType);
       // Show the edit modal
       console.log(poemId);
         console.log(title);
@@ -424,39 +432,80 @@ $(document).ready(function () {
 </script>
       <script>
 function updatePoem() {
+    document.getElementById('loading-overlay').style.display = 'flex';
+
     const poemId = $('#editPoemId').val();
     const title = $('#editPoemTitle').val();
     const content = $('#editPoemContent').val();
+    const poemType = $('#editPoemType').val();
 
-    // Send the updated poem data to the server
-    fetch('/edit_poem', {
+    // First, validate the poem
+    fetch('/validate_poem_edit', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            poem_id: poemId,
+            type: poemType,
             title: title,
             content: content,
         }),
     })
+    .then(response => response.json())
+    .then(data => {
+        if (!data.success) {
+            // Handle validation failure
+            document.getElementById('loading-overlay').style.display = 'none'; // Hide loading immediately if validation fails
+            alert(data.message); // Simple alert, consider using a more user-friendly notification method
+            return; // Prevent further execution
+        }
+
+        // Proceed with poem update if validation succeeds
+        fetch('/edit_poem', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                poem_id: poemId,
+                title: title,
+                content: content,
+            }),
+        })
         .then(response => response.json())
         .then(data => {
+            document.getElementById('loading-overlay').style.display = 'none'; // Hide loading here before showing the modal
             if (data.success) {
                 $('#editPoemModal').modal('hide');
+            alert("Successfully edited!"); // Simple alert, consider using a more user-friendly notification method
 
-
-console.log('About to show success modal');
-$('#successModal').modal('show');
-                location.reload();
+                // location.reload(); // Consider reloading or updating the UI without reloading for better user experience
             } else {
                 console.error('Failed to update poem:', data.error);
             }
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('loading-overlay').style.display = 'none';
+        });
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('loading-overlay').style.display = 'none';
+    });
 }
-</script>
 
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelector('form').addEventListener('button', function (event) {
+
+        document.getElementById('loading-overlay').style.display = 'flex';
+        document.getElementById('main-content').style.display = 'none';
+
+    });
+});
+</script>
   </body>
 
 </html>
