@@ -1456,7 +1456,24 @@ height: 45px !important;
 .featured-services .icon-box:hover .icon i {
   color: #fff;
 }
+#successModal{
 
+z-index: 999999;
+}
+
+#customModal{
+
+z-index: 999999;
+}
+.mcontent{
+background-color: #F2EFF6 !important;
+}
+.custom-modal-background{
+background-color:#FEEDE6 !important;
+}
+.custom-modal-background2{
+background-color:#F7FEE6!important;
+}
        #loading-overlay {
             display: none;
             position: fixed;

@@ -89,6 +89,9 @@
                     {% if isBad %}
                     <li>Do not use any harmful words!</li>
                     {% endif %}
+                                                                    {% if isEmpty %}
+                    <li>Please write a poem before you submit!</li>
+                    {% endif %}
                                                 {% if isLine %}
                     <li>Acrostic requires to match the theme with your contents of poem!</li>
                     {% endif %}
