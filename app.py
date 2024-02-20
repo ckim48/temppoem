@@ -261,26 +261,26 @@ def validate_poem_edit():
 	content = data['content'].split("\n")
 	if poem_type == 'Haiku':
 		if isSimilar_theme(title, content) < 0.11:
-			return jsonify(success=False, message="Theme does not match.")
+			return jsonify(success=False, message="CANNOT EDIT!! -Theme does not match.")
 		if any(contains_profanity(line) for line in content):
-			return jsonify(success=False, message="Contains prohibited content.")
+			return jsonify(success=False, message="CANNOT EDIT!! -Contains prohibited content.")
 		if not haiku_is_standard(content):
-			return jsonify(success=False, message="Does not meet Haiku standards.")
+			return jsonify(success=False, message="CANNOT EDIT!! -Does not meet Haiku standards.")
 	if poem_type == 'Acrostic':
 		if any(line == "" for line in content):
-			return jsonify(success=False, message="All lines must be filled.")
+			return jsonify(success=False, message="CANNOT EDIT!! -All lines must be filled.")
 
 		if len(content) != len(title):
-			return jsonify(success=False, message="The number of lines must match the number of characters in the title.")
+			return jsonify(success=False, message="CANNOT EDIT!! -The number of lines must match the number of characters in the title.")
 
 		if isSimilar_theme(title, content) < 0.11:
-			return jsonify(success=False, message="Theme does not match closely enough.")
+			return jsonify(success=False, message="CANNOT EDIT!! -Theme does not match closely enough.")
 
 		if any(contains_profanity(line) for line in content):
-			return jsonify(success=False, message="Contains inappropriate content.")
+			return jsonify(success=False, message="CANNOT EDIT!! -Contains inappropriate content.")
 
 		if not is_acroustic(title, content):
-			return jsonify(success=False, message="Does not meet Acrostic structure standards.")
+			return jsonify(success=False, message="CANNOT EDIT!! -Does not meet Acrostic structure standards.")
 	if poem_type == 'Sonnet':
 		isStress = True
 		isFinal = False
@@ -303,19 +303,19 @@ def validate_poem_edit():
 
 		if any(len(i) == 0 for i in content):
 			isLine = True
-			return jsonify(success=False, message="All lines must be filled.")
+			return jsonify(success=False, message="CANNOT EDIT!! -All lines must be filled.")
 
 		if not isSimilar_theme(title, content):
-			return jsonify(success=False, message="Theme does not match closely enough.")
+			return jsonify(success=False, message="CANNOT EDIT!! -Theme does not match closely enough.")
 
 		if any(contains_profanity(line) for line in content):
-			return jsonify(success=False, message="Contains inappropriate content.")
+			return jsonify(success=False, message="CANNOT EDIT!! -Contains inappropriate content.")
 
 		if isFinal or isLine:
-			return jsonify(success=False, message="Does not meet Sonnet structure standards.")
+			return jsonify(success=False, message="CANNOT EDIT!! -Does not meet Sonnet structure standards.")
 
 		if not is_sonnet(content):
-			return jsonify(success=False, message="Does not comply with Sonnet requirements.")
+			return jsonify(success=False, message="CANNOT EDIT!! -Does not comply with Sonnet requirements.")
 	if poem_type == 'Free':
 		isStress = True
 		count = 0
@@ -334,13 +334,13 @@ def validate_poem_edit():
 						count += 1
 						isStress = False
 			if (isStress and count >= 2) or syll_count not in [10, 9, 11]:
-				return jsonify(success=False, message="Syllable count or stress pattern does not meet the requirements.")
+				return jsonify(success=False, message="CANNOT EDIT!! -Syllable count or stress pattern does not meet the requirements.")
 
 		if isSimilar_theme(title, content) < 0.11:
-			return jsonify(success=False, message="Theme does not match closely enough.")
+			return jsonify(success=False, message="CANNOT EDIT!! -Theme does not match closely enough.")
 
 		if any(contains_profanity(line) for line in content):
-			return jsonify(success=False, message="Contains inappropriate content.")
+			return jsonify(success=False, message="CANNOT EDIT!! -Contains inappropriate content.")
 
 	return jsonify(success=True)
 
