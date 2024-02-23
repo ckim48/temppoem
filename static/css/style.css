@@ -1,4 +1,6 @@
-
+html, body{
+font-family: 'Nanum Myeongjo', serif !important;
+}
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
@@ -806,7 +808,17 @@ section {
   text-align: center;
   padding-top: 30px;
 }
+.btn-outline-primary.dropdown-toggle::after {
+    display: none;
+}
+.icon-nudge-up {
+    position: relative;
+    top: -5px;
+}
+.custom-size {
+    font-size: 17px;
 
+}
 #footer .credits {
   padding-top: 10px;
   text-align: center;
@@ -1171,7 +1183,7 @@ color:white !important;
 
 .poem-card{
 width: 17rem !important;
-height: 210px;
+height: 220px;
 background-color:#ECEFFE;
 border: 2px solid #BECDFB;
 transition: transform 0.3s ease-in-out;

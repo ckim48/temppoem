@@ -1,5 +1,21 @@
 /*Login Page*/
+html, body{
+font-family: 'Nanum Myeongjo', serif !important;
+}
 
+
+
+
+    .successbg {
+        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        background-size: 400% 400%;
+        animation: gradientBackground 15s ease infinite;
+    }
+    @keyframes gradientBackground {
+        0% {background-position: 0% 50%;}
+        50% {background-position: 100% 50%;}
+        100% {background-position: 0% 50%;}
+    }
 .login-box, .signup-box {
 	background-color: white;
 	border: 1px solid #A2AFF6;
@@ -95,6 +111,7 @@ h1 {
     font-family: 'Nanum Myeongjo', serif;
     font-size: 18px;
 }
+
 @media (max-width: 1000px) {
 	.word-box {
 		width: 600px;
@@ -105,6 +122,7 @@ h1 {
 		width: 350px;
 	}
 }
+
 
 .btn-primary {
     background-color: #A2AFF6;

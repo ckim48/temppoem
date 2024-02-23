@@ -41,7 +41,7 @@ def mypage(): #index func calls render_template, showing login.html on website
 
 		# Modify your query to join Poem with Likes
 		query = """
-			SELECT P.username, P.content, P.date, P.title, P.type,P.id,
+			SELECT P.username, P.content, P.date, P.title, P.type,P.id, P.numLikes,
 				   COALESCE(L.liked, 0) AS liked
 			FROM Poem P
 			LEFT JOIN Likes L ON P.id = L.poem_id AND L.username = ?
@@ -56,6 +56,7 @@ def mypage(): #index func calls render_template, showing login.html on website
 		types = []
 		likes = []
 		ids = []
+		num_likes = []
 
 		for row in rows:
 			usernames.append(row[0])
@@ -66,6 +67,7 @@ def mypage(): #index func calls render_template, showing login.html on website
 			likes.append(row[6])
 
 			ids.append(row[5])
+			num_likes.append(row[7])
 		print(likes)
 		print(ids)
 		if "username" not in session:
@@ -76,7 +78,7 @@ def mypage(): #index func calls render_template, showing login.html on website
 
 		return render_template('mypage.html',ids=ids, usernames=usernames, contents=contents,
 							   dates=dates, titles=titles, types=types, liked_status=likes,
-							   num_poems=len(usernames), isLogin=isLogin, username = session["username"])
+							   num_poems=len(usernames), isLogin=isLogin, username = session["username"],num_likes=num_likes)
 def username_exists(username):
 	conn = sqlite3.connect('static/database.db')
 	cursor = conn.cursor()
@@ -442,14 +444,37 @@ def poem_writing_free():
 		conn.commit()
 		conn.close()
 		print("SSSSS")
-		return redirect(url_for('board'))
+		return redirect(url_for('submission_success'))
 	else:
 		if "username" not in session:
 			return redirect(url_for('login'))
 		else:
 			isLogin=True
 		return render_template('poem_writing_free.html',isLogin=isLogin)
+@app.route('/submission_success')
+def submission_success():
+    if "username" not in session:
+        return redirect(url_for('login'))
+    return render_template('submission_success.html')
 
+@app.route('/delete_poem', methods=['POST'])
+def delete_poem():
+    data = request.json
+    poem_id = data['poem_id']
+
+    conn = sqlite3.connect('static/database.db')
+    cur = conn.cursor()
+
+    try:
+        cur.execute("DELETE FROM Poem WHERE id = ?", (poem_id,))
+        conn.commit()
+        response = {'success': True}
+    except Exception as e:
+        print(e)
+        response = {'success': False}
+
+    conn.close()
+    return jsonify(response)
 @app.route('/like_poem', methods=['POST'])
 def like_poem():
 	data = request.json
