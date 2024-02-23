@@ -29,6 +29,9 @@ font-family: 'Nanum Myeongjo', serif !important;
 .myloginimg{
 width:45%;
 }
+.myloginimg2{
+width:27%;
+}
 .btn-success:focus{
     background-color:#A2AFF6 !important;
 }
