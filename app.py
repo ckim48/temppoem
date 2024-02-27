@@ -41,7 +41,7 @@ def mypage(): #index func calls render_template, showing login.html on website
 
 		# Modify your query to join Poem with Likes
 		query = """
-			SELECT P.username, P.content, P.date, P.title, P.type,P.id, P.numLikes,
+			SELECT P.username, P.content, P.date, P.title, P.type,P.id, P.numLikes, P.iamb,
 				   COALESCE(L.liked, 0) AS liked
 			FROM Poem P
 			LEFT JOIN Likes L ON P.id = L.poem_id AND L.username = ?
@@ -57,6 +57,7 @@ def mypage(): #index func calls render_template, showing login.html on website
 		likes = []
 		ids = []
 		num_likes = []
+		iambs = []
 
 		for row in rows:
 			usernames.append(row[0])
@@ -65,9 +66,10 @@ def mypage(): #index func calls render_template, showing login.html on website
 			titles.append(row[3])
 			types.append(row[4].title())
 			likes.append(row[6])
+			iambs.append(row[7])
 
 			ids.append(row[5])
-			num_likes.append(row[7])
+			num_likes.append(row[8])
 		print(likes)
 		print(ids)
 		if "username" not in session:
@@ -822,7 +824,7 @@ def board():
 
 		# Modify your query to join Poem with Likes
 		query = """
-			SELECT P.username, P.content, P.date, P.title, P.type,P.id, P.numLikes,
+			SELECT P.username, P.content, P.date, P.title, P.type,P.id, P.numLikes, P.iamb,
 				   COALESCE(L.liked, 0) AS liked
 			FROM Poem P
 			LEFT JOIN Likes L ON P.id = L.poem_id AND L.username = ?
@@ -839,6 +841,7 @@ def board():
 		likes = []
 		ids = []
 		num_likes = []
+		iambs = []
 
 		for row in rows:
 			usernames.append(row[0])
@@ -846,8 +849,9 @@ def board():
 			dates.append(row[2])
 			titles.append(row[3])
 			types.append(row[4].title())
-			likes.append(row[7])
+			likes.append(row[8])
 			num_likes.append(row[6])
+			iambs.append(row[7])
 
 			ids.append(row[5])
 		print(likes)
@@ -860,7 +864,7 @@ def board():
 		else:
 			isLogin = True
 
-		return render_template('board.html',ids=ids, usernames=usernames, contents=contents,
+		return render_template('board.html',ids=ids,iambs=iambs, usernames=usernames, contents=contents,
 							   dates=dates, titles=titles, types=types, liked_status=likes,
 							   num_poems=num_poems, num_likes = num_likes,isLogin=isLogin)
 

@@ -108,10 +108,22 @@
                       <div class="card poem-card mx-auto" style="width: 18rem;">
                         <div class="card-body">
                         <div class="d-flex">
-                    {% if titles[i]|length < 12 %}
-                  <h5 class="card-title"><span class="title">{{titles[i]}}</span> - <span class="board-poemtype type">{{types[i]}}</span></h5>
+                    {% if titles[i]|length < 11 %}
+                                                    {% if iambs[i] == 1 %}
+                                              <h5 class="card-title"><span class="title">{{titles[i]}} (I)</span> - <span class="board-poemtype type">{{types[i]}}</span></h5>
+
+                                                    {% else %}
+                              <h5 class="card-title"><span class="title">{{titles[i]}}</span> - <span class="board-poemtype type">{{types[i]}}</span></h5>
+
+                                                    {% endif %}
                     {% else %}
-                                      <h5 class="card-title"><span class="title">{{titles[i][0:12]}}...</span> - <span class="board-poemtype type">{{types[i]}}</span></h5>
+                                                                                {% if iambs[i] == 1 %}
+                                                                  <h5 class="card-title"><span class="title">{{titles[i][0:11]}} (I)...</span> - <span class="board-poemtype type">{{types[i]}}</span></h5>
+
+                                                    {% else %}
+                                                  <h5 class="card-title"><span class="title">{{titles[i][0:11]}} (I)...</span> - <span class="board-poemtype type">{{types[i]}}</span></h5>
+
+                                                    {% endif %}
                     {% endif %}
 <div class="options-button-container ms-auto">
     <div class="btn-group">
