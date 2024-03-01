@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request,jsonify, url_for, flash, redirect, session # flask: like library, python programme, connects frontend & backend
+ from flask import Flask, render_template, request,jsonify, url_for, flash, redirect, session # flask: like library, python programme, connects frontend & backend
 import sqlite3 #library that connects python & database
 import bcrypt
 from datetime import timedelta, datetime
@@ -79,7 +79,7 @@ def mypage(): #index func calls render_template, showing login.html on website
 			isLogin = True
 
 		return render_template('mypage.html',ids=ids, usernames=usernames, contents=contents,
-							   dates=dates, titles=titles, types=types, liked_status=likes,
+							   dates=dates, titles=titles, types=types, liked_status=likes, iambs=iambs,
 							   num_poems=len(usernames), isLogin=isLogin, username = session["username"],num_likes=num_likes)
 def username_exists(username):
 	conn = sqlite3.connect('static/database.db')
