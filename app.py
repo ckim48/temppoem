@@ -1,4 +1,4 @@
- from flask import Flask, render_template, request,jsonify, url_for, flash, redirect, session # flask: like library, python programme, connects frontend & backend
+from flask import Flask, render_template, request,jsonify, url_for, flash, redirect, session # flask: like library, python programme, connects frontend & backend
 import sqlite3 #library that connects python & database
 import bcrypt
 from datetime import timedelta, datetime
