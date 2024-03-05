@@ -299,6 +299,9 @@ list-style:none;
   left: calc(100% - 30px);
   visibility: hidden;
 }
+.hidden{
+display:none !important;
+}
 
 .navbar .dropdown .dropdown:hover>ul {
   opacity: 1;
@@ -1017,7 +1020,19 @@ body a:hover {
 .btn-primary2 {
     padding: 7px 33px 7px 33px;
 }
-
+.add-btn{
+font-size: 14px;
+border: 2px solid #AB87CD;
+color: #AB87CD;
+background-color: white;
+padding: 4px 7px 4px 7px;
+}
+.add-btn:hover {
+    background-color: #909BD8;
+    border-color: #909BD8;
+    color:white;
+    font-family: 'Nanum Myeongjo', serif;
+}
 .btn-primary:hover {
     background-color: #909BD8;
     border-color: darkgray;
@@ -1151,25 +1166,42 @@ color:black;
         border: 1px solid #A2AFF6;
 
 }
+.bigbigicon{
+font-size: 28px !important;
+}
+.btn-secondary{
+background-color:#ECEFFE !important;
+border: 1px solid #BECDFB !important;
+color: black !important;
+}
+.btn-secondary:hover{
+  background-color:#BECDFB !important;
+border: 1px solid #BECDFB !important;
+}
 .card-link{
-cursor:pointer
+cursor:pointer;
+font-size: 14.5px;
 }
 .card-link:hover{
 color:black;
 }
 .like-button{
-font-size:14px;
+font-size:16px;
 }
-.btn-outline-danger{
-background-color:white !important;
+
+.like-button{
+background-color: transparent !important;
 color:#B255E3 !important;
-border:1px solid #B255E3 !important;
+border: none !important;
 }
-.btn-outline-danger:hover{
-background-color:#B255E3 !important;
-color:white !important;
-border:1px solid #B255E3 !important;
+.like-button:hover{
+background-color: transparent !important;
+color: #B255E3 !important;
+border: none;
 }
+
+
+
 .really-like{
 background-color:#B255E3 !important;
 color:white !important;
@@ -1183,13 +1215,28 @@ color:white !important;
 
 .poem-card{
 width: 17rem !important;
-height: 220px;
+height: 230px;
 background-color:#ECEFFE;
 border: 2px solid #BECDFB;
 transition: transform 0.3s ease-in-out;
 }
 .poem-card:hover{
     transform: translateY(-14px);
+}
+.card-subtitle{
+font-size: 15px !important;
+}
+.poem-card-s{
+background-color:#FEF7F1 !important;
+border: 2px solid #F1CCAE!important
+}
+.poem-card-h{
+background-color:#F9FDF1 !important;
+border: 2px solid #99DA86 !important;
+}
+.poem-card-f{
+background-color: #F2FFFF !important;
+border: 2px solid #86DADA !important;
 }
 .stat-mt{
     margin-top: 100px;
@@ -1282,6 +1329,11 @@ transition: transform 0.3s ease-in-out;
   margin-top: 10px;
   font-size: 16px;
   color: #666;
+}
+.mytext{
+font-size:15.5px !important;
+
+}
 }
 @media (max-width: 1200px) {
 .mytext{

@@ -76,14 +76,14 @@
                 </div>
 
                       <div class="input-wrapper d-flex align-items-center">
-<input class="word-box me-3 text-center ms-input" name="line" placeholder="Enter a line" value="{{ lines[0] | default('') }}">
+<input class="word-box me-3 text-center ms-input" name="line" placeholder="Enter a text" value="{{ lines[0] | default('') }}">
 
                           </div>
                                               <div class="input-wrapper d-flex align-items-center">
-<input class="word-box me-3 text-center ms-input mt-3" name="line" placeholder="Enter a line" value="{{ lines[1] | default('') }}">
+<input class="word-box me-3 text-center ms-input mt-3" name="line" placeholder="Enter a text" value="{{ lines[1] | default('') }}">
                       </div>
                                               <div class="input-wrapper d-flex align-items-center">
-<input class="word-box me-3 text-center ms-input mt-3" name="line" placeholder="Enter a line" value="{{ lines[2] | default('') }}">                      </div>
+<input class="word-box me-3 text-center ms-input mt-3" name="line" placeholder="Enter a text" value="{{ lines[2] | default('') }}">                      </div>
                       </div>
                     </div>
 
@@ -91,7 +91,7 @@
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
                 {% with messages = get_flashed_messages() %}
-                    {% if messages%}
+                    {% if messages %}
             <div id ="alert-message" class="alert alert-danger d-block mx-auto mt-3 mb-" role="alert">
               Wrong Poem!
                 <ul>
@@ -190,7 +190,7 @@ document.addEventListener("click", function(event) {
     newInputWrapper.classList.add('input-wrapper', 'd-flex', 'align-items-center','mt-3');
 
     var newBox = document.createElement("input");
-    newBox.setAttribute('placeholder', "Enter a line");
+    newBox.setAttribute('placeholder', "Enter a text");
     newBox.setAttribute('name', 'line');
 
     newBox.classList.add("word-box", "me-3", "text-center", "ms-input");

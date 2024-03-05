@@ -68,12 +68,12 @@
                         {% if lines %}
                         {% for line in lines %}
                             <div class="input-wrapper d-flex align-items-center mt-3">
-                                <input class="word-box me-3 text-center ms-input" name="line" placeholder="Enter a line" value="{{ line }}">
+                                <input class="word-box me-3 text-center ms-input" name="line" placeholder="Enter a text" value="{{ line }}">
                             </div>
                         {% endfor %}
                     {% else %}
 <!--                                        <div class="input-wrapper d-flex align-items-center">-->
-<!--                        <input class="word-box me-md-3 text-center ms-input" name="line" placeholder="Enter a line">-->
+<!--                        <input class="word-box me-md-3 text-center ms-input" name="line" placeholder="Enter a text">-->
 <!--                    </div>-->
                     {% endif %}
 
@@ -167,7 +167,7 @@
                     newInputWrapper.classList.add('input-wrapper', 'd-flex', 'align-items-center', 'mt-3');
 
                     var newBox = document.createElement("input");
-                    newBox.setAttribute('placeholder', 'Enter a line starting with: ' + themeValue[i].toUpperCase());
+                    newBox.setAttribute('placeholder', 'Enter a text starting with: ' + themeValue[i].toUpperCase());
                     newBox.setAttribute('name', 'line');
                     newBox.classList.add("word-box", "me-3", "text-center", "ms-input");
 

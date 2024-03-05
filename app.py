@@ -200,7 +200,6 @@ def poem_writing_haiku():
 	isLogin = False
 	lines = []
 	title = ""
-
 	if request.method == "POST":
 		isLogin = True
 		isMatch = False
@@ -814,7 +813,6 @@ def poem_writing_sonnet():
 @app.route("/board", methods=['GET', 'POST'])
 def board():
 	isLogin = False
-
 	if request.method == "POST":
 		pass
 	else:
@@ -848,7 +846,10 @@ def board():
 			contents.append(row[1])
 			dates.append(row[2])
 			titles.append(row[3])
-			types.append(row[4].title())
+			if row[4] == "free":
+				types.append("Freestyle")
+			else:
+				types.append(row[4].title())
 			likes.append(row[8])
 			num_likes.append(row[6])
 			iambs.append(row[7])

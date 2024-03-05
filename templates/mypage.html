@@ -153,15 +153,15 @@
 
                     {% if liked_status[i] == 1 %}
                   <div class="text-right">
-                    <button class="mt-3 btn btn-outline-danger like-button really-like" data-poem-id="{{ ids[i] }}" data-username="{{ usernames[i] }}" data-liked="{{ liked_status[i] }}">
-      <i class="bi bi-heart-fill"></i> <span class="like-count">{{ num_likes[i] }}</span> Likes
+                    <button class="mt-1 like-button" data-poem-id="{{ ids[i] }}" data-username="{{ usernames[i] }}" data-liked="{{ liked_status[i] }}">
+      <i class="bi bi-heart-fill"></i> <span class="like-count">{{ num_likes[i] }}</span>
                     </button>
                   </div>
 
                     {%else %}
                                       <div class="text-right">
-                    <button class="mt-3 btn btn-outline-danger like-button" data-poem-id="{{ ids[i] }}" data-username="{{ usernames[i] }}" data-liked="{{ liked_status[i] }}">
-      <i class="bi bi-heart"></i> <span class="like-count">{{ num_likes[i] }}</span> Likes
+                    <button class="mt-1 like-button" data-poem-id="{{ ids[i] }}" data-username="{{ usernames[i] }}" data-liked="{{ liked_status[i] }}">
+      <i class="bi bi-heart"></i> <span class="like-count">{{ num_likes[i] }}</span>
                     </button>
                   </div>
                     {% endif %}

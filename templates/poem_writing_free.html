@@ -84,23 +84,21 @@
                       <!-- Initial input and button -->
                                                 {% if lines %}
                         {% for line in lines %}
-                      <div class="input-wrapper d-flex align-items-center">
-                                <input class="word-box me-3 text-center ms-input word-box2 mt-3" name="line" placeholder="Enter a line" value="{{ line }}">
+                                <input class="word-box ms-input word-box2 mb-3 ps-3" name="line" placeholder="Enter a text" value="{{ line }}">
         {% if loop.last %}
-            <button type="button" class="btn btn-primary text-center add-btn mt-3"><i class="bi bi-patch-plus"></i></button>
+            <button type="button" class="text-center add-btn mt-5"><i class="bi bi-plus"></i></button>
         {% endif %}
-                      </div>
                         {% endfor %}
                     {% else %}
-                          <div class="input-wrapper d-flex align-items-center">
 
-                        <input class="word-box me-3 text-center ms-input word-box2" name="line" placeholder="Enter a line">
-                        <button  type="button" class="btn btn-primary text-center add-btn"><i class="bi bi-patch-plus"></i></button>
-                      </div>
+                        <input class="word-box ms-input word-box2 mb-3 ps-3 name="line" placeholder="Enter a text">
+                        <button  type="button" class="text-center add-btn mt-4"><i class="bi bi-plus"></i> Add a New Line</button>
                     {% endif %}
 
                     </div>
                 <div class="d-flex justify-content-end mt-end">
+                     <button type="button" id="resetButton" class="btn btn-primary me-3">Reset</button>
+
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             {% with messages = get_flashed_messages() %}
@@ -160,52 +158,72 @@
 
        <script>
 
-var box_limit = 20;
-var box_current = 1;
-var word_container = document.querySelector(".wordbox-container");
+document.addEventListener("DOMContentLoaded", function() {
+    var box_limit = 20;
+    var word_container = document.querySelector(".wordbox-container");
 
-document.addEventListener("click", function(event) {
-  var clickedElement = event.target;
-  if ((clickedElement.classList.contains('bi-patch-plus')||clickedElement.classList.contains('add-btn')) && box_current < box_limit) {
+    document.addEventListener("click", function(event) {
+        var clickedElement = event.target;
+        var currentInputs = document.querySelectorAll(".wordbox-container .input-wrapper").length;
+        if ((clickedElement.classList.contains('bi-plus') || clickedElement.classList.contains('add-btn')) && currentInputs < box_limit) {
+            // Hide the previous "Add" button
+            var previousAddBtn = word_container.querySelector(".add-btn:not(.hidden)");
+            if (previousAddBtn) {
+                previousAddBtn.classList.add("hidden"); // Add "hidden" class or use previousAddBtn.style.display = "none";
+            }
 
-    var newInputWrapper = document.createElement('div');
-    newInputWrapper.classList.add('input-wrapper', 'd-flex', 'align-items-center','mt-3');
+            var newInputWrapper = document.createElement('div');
+            newInputWrapper.classList.add('input-wrapper', 'd-flex', 'flex-column', 'align-items-center', 'mt-3');
 
-    var newBox = document.createElement("input");
-    newBox.setAttribute('placeholder', "Enter a line");
-    newBox.setAttribute('name', 'line');
-    if (box_limit == 19){
-        newBox.classList.add("word-box", "me-3", "text-center", "ms-input","word-box2","mb-5");
+            var newBox = document.createElement("input");
+            newBox.setAttribute('type', 'text');
+            newBox.setAttribute('placeholder', "Enter a text");
+            newBox.setAttribute('name', 'line[]'); // Ensure the name is in an array format to receive all lines on the server side
+            newBox.classList.add("word-box", "ps-3", "ms-input", "word-box2", "mb-3");
+
+            var newButton = document.createElement("button");
+            newButton.setAttribute('type', 'button');
+            newButton.classList.add("btn", "btn-primary", "text-center", "add-btn");
+            newButton.innerHTML = '<i class="bi bi-plus"></i>';
+
+            newInputWrapper.appendChild(newBox);
+            newInputWrapper.appendChild(newButton);
+
+            word_container.appendChild(newInputWrapper);
+
+            box_current += 1;
+        }
+    });
+});
+
+</script>
+       <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const resetButton = document.getElementById('resetButton');
+    const wordContainer = document.querySelector(".wordbox-container");
+
+    resetButton.addEventListener('click', function() {
+        // Remove all input-wrapper elements
+        wordContainer.querySelectorAll(".input-wrapper").forEach(function(wrapper) {
+            wrapper.remove();
+        });
+
+        // Recreate the initial input-wrapper with one input box and one add button
+        const newInputWrapper = document.createElement('div');
+        newInputWrapper.classList.add('input-wrapper', 'd-flex', 'flex-column', 'align-items-center');
 
 
-    }else{
-        newBox.classList.add("word-box", "me-3", "text-center", "ms-input","word-box2");
+        const newButton = document.createElement("button");
+        newButton.setAttribute('type', 'button');
+        newButton.classList.add("btn", "btn-primary", "text-center", "add-btn");
+        newButton.innerHTML = '<i class="bi bi-plus"></i> Add a New Line';
 
-    }
 
-    var newButton = document.createElement("button");
-    newButton.setAttribute('type','button');
-
-    newButton.classList.add("btn", "btn-primary", "text-center", "add-btn");
-    newButton.innerHTML = '<i class="bi bi-patch-plus"></i>';
-
-    newInputWrapper.appendChild(newBox);
-    newInputWrapper.appendChild(newButton);
-
-    word_container.append(newInputWrapper);
-
-    if (clickedElement.classList.contains('add-btn')) {
-      clickedElement.style.visibility = 'hidden'; // Hide the clicked "Add" button
-    } else if (clickedElement.classList.contains('bi-patch-plus')) {
-      var parentDiv = clickedElement.closest('.input-wrapper');
-      var addBtn = parentDiv.querySelector('.add-btn');
-      addBtn.style.visibility = 'hidden'; // Hide the "Add" button associated with the clicked icon
-    }
-    box_current += 1;
-  }
+        newInputWrapper.appendChild(newButton);
+        wordContainer.appendChild(newInputWrapper);
+    });
 });
 </script>
-
   <script src="../static/js/main.js"></script>
 
 </body>
