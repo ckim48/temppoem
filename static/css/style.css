@@ -1,5 +1,6 @@
 html, body{
 font-family: 'Nanum Myeongjo', serif !important;
+
 }
 /*--------------------------------------------------------------
 # General
@@ -41,8 +42,9 @@ border-radius:5px;
 height:45px;
 }
 .title-label{
-color:white;
+color:black;
 font-size:25px;
+margin-top:3px;
 
 }
 /*--------------------------------------------------------------
@@ -971,7 +973,7 @@ body a:hover {
     font-size: 50px;
 }
 .haiku_heading{
-    color: white;
+    color: black;
 }
 .sonnet_heading{
     color: red;
@@ -1077,7 +1079,7 @@ color: darkgray !important;
 }
 .info-icon {
   font-size: 24px;
-  color: #FFF;
+  color: black;
 }
 mymy-5{
 margin-top: 400px !important;
@@ -1099,12 +1101,25 @@ margin-top: 400px !important;
 font-size:20px;
 }
 .haikuback {
-    background-image: url("../img/haiku.jpg");
+    position: relative;
+    width: 100%; /* Ensure full width */
+    min-height: 100vh; /* Adjust height to cover full content */
+    background-image: url("../img/tempbg2.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
-    height: 100vh;
+}
+
+.haikuback::before {
+    content: "";
+    position: absolute;
+  top: -70px; /* Adjust this based on your navbar's actual height */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.12); /* Adjust the opacity (0.5) to make it darker or lighter */
+    z-index: -1;
 }
 .color-black{
 color:black;
