@@ -144,3 +144,24 @@ h1 {
 body {
     margin: 0;
 }
+
+.loginback {
+    position: relative;
+    width: 100%; /* Ensure full width */
+    min-height: 100vh; /* Adjust height to cover full content */
+    background-image: url("../img/tempbg.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+.loginback ::before {
+    content: "";
+    position: absolute;
+  top: -70px; /* Adjust this based on your navbar's actual height */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
