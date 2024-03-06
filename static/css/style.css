@@ -1135,6 +1135,12 @@ margin-top: 400px !important;
 .close-modal{
 font-size:20px;
 }
+.gbutton-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically if needed */
+    height: 100%; /* Adjust height as needed */
+}
 .haikuback {
     position: relative;
     width: 100%; /* Ensure full width */

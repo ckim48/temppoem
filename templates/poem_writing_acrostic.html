@@ -59,9 +59,10 @@
                 <div class="themebox-container d-flex justify-content-center mb-3 mt-3">
                     <label for="theme" class="form-label title-label me-2 color-black">Theme:</label>
                     <input class="title-box me-2 me-md-5" name="theme" placeholder="" value="{{ title | default('') }}">
+                </div>
+                <div class="gbutton-container">
                     <button type="button" class="btn btn-primary3 small-btn" onclick="createInputBoxes()">Generate Lines</button>
                 </div>
-
                 <div class="wordbox-container d-flex justify-content-center flex-column align-items-center" id="wordbox-container">
                         {% if lines %}
                         {% for line in lines %}
