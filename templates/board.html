@@ -37,7 +37,6 @@
 
           <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto" href="{{url_for('index')}}#about">About</a></li>
           <li class="dropdown"><a href="{{url_for('bwrite')}}"><span>Write Poem</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="{{url_for('poem_writing_acrostic')}}">Acrostic</a></li>
@@ -47,11 +46,10 @@
               <li><a href="{{url_for('poem_writing_sonnet')}}">Sonnet</a></li>
             </ul>
           </li>
-          <li><a class="nav-link scrollto active" href="{{url_for('board')}}">Community</a></li>
+          <li><a class="nav-link scrollto active" href="{{url_for('board')}}">Read Poems</a></li>
                       <li><a class="nav-link scrollto" href="{{url_for('mypage')}}">My Poem</a></li>
-          <li><a class="nav-link scrollto" href="{{url_for('tube')}}">Materials</a></li>
+          <li><a class="nav-link scrollto" href="{{url_for('tube')}}">Resources</a></li>
 
-          <li><a class="nav-link scrollto" href="{{url_for('statistics')}}">Statistics</a></li>
 
           {% if isLogin %}
             <li><a class="nav-link scrollto" href="{{url_for('logout')}}">Logout</a></li>
@@ -70,7 +68,7 @@
 
 
         <div class="container board-top">
-          <h1 class="mb-5 text-center">Community</h1>
+          <h1 class="mb-5 text-center">Read Poems</h1>
 
   <div class="d-flex">
       <i class="bi bi-filter ms-5 ms-md-4 me-2 bigbigicon"></i>

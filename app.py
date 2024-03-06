@@ -18,9 +18,79 @@ app.permanent_session_lifetime = timedelta(seconds=3600)
 @app.route('/', methods=['GET']) # / => main homepage; decorator
 def index(): #index func calls render_template, showing login.html on website
 	isLogin = False
+	conn = sqlite3.connect("static/database.db")
+	cursor = conn.cursor()
+
+	cursor.execute("SELECT type, COUNT(type) From Poem GROUP BY type")
+	types = cursor.fetchall()
+	poem_dic = {} # {"acrostic" : 1, "haiku" :2, "sonnet": 1}
+	for type in types:
+		poem_type, count = type
+		poem_dic[poem_type] = count
+
 	if "username" in session:
+		username = session["username"]
 		isLogin = True
-	return render_template('index.html', isLogin = isLogin) # html var = python var
+	else:
+		username = ""
+
+	cursor.execute("SELECT type, COUNT(type) From Poem GROUP BY type")
+	types = cursor.fetchall()
+	conn.close()
+	user_dic = {} # {"acrostic" : 1, "haiku" :2, "sonnet": 1}
+	for type in types:
+		poem_type, count = type
+		user_dic[poem_type] = count
+	print(user_dic)
+
+	conn = sqlite3.connect('static/database.db')
+	cursor = conn.cursor()
+	cursor.execute("SELECT strftime('%m', date) as month, COUNT(*) FROM Login_logs GROUP BY month ORDER BY month;")
+	login_data = cursor.fetchall()
+	conn.close()
+
+	labels = [str(data[0]) for data in login_data]
+	values = [data[1] for data in login_data]
+	connection = sqlite3.connect('static/database.db')
+	cursor = connection.cursor()
+
+
+	cursor.execute("SELECT content FROM Poem")
+	poems = cursor.fetchall()
+
+	conn.close()
+
+	stop_words = set(stopwords.words('english'))
+	words = []
+	for poem in poems:
+		words.extend([word for word in re.findall(r'\b\w+\b', poem[0].lower()) if word not in stop_words])
+
+	word_freq = Counter(words)
+
+	top_words = word_freq.most_common(7)
+
+	labels_word = [word[0] for word in top_words]
+	frequencies = [word[1] for word in top_words]
+
+	cursor.execute('SELECT sentiment FROM Poem')
+	sentiments = cursor.fetchall()
+	sentiment_counts = {'positive': 0, 'neutral': 0, 'negative': 0}
+	for sentiment in sentiments:
+		if sentiment[0] == 1:
+			sentiment_counts['positive'] += 1
+		elif sentiment[0] == 0:
+			sentiment_counts['neutral'] += 1
+		elif sentiment[0] == -1:
+			sentiment_counts['negative'] += 1
+	cursor.execute(
+		"SELECT username, SUM(numLikes) FROM Poem GROUP BY username ORDER BY SUM(numLikes) DESC LIMIT 5")
+	top_users = cursor.fetchall()
+	top_users_dict = {username: total_likes for username, total_likes in top_users}
+	labels_username = [user[0] for user in top_users]
+	number_likes = [user[1] for user in top_users]
+	connection.close()
+	print(labels_username)
+	return render_template('index.html', poem_dic = poem_dic, user_dic = user_dic, isLogin=isLogin,labels=labels,values=values, sentiment_counts=sentiment_counts, labels_word=labels_word, frequencies=frequencies,labels_username=labels_username,number_likes=number_likes) # html var = python var
 @app.route('/bwrite', methods=['GET']) # / => main homepage; decorator
 def bwrite(): #index func calls render_template, showing login.html on website
 	isLogin = False
@@ -64,7 +134,10 @@ def mypage(): #index func calls render_template, showing login.html on website
 			contents.append(row[1])
 			dates.append(row[2])
 			titles.append(row[3])
-			types.append(row[4].title())
+			if row[4] == "free":
+				types.append("Freestyle")
+			else:
+				types.append(row[4].title())
 			likes.append(row[6])
 			iambs.append(row[7])
 

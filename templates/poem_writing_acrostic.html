@@ -14,7 +14,7 @@
     <link href="../static/img/apple-touch-icon.png" rel="apple-touch-icon">
 </head>
 
-<body class="acrosticback">
+<body  class="haikuback">
     <header id="header" class="fixed-top d-flex align-items-center">
         <div class="container d-flex justify-content-between">
           <div class="logo">
@@ -23,7 +23,6 @@
           </div>
           <nav id="navbar" class="navbar">
             <ul>
-              <li><a class="nav-link scrollto" href="{{url_for('index')}}#about">About</a></li>
               <li class="dropdown active"><a class="active" href="{{url_for('bwrite')}}"><span>Write Poem</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="{{url_for('poem_writing_acrostic')}}">Acrostic</a></li>
@@ -33,11 +32,10 @@
               <li><a href="{{url_for('poem_writing_sonnet')}}">Sonnet</a></li>
             </ul>
               </li>
-              <li><a class="nav-link scrollto" href="{{url_for('board')}}">Community</a></li>
+              <li><a class="nav-link scrollto" href="{{url_for('board')}}">Read Poems</a></li>
               <li><a class="nav-link scrollto" href="{{url_for('mypage')}}">My Poem</a></li>
-                       <li><a class="nav-link scrollto" href="{{url_for('tube')}}">Materials</a></li>
+                       <li><a class="nav-link scrollto" href="{{url_for('tube')}}">Resources</a></li>
 
-              <li><a class="nav-link scrollto" href="{{url_for('statistics')}}">Statistics</a></li>
 
                 {% if isLogin %}
                 <li><a class="nav-link scrollto" href="{{url_for('logout')}}">Logout</a></li>
@@ -79,6 +77,8 @@
 
                 </div>
                        <div class="d-flex justify-content-end mt-end">
+                                                <button type="button" id="resetButton" class="btn btn-primary me-3">Reset</button>
+
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
                 {% with messages = get_flashed_messages() %}
@@ -148,7 +148,7 @@
     <div id="loading-overlay" style="display: none;">
                 <div id="loading-content">
         <div id="loading-spinner"></div>
-        <h3 class="mt-3 color-white">We are currently analyzing your poem using NLP techniques; please wait for few seconds.</h3>
+            <h3 class="mt-3 color-white text-center">Analyzing your poem with NLP <br> Please wait.</h3>
     </div>
 
     </div>
@@ -195,7 +195,26 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
     </script>
+           <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const resetButton = document.getElementById('resetButton');
 
+    resetButton.addEventListener('click', function() {
+        // Select all input elements
+        const inputs = document.querySelectorAll('input');
+
+        // Iterate over each input element and set its value to an empty string
+        inputs.forEach(function(input) {
+            // Check if the input is of type 'checkbox' or 'radio', reset differently
+            if (input.type === 'checkbox' || input.type === 'radio') {
+                input.checked = false; // Uncheck the box or radio button
+            } else {
+                input.value = ''; // Clear the value for text, number, email, etc.
+            }
+        });
+    });
+});
+</script>
   <script src="../static/js/main.js"></script>
 
 </body>

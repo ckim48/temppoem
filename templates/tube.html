@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Cosmos | Materials</title>
+    <title>Cosmos | Resources</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
           <meta property="og:image" content="../static/img/my.png">
@@ -26,7 +26,7 @@
     <!-- Template Main CSS File -->
     <link href="../static/css/style.css" rel="stylesheet">
   </head>
-  <body class="constr">
+  <body class="constr tubebg">
       <header id="header" class="fixed-top d-flex align-items-center">
         <div class="container d-flex justify-content-between">
 
@@ -36,7 +36,6 @@
 
           <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto" href="{{url_for('index')}}#about">About</a></li>
           <li class="dropdown"><a href="{{url_for('bwrite')}}"><span>Write Poem</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="{{url_for('poem_writing_acrostic')}}">Acrostic</a></li>
@@ -46,11 +45,10 @@
               <li><a href="{{url_for('poem_writing_sonnet')}}">Sonnet</a></li>
             </ul>
           </li>
-          <li><a class="nav-link scrollto" href="{{url_for('board')}}">Community</a></li>
+          <li><a class="nav-link scrollto" href="{{url_for('board')}}">Read Poems</a></li>
                       <li><a class="nav-link scrollto" href="{{url_for('mypage')}}">My Poem</a></li>
-          <li><a class="nav-link scrollto" href="{{url_for('tube')}}">Materials</a></li>
+          <li><a class="nav-link scrollto" href="{{url_for('tube')}}">Resources</a></li>
 
-          <li><a class="nav-link scrollto" href="{{url_for('statistics')}}">Statistics</a></li>
 
           {% if isLogin %}
             <li><a class="nav-link scrollto" href="{{url_for('logout')}}">Logout</a></li>
@@ -65,17 +63,16 @@
         </div>
       </header>
 
-      <main>
-        <div class="container stat-mt">
-<!--        <h1 class="mb-5 text-center" data-aos="fade-up" data-aos-duration="1000">Videos</h1>-->
-        <div class="row justify-content-center align-items-center">
-            <div class="col-md-6 text-center">
-                <div class="construction-icon bi bi-tools"></div> <!-- Bootstrap icon for construction tools -->
-                <h2 class="mb-3">To Be Updated</h2>
-                <p class="mb-5">The support video to learn about different types of poems will be available here soon. Thank you for your patience!</p>
-            </div>
+      <main class="">
+<div class="container stat-mt" data-aos="fade-up" data-aos-duration="1000">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-6 text-center">
+            <div class="construction-icon bi bi-tools" data-aos="pulse" data-aos-delay="500"></div> <!-- Bootstrap icon for construction tools -->
+            <h2 class="mb-3" data-aos="fade-up" data-aos-delay="600">To Be Updated</h2>
+            <p class="mb-5 maintp" data-aos="fade-up" data-aos-delay="700">The support video to learn about different types of poems will be available here soon. Thank you for your patience!</p>
         </div>
-        </div>
+    </div>
+</div>
       </main>
 
       <!--          <div class="row ">-->

@@ -18,7 +18,7 @@
     <link href="../static/img/apple-touch-icon.png" rel="apple-touch-icon">
 </head>
 
-<body  class="freeback">
+<body  class="haikuback">
        <header id="header" class="fixed-top d-flex align-items-center">
         <div class="container d-flex justify-content-between">
 
@@ -29,7 +29,6 @@
 
           <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto" href="{{url_for('index')}}#about">About</a></li>
           <li class="dropdown active"><a class="active" href="{{url_for('bwrite')}}"><span>Write Poem</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="{{url_for('poem_writing_acrostic')}}">Acrostic</a></li>
@@ -39,11 +38,10 @@
               <li><a href="{{url_for('poem_writing_sonnet')}}">Sonnet</a></li>
             </ul>
           </li>
-          <li><a class="nav-link scrollto" href="{{url_for('board')}}">Community</a></li>
+          <li><a class="nav-link scrollto" href="{{url_for('board')}}">Read Poems</a></li>
                       <li><a class="nav-link scrollto" href="{{url_for('mypage')}}">My Poem</a></li>
-          <li><a class="nav-link scrollto" href="{{url_for('tube')}}">Materials</a></li>
+          <li><a class="nav-link scrollto" href="{{url_for('tube')}}">Resources</a></li>
 
-          <li><a class="nav-link scrollto" href="{{url_for('statistics')}}">Statistics</a></li>
 
           {% if isLogin %}
             <li><a class="nav-link scrollto" href="{{url_for('logout')}}">Logout</a></li>
@@ -72,7 +70,7 @@
                     <label for="theme" class="form-label title-label me-2 color-black">Title:</label>
                     <input class="title-box me-5" name="theme" placeholder="" value="{{ title | default('') }}">
                 </div>
-                <div class="d-flex justify-content-center mb-3">
+                <div class="d-flex justify-content-center mb-4">
 <span class="mt-1 me-3 color-block">Check Iambic</span>
         <label class="toggle-switch" for="toggleSwitch">
             <input value="checked" id="toggleSwitch" class="form-check-input" type="checkbox" name="toggleStress">
@@ -84,7 +82,7 @@
                       <!-- Initial input and button -->
                                                 {% if lines %}
                         {% for line in lines %}
-                                <input class="word-box ms-input word-box2 mb-3 ps-3" name="line" placeholder="Enter a text" value="{{ line }}">
+                                <input class="word-box ms-input word-box2 mb-3 ps-3 " name="line" placeholder="Enter a text" value="{{ line }}">
         {% if loop.last %}
             <button type="button" class="text-center add-btn mt-5"><i class="bi bi-plus"></i></button>
         {% endif %}
@@ -149,7 +147,7 @@
     <div id="loading-overlay" style="display: none;">
                 <div id="loading-content">
         <div id="loading-spinner"></div>
-        <h3 class="mt-3 color-white">We are currently analyzing your poem using NLP techniques; please wait for few seconds.</h3>
+            <h3 class="mt-3 color-white text-center">Analyzing your poem with NLP <br> Please wait.</h3>
     </div>
 
     </div>
@@ -224,6 +222,24 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+       <script>
+           document.addEventListener('DOMContentLoaded', function() {
+    // Select the form or input fields
+    const inputs = document.querySelectorAll('input');
+
+    inputs.forEach(function(input) {
+        input.addEventListener('keypress', function(event) {
+            // Check if the pressed key is 'Enter'
+            if (event.key === 'Enter') {
+                // Prevent the default action to stop form submission
+                event.preventDefault();
+                // Optionally, add any other logic you want to execute when Enter is pressed
+                return false; // Stop the function here
+            }
+        });
+    });
+});
+       </script>
   <script src="../static/js/main.js"></script>
 
 </body>

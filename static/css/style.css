@@ -37,6 +37,7 @@ h6 {
 width:40%;
 }
 .title-box{
+background-color: rgba(255,255,255,0.7) !important;
 width:300px;
 border-radius:5px;
 height:45px;
@@ -111,6 +112,7 @@ margin-top:3px;
 margin-left:0px !important;
 }
 .word-box {
+
     width: 300px !important;
     height: 38px !important;
     font-size: 16px !important;
@@ -443,25 +445,57 @@ display:none !important;
 #hero {
   width: 100%;
   height: calc(100vh - 70px);
-  background: url("../img/sky.jpg") center center;
-  background-size: cover;
   position: relative;
   margin-top: 70px;
   padding: 0;
+  overflow: hidden; /* Ensure the video doesn't overflow the hero section */
+}
+
+#hero video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  z-index: 1; /* Ensure the video is under the content */
+  object-fit: cover; /* Cover the entire section */
 }
 
 #hero:before {
   content: "";
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.4); /* Dark overlay */
   position: absolute;
   bottom: 0;
   top: 0;
   left: 0;
   right: 0;
+  z-index: 2; /* Overlay on top of the video */
+}
+#hero .container {
+  z-index: 3; /* Ensure the text content is above the video and overlay */
 }
 
-#hero .container {
-  z-index: 2;
+@keyframes pulseAnimation {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+
+.construction-icon {
+  animation: pulseAnimation 2s infinite;
+  display: inline-block;
 }
 
 #hero h1 {
@@ -625,7 +659,7 @@ section {
 }
 
 .about img{
-    width: 80%;
+    width: 90%;
     border-radius: 10px;
 }
 .about p{
@@ -980,6 +1014,7 @@ body a:hover {
 }
 
 .word-box {
+background-color: rgba(255,255,255,0.7) !important;
     border:1px solid darkgray;
     color: black;
     width: 800px;
@@ -1119,6 +1154,33 @@ font-size:20px;
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.12); /* Adjust the opacity (0.5) to make it darker or lighter */
+    z-index: -1;
+}
+
+
+.tubebg {
+    position: relative;
+    width: 100%; /* Ensure full width */
+    min-height: 100vh; /* Adjust height to cover full content */
+    background-image: url("../img/resourcesbg.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+.maintp{
+    background-color: rgba(251, 244, 252,0.5);
+    padding: 15px 30px 15px 30px;
+
+}
+.tubebg::before {
+    content: "";
+    position: absolute;
+    top: -70px; /* Adjust this based on your navbar's actual height */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.05); /* Adjust the opacity (0.5) to make it darker or lighter */
     z-index: -1;
 }
 .color-black{
