@@ -144,11 +144,10 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center ms-2">
-        <h5 class="modal-title mx-auto" id="exampleModalLongTitle">Haiku Rules</h5>
+        <h5 class="modal-title mx-auto" id="exampleModalLongTitle">Haiku Poem Rules</h5>
             <a class="close-modal" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x"></i></a>
       </div>
       <div class="modal-body">
-          <h5><strong>How to write:</strong> </h5>
               <p>
               Compose a haiku by capturing a moment in 17 syllables, distributed across three lines (5-7-5). Emphasize nature or emotions, creating vivid imagery.</p>
           <p class="small-font">* Our app utilizes the CMU Pronouncing Dictionary, which offers a more precise breakdown of syllables through phonetic transcripts. As a result, there may be instances where the syllable count differs from conventional English pronunciation. </p>
@@ -168,7 +167,24 @@
     </div>
   </div>
 </div>
+       <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="successModalLabel">Success!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Your poem has been successfully submitted.
+      </div>
+      <div class="modal-footer">
+<button type="button" id="viewPoemButton" class="btn btn-secondary" data-bs-dismiss="modal">View my poem</button>
 
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Create new poem</button>
+      </div>
+    </div>
+  </div>
+</div>
 
     <div id="loading-overlay" style="display: none;">
                 <div id="loading-content">
@@ -322,5 +338,23 @@ $(document).ready(function() {
             document.getElementById('themeInput').focus();
         });
     </script>
+
+<script>
+$(document).ready(function() {
+    {% if showSuccessModal %}
+        $('#successModal').modal('show');
+    {% endif %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            $('#wrongPoemModal').modal('show');
+        {% endif %}
+    {% endwith %}
+});
+</script>
+<script>
+document.getElementById('viewPoemButton').addEventListener('click', function() {
+    window.location.href = '/mypage'; // Replace '/mypage' with your target route
+});
+</script>
 </body>
 </html>

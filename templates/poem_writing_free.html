@@ -76,11 +76,11 @@
                     <input class="title-box me-5" id="themeInput" name="theme" placeholder="" value="{{ title | default('') }}">
                 </div>
                 <div class="d-flex justify-content-center mb-4">
-<span class="mt-1 me-3 color-block">Check Iambic</span>
-        <label class="toggle-switch" for="toggleSwitch">
-            <input value="checked" id="toggleSwitch" class="form-check-input" type="checkbox" name="toggleStress">
-            <span class="slider"></span>
-        </label>
+                    <span class="mt-1 me-3 color-block">Check Iambic</span>
+                            <label class="toggle-switch" for="toggleSwitch">
+                                <input value="checked" id="toggleSwitch" class="form-check-input" type="checkbox" name="toggleStress">
+                                <span class="slider"></span>
+                            </label>
 
                 </div>
                     <div class="wordbox-container d-flex justify-content-center flex-column align-items-center">
@@ -88,13 +88,13 @@
                                                 {% if lines %}
                         {% for line in lines %}
                                 <input class="word-box ms-input word-box2 mb-3 ps-3 " name="line" placeholder="Enter a text" value="{{ line }}">
-        {% if loop.last %}
-            <button type="button" class="text-center add-btn mt-5"><i class="bi bi-plus"></i></button>
-        {% endif %}
+                        {% if loop.last %}
+                            <button type="button" class="text-center add-btn mt-5"><i class="bi bi-plus"></i></button>
+                        {% endif %}
                         {% endfor %}
                     {% else %}
 
-                        <input class="word-box ms-input word-box2 mb-3 ps-3 name="line" placeholder="Enter a text">
+                        <input class="word-box ms-input word-box2 mb-3 ps-3" name="line" placeholder="Enter a text">
                         <button  type="button" class="text-center add-btn mt-4"><i class="bi bi-plus"></i> Add a New Line</button>
                     {% endif %}
 
@@ -137,7 +137,9 @@
         Your poem has been successfully submitted.
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+<button type="button" id="viewPoemButton" class="btn btn-secondary" data-bs-dismiss="modal">View my poem</button>
+
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Create new poem</button>
       </div>
     </div>
   </div>
@@ -250,11 +252,23 @@ $(document).ready(function() {
 });
 </script>
   <script src="../static/js/main.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Focus on the theme input field when the page loads
-            document.getElementById('themeInput').focus();
-        });
-    </script>
+<script>
+$(document).ready(function() {
+    {% if showSuccessModal %}
+        $('#successModal').modal('show');
+    {% endif %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            $('#wrongPoemModal').modal('show');
+        {% endif %}
+    {% endwith %}
+});
+</script>
+<script>
+document.getElementById('viewPoemButton').addEventListener('click', function() {
+    window.location.href = '/mypage'; // Replace '/mypage' with your target route
+});
+</script>
+
 </body>
 </html>

@@ -143,8 +143,8 @@ def mypage(): #index func calls render_template, showing login.html on website
 
 			ids.append(row[5])
 			num_likes.append(row[8])
-		print(likes)
-		print(ids)
+
+		print("ABCCCCC",iambs)
 		if "username" not in session:
 			isLogin = False
 			return redirect(url_for('login'))
@@ -324,7 +324,7 @@ def poem_writing_haiku():
 			conn.commit()
 			conn.close()
 
-			return redirect(url_for('board'))
+			return render_template('poem_writing_haiku.html', isLogin=isLogin, showSuccessModal=True, lines=[])
 		else:
 			isSyll = True
 			flash("Please check the number of syllables for each line.")
@@ -457,7 +457,9 @@ def poem_writing_free():
 		syll_count = 0
 		isStress = True
 		isFinal = False
+		print(request.form)  # See all form data
 		lines = request.form.getlist("line") #["line1", "line2","line3"]
+		print(lines)
 		title = request.form.get("theme")
 		isEmpty = False
 		if len(lines)==0:
@@ -490,7 +492,7 @@ def poem_writing_free():
 
 		if isSimilar_theme(title,lines) < 0.11:
 			isMatch = True
-			flash("Acrostic requires to match the theme with your contents of poem.")
+			flash("Poem requires to match the title with your contents of poem.")
 			# return render_template('poem_writing_free.html', isLogin=isLogin, lines=lines, title=title, isMatch=isMatch)
 
 		for line in lines:
@@ -512,12 +514,16 @@ def poem_writing_free():
 
 		largest_id = cursor.fetchone()[0]
 		sentiment = get_sentiment(' '.join(lines))
-		cursor.execute("Insert INTO Poem (username, content, date,title,type,id,numLikes,sentiment) VALUES (?,?,?,?,?,?,?,?)",
-					   (username, content, today_date, title, type, largest_id + 1,0,sentiment))
+		if request.form.get('toggleStress') == "checked":
+			cursor.execute("Insert INTO Poem (username, content, date,title,type,id,numLikes,sentiment,iamb) VALUES (?,?,?,?,?,?,?,?,?)",
+						   (username, content, today_date, title, type, largest_id + 1,0,sentiment,1))
+		else:
+			cursor.execute("Insert INTO Poem (username, content, date,title,type,id,numLikes,sentiment,iamb) VALUES (?,?,?,?,?,?,?,?,?)",
+						   (username, content, today_date, title, type, largest_id + 1,0,sentiment,0))
 		conn.commit()
 		conn.close()
 		print("SSSSS")
-		return redirect(url_for('submission_success'))
+		return render_template('poem_writing_free.html', isLogin=isLogin, showSuccessModal=True, lines=[])
 	else:
 		if "username" not in session:
 			return redirect(url_for('login'))
@@ -729,7 +735,7 @@ def poem_writing_acrostic():
 			conn.commit()
 			conn.close()
 
-			return redirect(url_for('board'))
+			return render_template('poem_writing_acrostic.html', isLogin=isLogin, showSuccessModal=True, lines=[])
 		else:
 			isWrong = True
 			flash("Each line should start with each character of the theme.")
@@ -836,12 +842,18 @@ def poem_writing_sonnet():
 
 			largest_id = cursor.fetchone()[0]
 			sentiment = get_sentiment(' '.join(lines))
-			cursor.execute("Insert INTO Poem (username, content, date,title,type,id,numLikes,sentiment) VALUES (?,?,?,?,?,?,?,?)",
-						   (username, content, today_date, title, type, largest_id + 1,0,sentiment))
+			if request.form.get('toggleStress') == "checked":
+				cursor.execute(
+					"Insert INTO Poem (username, content, date,title,type,id,numLikes,sentiment,iamb) VALUES (?,?,?,?,?,?,?,?,?)",
+					(username, content, today_date, title, type, largest_id + 1, 0, sentiment, 1))
+			else:
+				cursor.execute(
+					"Insert INTO Poem (username, content, date,title,type,id,numLikes,sentiment,iamb) VALUES (?,?,?,?,?,?,?,?,?)",
+					(username, content, today_date, title, type, largest_id + 1, 0, sentiment, 0))
 			conn.commit()
 			conn.close()
 
-			return redirect(url_for('board'))
+			return render_template('poem_writing_sonnet.html', isLogin=isLogin, showSuccessModal=True, lines=[])
 		else:
 			flash("Please check your rhymes.")
 			isWrong = True
