@@ -508,6 +508,23 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+       <script>
+           document.addEventListener('DOMContentLoaded', function() {
+    // Select the form or input fields
+    const inputs = document.querySelectorAll('input');
 
+    inputs.forEach(function(input) {
+        input.addEventListener('keypress', function(event) {
+            // Check if the pressed key is 'Enter'
+            if (event.key === 'Enter') {
+                // Prevent the default action to stop form submission
+                event.preventDefault();
+                // Optionally, add any other logic you want to execute when Enter is pressed
+                return false; // Stop the function here
+            }
+        });
+    });
+});
+       </script>
 </body>
 </html>
