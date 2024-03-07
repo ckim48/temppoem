@@ -1676,7 +1676,14 @@ font-size:13px !important;
     transform: scale(1);
   }
 }
-
+.btn-close {
+    filter: invert(27%) sepia(100%) saturate(7500%) hue-rotate(1deg) brightness(100%) contrast(100%);
+}
+.btn-close:focus {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
 .rounded-circle {
   border-radius: 50%!important;
   width: 250px;

@@ -282,24 +282,24 @@ def poem_writing_haiku():
 		title = request.form.get('title')
 		if len(lines)==0:
 			isEmpty = True
-			flash("Wrong")
+			flash("Please write a poem before you submit.")
 			return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title,
 								   isMatch=isMatch, isBad=isBad, isEmpty=isEmpty)
 		for line in lines:
 			if line == "":
 				isEmpty = True
-				flash("Wrong")
+				flash("Please write a poem before you submit.")
 				return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title,
 									   isMatch=isMatch, isBad=isBad,isEmpty=isEmpty)
 		if isSimilar_theme(title,lines) < 0.11:
 			isMatch = True
-			flash("Wrong!")
+			flash("Please match the title with your contents of poem.")
 			# return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title, isMatch=isMatch)
 
 		for line in lines:
 			if contains_profanity(line):
 				isBad = True
-				flash("Wrong!")
+				flash("Do not use any harmful words.")
 				# return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad)
 
 
@@ -327,7 +327,7 @@ def poem_writing_haiku():
 			return redirect(url_for('board'))
 		else:
 			isSyll = True
-			flash("Wrong!")
+			flash("Please check the number of syllables for each line.")
 			return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title,isSyll=isSyll,isMatch = isMatch, isBad = isBad)
 
 
@@ -462,13 +462,13 @@ def poem_writing_free():
 		isEmpty = False
 		if len(lines)==0:
 			isEmpty = True
-			flash("Wrong")
-			return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title,
+			flash("Please write a poem before you submit.")
+			return render_template('poem_writing_free.html', isLogin=isLogin, lines=lines, title=title,
 								   isMatch=isMatch, isBad=isBad, isEmpty=isEmpty)
 		for line in lines:
 			if line == "":
 				isEmpty = True
-				flash("Wrong")
+				flash("Please write a poem before you submit.")
 				return render_template('poem_writing_free.html', isLogin=isLogin, lines=lines, title=title,
 									    isMatch=isMatch, isBad=isBad,isEmpty=isEmpty)
 		if request.form.get('toggleStress') == "checked":
@@ -484,21 +484,20 @@ def poem_writing_free():
 						count+=1
 						isStress = False
 			if (isStress == True and count >= 2 ) or syll_count != 10 or syll_count != 9 or syll_count !=11:
-				flash("Wrong!")
+				flash("Check your stress pattern.")
 				isFinal = True
 			# return render_template('poem_writing_free.html', isLogin=isLogin, lines=lines, title=title,isStress=isStress)
 
 		if isSimilar_theme(title,lines) < 0.11:
 			isMatch = True
-			flash("Wrong!")
+			flash("Acrostic requires to match the theme with your contents of poem.")
 			# return render_template('poem_writing_free.html', isLogin=isLogin, lines=lines, title=title, isMatch=isMatch)
 
 		for line in lines:
 			if contains_profanity(line):
 				isBad = True
-				flash("Wrong!")
+				flash("Do not use any harmful words.")
 		if isMatch or isBad or isFinal:
-				print("AABADAFAFAFDA")
 				return render_template('poem_writing_free.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad, isMatch=isMatch,isFinal=isFinal ), 300
 
 		username = session["username"]
@@ -677,18 +676,18 @@ def poem_writing_acrostic():
 		title = request.form.get('theme')
 		if len(lines)==0:
 			isEmpty = True
-			flash("Wrong")
+			flash("Please write a poem before you submit.")
 			return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title,
 								   isLine=isLine, isMatch=isMatch, isBad=isBad, isEmpty=isEmpty)
 		for line in lines:
 			if line == "":
 				isEmpty = True
-				flash("Wrong")
+				flash("Please write a poem before you submit.")
 				return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title,
 									   isLine=isLine, isMatch=isMatch, isBad=isBad,isEmpty=isEmpty)
 		if len(lines[0]) == 0:
 			isLine = True
-			flash("Wrong")
+			flash("You have not completed your poem.")
 			return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title, isLine = isLine, isMatch=isMatch, isBad = isBad )
 
 		for i in lines:
@@ -700,13 +699,13 @@ def poem_writing_acrostic():
 				# 					   isLine=isLine)
 		if isSimilar_theme(title,lines) < 0.11:
 			isMatch = True
-			flash("Wrong!")
+			flash("Acrostic requires to match the theme with your contents of poem.")
 			# return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title, isMatch=isMatch)
 
 		for line in lines:
 			if contains_profanity(line):
 				isBad = True
-				flash("Wrong!")
+				flash("Do not use any harmful words.")
 				# return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad)
 
 		result = is_acroustic(title,lines)
@@ -733,7 +732,7 @@ def poem_writing_acrostic():
 			return redirect(url_for('board'))
 		else:
 			isWrong = True
-			flash("Wrong!")
+			flash("Each line should start with each character of the theme.")
 
 			return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title, isWrong = isWrong,isLine = isLine, isMatch=isMatch, isBad = isBad )
 	else:
@@ -778,7 +777,7 @@ def poem_writing_sonnet():
 		for line in lines:
 			if line == "":
 				isEmpty = True
-				flash("Wrong")
+				flash("Please write a poem before you submit.")
 				return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title,
 									   isLine=isLine, isMatch=isMatch, isBad=isBad,isEmpty=isEmpty)
 		if request.form.get('toggleStress') == "checked":
@@ -795,7 +794,7 @@ def poem_writing_sonnet():
 						isStress = False
 			if (isStress == True and count >= 2) or syll_count != 10 or syll_count != 9 or syll_count !=11:
 				isFinal = True
-				flash("wrong")
+				flash("Check your stress pattern.")
 
 				return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title,
 									   isBad=isBad, isMatch=isMatch, isFinal=isFinal, isLine=isLine)
@@ -803,7 +802,7 @@ def poem_writing_sonnet():
 		for i in lines:
 			if len(i) == 0:
 				isLine = True
-				flash("Wrong!")
+				flash("Sonnet needs to have 14 lines.")
 				# return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title,
 				# 					   isLine=isLine)
 
@@ -811,7 +810,7 @@ def poem_writing_sonnet():
 
 		if not isSimilar_theme(title,lines):
 			isMatch = True
-			flash("Wrong!")
+			flash("Please match the title with your contents of poem.")
 			# return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title, isMatch=isMatch)
 
 		for line in lines:
@@ -820,7 +819,6 @@ def poem_writing_sonnet():
 				flash("Wrong!")
 				# return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad)
 		if isBad or isMatch or isFinal or isLine:
-			flash("wrong")
 			return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title, isBad=isBad, isMatch=isMatch, isFinal = isFinal, isLine = isLine)
 
 		result = is_sonnet(lines)
@@ -845,7 +843,7 @@ def poem_writing_sonnet():
 
 			return redirect(url_for('board'))
 		else:
-			flash("Wrong!")
+			flash("Please check your rhymes.")
 			isWrong = True
 			return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title, isWrong=isWrong)
 

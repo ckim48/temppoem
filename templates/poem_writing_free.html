@@ -100,28 +100,25 @@
 
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
-            {% with messages = get_flashed_messages() %}
-                {% if messages%}
-                    <div class="alert alert-danger d-block mx-auto mt-3 mb-" role="alert">
-                        Wrong poem!
-                                        <ul>
-                    {% if isBad%}
-                    <li>Do not use any harmful words!</li>
-                    {% endif %}
-                                                                                                                {% if isEmpty %}
-                    <li>Please write a poem before you submit!</li>
-                    {% endif %}
-                                                                                    {% if isMatch%}
-                    <li>Please match the title with your contents of poem!</li>
-                    {% endif %}
+         <div class="modal fade" id="wrongPoemModal" tabindex="-1" aria-labelledby="wrongPoemModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="wrongPoemModalLabel">Errors</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul id="poemErrors">
+        {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        {% endwith %}        </ul>
+      </div>
 
-                                                                                        {% if isFinal%}
-                    <li>Check your stress pattern!</li>
-                    {% endif %}
-                </ul>
-                    </div>
-                {% endif %}
-            {% endwith %}
+    </div>
+  </div>
+</div>
             </form>
             <div>
                 <p>&nbsp;  &nbsp; &nbsp;</p>
@@ -241,6 +238,17 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
        </script>
+ <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            $('#wrongPoemModal').modal('show');
+        {% endif %}
+    {% endwith %}
+});
+</script>
   <script src="../static/js/main.js"></script>
 
 </body>

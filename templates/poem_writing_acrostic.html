@@ -87,33 +87,33 @@
 
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
-                {% with messages = get_flashed_messages() %}
-                    {% if messages%}
-                        <div class="alert alert-danger d-block mx-auto mt-3 mb-5" role="alert">
-                            Wrong poem!
-                                            <ul>
-                    {% if isBad %}
-                    <li>Do not use any harmful words!</li>
-                    {% endif %}
-                                                                    {% if isEmpty %}
-                    <li>Please write a poem before you submit!</li>
-                    {% endif %}
-                                                {% if isLine %}
-                    <li>You have not completed your poem!</li>
-                    {% endif %}
+<!--                {% with messages = get_flashed_messages() %}-->
+<!--                    {% if messages%}-->
+<!--                        <div class="alert alert-danger d-block mx-auto mt-3 mb-5" role="alert">-->
+<!--                            Wrong poem!-->
+<!--                                            <ul>-->
+<!--                    {% if isBad %}-->
+<!--                    <li>Do not use any harmful words!</li>-->
+<!--                    {% endif %}-->
+<!--                                                                    {% if isEmpty %}-->
+<!--                    <li>Please write a poem before you submit!</li>-->
+<!--                    {% endif %}-->
+<!--                                                {% if isLine %}-->
+<!--                    <li>You have not completed your poem!</li>-->
+<!--                    {% endif %}-->
 
 
-                     {% if isMatch %}
-                    <li>Acrostic requires to match the theme with your contents of poem!</li>
-                    {% endif %}
+<!--                     {% if isMatch %}-->
+<!--                    <li>Acrostic requires to match the theme with your contents of poem!</li>-->
+<!--                    {% endif %}-->
 
-                     {% if isWrong %}
-                    <li>Each line should start with each character of the theme!</li>
-                    {% endif %}
-                </ul>
-                        </div>
-                    {% endif %}
-                {% endwith %}
+<!--                     {% if isWrong %}-->
+<!--                    <li>Each line should start with each character of the theme!</li>-->
+<!--                    {% endif %}-->
+<!--                </ul>-->
+<!--                        </div>-->
+<!--                    {% endif %}-->
+<!--                {% endwith %}-->
             </form>
         </div>
     </div>
@@ -151,6 +151,26 @@
             </div>
         </div>
     </div>
+<div class="modal fade" id="wrongPoemModal" tabindex="-1" aria-labelledby="wrongPoemModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="wrongPoemModalLabel">Errors</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul id="poemErrors">
+        {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        {% endwith %}        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
     <div id="loading-overlay" style="display: none;">
                 <div id="loading-content">
         <div id="loading-spinner"></div>
@@ -222,6 +242,17 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
   <script src="../static/js/main.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+<script>
+$(document).ready(function() {
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            $('#wrongPoemModal').modal('show');
+        {% endif %}
+    {% endwith %}
+});
+</script>
+</script>
 </body>
 </html>
