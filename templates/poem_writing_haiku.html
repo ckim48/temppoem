@@ -71,7 +71,7 @@
                       <!-- Initial input and button -->
                 <div class="themebox-container d-flex justify-content-center mb-3">
                     <label for="title" class="form-label title-label me-2">Title:</label>
-                    <input class="title-box me-5" name="title" placeholder="" value="{{ title | default('') }}" >
+                    <input class="title-box me-5"id="themeInput" name="title" placeholder="" value="{{ title | default('') }}" >
                 </div>
 
                       <div class="input-wrapper d-flex align-items-center">
@@ -316,5 +316,11 @@ $(document).ready(function() {
     {% endwith %}
 });
 </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Focus on the theme input field when the page loads
+            document.getElementById('themeInput').focus();
+        });
+    </script>
 </body>
 </html>

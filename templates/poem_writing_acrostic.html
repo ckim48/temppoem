@@ -58,12 +58,12 @@
             <h1 class="mb-4 bigmargin acrostic_heading text-center mt-3 mb-3">Acrostic </h1>
             <a class="info-icon2 margin-info" data-bs-toggle="modal" data-bs-target="#haiku_instruction"> <i class="bi bi-patch-question"></i> </a>
         </div>
-        <h5 class="text-center inp">To begin writing a poem, enter your theme and press 'Generate Lines'.</h5>
+        <h5 class="text-center inp">Begin by typing in the theme of your poem.</h5>
         <div>
             <form action="/poem_writing_acrostic" method="POST">
                 <div class="themebox-container d-flex justify-content-center mb-3 mt-3">
                     <label for="theme" class="form-label title-label me-2 color-black">Theme:</label>
-                    <input class="title-box me-2 me-md-5" name="theme" placeholder="" value="{{ title | default('') }}">
+                    <input class="title-box me-2 me-md-5" id="themeInput" name="theme" placeholder="" value="{{ title | default('') }}">
                 </div>
                 <div class="gbutton-container">
                     <button type="button" class="btn btn-primary3 small-btn" onclick="createInputBoxes()">Generate Lines</button>
@@ -254,5 +254,12 @@ $(document).ready(function() {
 });
 </script>
 </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Focus on the theme input field when the page loads
+            document.getElementById('themeInput').focus();
+        });
+    </script>
 </body>
 </html>

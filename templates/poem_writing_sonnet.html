@@ -112,7 +112,7 @@
 <!--            {% endwith %}-->
                 <div class="themebox-container d-flex justify-content-center mb-3">
                     <label for="theme" class="form-label title-label me-2 color-black">Title:</label>
-                    <input class="title-box me-5" name="theme" placeholder="" value="{{ title | default('') }}">
+                    <input class="title-box me-5" name="theme"id="themeInput" placeholder="" value="{{ title | default('') }}">
                 </div>
                 <div class="d-flex justify-content-center mb-3">
 <span class="mt-1 me-3 color-block">Check Iambic</span>
@@ -395,6 +395,12 @@ $(document).ready(function() {
     {% endwith %}
 });
 </script>
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Focus on the theme input field when the page loads
+            document.getElementById('themeInput').focus();
+        });
+    </script>
   <script src="../static/js/main.js"></script>
 
 </body>
