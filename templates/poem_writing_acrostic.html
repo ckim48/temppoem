@@ -61,6 +61,10 @@
         <h5 class="text-center inp">Begin by typing in the theme of your poem.</h5>
         <div>
             <form action="/poem_writing_acrostic" method="POST">
+                            <div class="d-flex justify-content-end mb-3"> <!-- Adjusted alignment and spacing -->
+                <button type="button" id="resetButton" class="btn btn-primary btn-primarym me-2">Reset</button>
+                <button type="submit" class="btn btn-primary btn-primarym">Submit</button>
+            </div>
                 <div class="themebox-container d-flex justify-content-center mb-3 mt-3">
                     <label for="theme" class="form-label title-label me-2 color-black">Theme:</label>
                     <input class="title-box me-2 me-md-5" id="themeInput" name="theme" placeholder="" value="{{ title | default('') }}">
@@ -82,11 +86,7 @@
                     {% endif %}
 
                 </div>
-                       <div class="d-flex justify-content-end mt-end">
-                                                <button type="button" id="resetButton" class="btn btn-primary me-3">Reset</button>
 
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
 <!--                {% with messages = get_flashed_messages() %}-->
 <!--                    {% if messages%}-->
 <!--                        <div class="alert alert-danger d-block mx-auto mt-3 mb-5" role="alert">-->

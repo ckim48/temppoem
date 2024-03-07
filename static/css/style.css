@@ -1047,13 +1047,15 @@ background-color: rgba(255,255,255,0.7) !important;
     font-size: 16px;
 }
 
-
+.btn-primarym {
+    padding: 7px 40px 7px 40px;
+    color:white !important;
+}
 
 
 .btn-primary {
-
-    background-color: #A2AFF6;
-    border-color: darkgray;
+    background-color: #BB9DE7;
+    border: 2px solid #B88DF7;
     font-family: 'Nanum Myeongjo', serif;
     font-size: 15px;
 }
@@ -1077,7 +1079,6 @@ padding: 4px 7px 4px 7px;
     background-color: #909BD8;
     border-color: darkgray;
     font-family: 'Nanum Myeongjo', serif;
-    font-size: 18px;
 }
 
 .btn-primary:focus{

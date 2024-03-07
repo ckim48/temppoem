@@ -67,6 +67,10 @@
 
         <div> <!-- x physically shown-->
             <form action="/poem_writing_free" method = "POST">
+            <div class="d-flex justify-content-end mb-3"> <!-- Adjusted alignment and spacing -->
+                <button type="button" id="resetButton" class="btn btn-primary btn-primarym me-2">Reset</button>
+                <button type="submit" class="btn btn-primary btn-primarym">Submit</button>
+            </div>
                 <div class="themebox-container d-flex justify-content-center mb-3">
                     <label for="theme" class="form-label title-label me-2 color-black">Title:</label>
                     <input class="title-box me-5" id="themeInput" name="theme" placeholder="" value="{{ title | default('') }}">
@@ -95,11 +99,7 @@
                     {% endif %}
 
                     </div>
-                <div class="d-flex justify-content-end mt-end">
-                     <button type="button" id="resetButton" class="btn btn-primary me-3">Reset</button>
 
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
          <div class="modal fade" id="wrongPoemModal" tabindex="-1" aria-labelledby="wrongPoemModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

@@ -67,6 +67,10 @@
 
         <div> <!-- x physically shown-->
             <form action="/poem_writing_haiku" method ="POST">
+                            <div class="d-flex justify-content-end mb-3"> <!-- Adjusted alignment and spacing -->
+                <button type="button" id="resetButton" class="btn btn-primary btn-primarym me-2">Reset</button>
+                <button type="submit" class="btn btn-primary btn-primarym">Submit</button>
+            </div>
                     <div class="wordbox-container d-flex justify-content-center flex-column align-items-center">
                       <!-- Initial input and button -->
                 <div class="themebox-container d-flex justify-content-center mb-3">
@@ -86,11 +90,7 @@
                       </div>
                     </div>
 
-                <div class="d-flex justify-content-end mt-end">
-                     <button type="button" id="resetButton" class="btn btn-primary me-3">Reset</button>
 
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
 <!--                {% with messages = get_flashed_messages() %}-->
 <!--                    {% if messages %}-->
 <!--            <div id ="alert-message" class="alert alert-danger d-block mx-auto mt-3 mb-" role="alert">-->
