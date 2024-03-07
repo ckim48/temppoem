@@ -253,7 +253,7 @@ def login():
 @app.route('/logout', methods=['GET']) # if user presses /logout
 def logout():
 	session.clear()
-	return redirect(url_for('login')) # sends user to /login
+	return redirect(url_for('index')) # sends user to /login
 
 
 @app.route('/tube', methods=['GET']) # if user presses /logout

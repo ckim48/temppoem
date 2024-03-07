@@ -2,6 +2,9 @@ html, body{
 font-family: 'Nanum Myeongjo', serif !important;
 
 }
+.large-icon {
+  font-size: 20px !important; /* Adjust size as needed */
+}
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
@@ -1387,7 +1390,7 @@ border: 2px solid #86DADA !important;
 
 
 .info-box {
-  background: #fff;
+  background: #FCF9FE;
   padding: 20px;
   border-radius: 8px;
   width: 60%;
@@ -1661,3 +1664,29 @@ color:white;
 .bi-shield-fill{
 font-size:13px !important;
 }
+
+@keyframes pulseAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.rounded-circle {
+  border-radius: 50%!important;
+  width: 250px;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+  animation: pulseAnimation 2s infinite; /* Apply the animation here */
+}
+
+

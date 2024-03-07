@@ -36,7 +36,7 @@
 <body>
 
   <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top d-flex align-items-center">
+ <header id="header" class="fixed-top d-flex align-items-center">
     <div class="container d-flex justify-content-between">
 
       <div class="logo">
@@ -49,22 +49,24 @@
             <ul>
               <li><a href="{{url_for('poem_writing_acrostic')}}">Acrostic</a></li>
               <li><a href="{{url_for('poem_writing_free')}}">Freestyle</a></li>
-
               <li><a href="{{url_for('poem_writing_haiku')}}">Haiku</a></li>
               <li><a href="{{url_for('poem_writing_sonnet')}}">Sonnet</a></li>
             </ul>
           </li>
           <li><a class="nav-link scrollto" href="{{url_for('board')}}">Read Poems</a></li>
-          <li><a class="nav-link scrollto" href="{{url_for('mypage')}}">My Poem</a></li>
           <li><a class="nav-link scrollto" href="{{url_for('tube')}}">Resources</a></li>
 
-
           {% if isLogin %}
-            <li><a class="nav-link scrollto" href="{{url_for('logout')}}">Logout</a></li>
+            <li class="dropdown">
+              <a href="#"><span><i class="bi bi-person-circle large-icon"></i></span> <i class="bi bi-chevron-down"></i></a>
+              <ul>
+                <li><a href="{{url_for('mypage')}}">My Poem</a></li>
+                <li><a href="{{url_for('logout')}}">Logout</a></li>
+              </ul>
+            </li>
           {% else %}
             <li><a class="nav-link scrollto" href="{{url_for('login')}}">Login</a></li>
           {% endif %}
-
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -159,7 +161,7 @@
 
 
 
-    <section class=" section-bg">
+    <section class="">
               <div class="container">
               <div class="section-title" data-aos="fade-up">
       <h2>Statistics</h2>
@@ -208,30 +210,27 @@
           </div>
         </div>
     </section>
- <section id="contact" class="why-us">
+<section id="contact" class="contact section-bg">
   <div class="container">
 
-    <div class="section-title" data-aos="fade-up">
-      <h2>Contact</h2>
-      <p>If you would like to dive deeper into the world of poetry with us and spread the beauty of verse to more people, feel free to reach out to us at the email below.</p>
+    <div class="section-title"  data-aos="fade-up">
+      <h2>Contact Us</h2>
+      <p>If you would like to dive deeper into the world of poetry with us and spread the beauty of verse to more people, feel free to reach out to us through email.</p>
     </div>
 
-    <div class="row" data-aos="fade-up">
-
-
-      <div class="col-lg-12">
-        <div class="info-box mx-auto">
-          <i class="bx bx-envelope"></i>
-          <h3>Email Me</h3>
+    <div class="row"  data-aos="flip-up">
+      <div class="col-lg-12 d-flex justify-content-center">
+        <div class="info-box mx-auto rounded-circle">
+          <i class="bx bx-envelope icon-big"></i>
+          <h3>Email Us</h3>
           <p>serenayeo7@gmail.com</p>
         </div>
       </div>
-
-
-
+    </div>
 
   </div>
 </section>
+
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
