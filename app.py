@@ -337,7 +337,7 @@ def poem_writing_haiku():
 		else:
 			isLogin = True
 
-	return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title)
+	return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title,isBegin = True)
 
 
 @app.route('/validate_poem_edit', methods=['POST'])
@@ -529,7 +529,7 @@ def poem_writing_free():
 			return redirect(url_for('login'))
 		else:
 			isLogin=True
-		return render_template('poem_writing_free.html',isLogin=isLogin)
+		return render_template('poem_writing_free.html',isLogin=isLogin,isBegin = True)
 @app.route('/submission_success')
 def submission_success():
     if "username" not in session:
@@ -747,7 +747,7 @@ def poem_writing_acrostic():
 		else:
 			isLogin = True
 
-	return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title)
+	return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title,isBegin = True)
 
 # Function to check if a word has a stress pattern of stress, unstress, stress
 def has_stress_pattern(word):
@@ -866,7 +866,7 @@ def poem_writing_sonnet():
 		else:
 			isLogin = True
 
-	return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title)
+	return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title,isBegin = True)
 # @app.route('/poem_writing_acrostic', methods=['GET', 'POST'])
 # def poem_writing_acrostic():
 # 	if request.method == "POST":

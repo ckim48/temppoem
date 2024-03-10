@@ -662,7 +662,7 @@ section {
 }
 
 .about img{
-    width: 90%;
+    width: 72%;
     border-radius: 10px;
 }
 .about p{
@@ -1188,11 +1188,92 @@ font-size:20px;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.12); /* Adjust the opacity (0.5) to make it darker or lighter */
+    background: rgba(228, 216, 247, 0.27); /* Adjust the opacity (0.5) to make it darker or lighter */
+    z-index: -1;
+}
+
+.acrosticback {
+    position: relative;
+    width: 100%; /* Ensure full width */
+    min-height: 100vh; /* Adjust height to cover full content */
+    background-image: url("../img/tempbg2.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+#comments-list {
+  list-style: none;
+  padding: 0;
+}
+.smb{
+ font-size:20px;
+}
+
+#comments-list li {
+  background-color: #fff; /* Card background color */
+  border: 1px solid #ddd; /* Card border */
+  border-radius: 5px; /* Card border radius for rounded corners */
+  padding: 15px; /* Card padding */
+  margin-bottom: 10px; /* Space between cards */
+  box-shadow: 0 2px 4px rgba(0,0,0,.1); /* Optional: Card shadow for depth */
+}
+.acrosticback::before {
+    content: "";
+    position: absolute;
+  top: -70px; /* Adjust this based on your navbar's actual height */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(222, 247, 216, 0.25); /* Adjust the opacity (0.5) to make it darker or lighter */
     z-index: -1;
 }
 
 
+.sonnetback {
+    position: relative;
+    width: 100%; /* Ensure full width */
+    min-height: 100vh; /* Adjust height to cover full content */
+    background-image: url("../img/tempbg2.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+.sonneetback::before {
+    content: "";
+    position: absolute;
+  top: -70px; /* Adjust this based on your navbar's actual height */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(247, 241, 216, 0.25); /* Adjust the opacity (0.5) to make it darker or lighter */
+    z-index: -1;
+}
+
+
+.freeback {
+    position: relative;
+    width: 100%; /* Ensure full width */
+    min-height: 100vh; /* Adjust height to cover full content */
+    background-image: url("../img/tempbg2.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+.freeback::before {
+    content: "";
+    position: absolute;
+  top: -70px; /* Adjust this based on your navbar's actual height */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(216, 238, 247, 0.25); /* Adjust the opacity (0.5) to make it darker or lighter */
+    z-index: -1;
+}
 .tubebg {
     position: relative;
     width: 100%; /* Ensure full width */
@@ -1221,31 +1302,8 @@ font-size:20px;
 .color-black{
 color:black;
 }
-.acrosticback {
-    background-image: url("../img/acrostic.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    height: 100vh;
-}
 
-.freeback {
-    background-image: url("../img/free.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    height: 100vh;
-}
-.sonnetback {
-    background-image: url("../img/sonnet.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    height: 100vh;
-}
+
 .board-top{
     margin-top: 120px;
 }
@@ -1510,6 +1568,7 @@ color:black;
             position: relative;
             width: 60px;
             height: 34px;
+            margin-top: 4px;
         }
 
         .toggle-switch input {

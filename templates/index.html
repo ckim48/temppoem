@@ -58,7 +58,7 @@
 
           {% if isLogin %}
             <li class="dropdown">
-              <a href="#"><span><i class="bi bi-person-circle large-icon"></i></span> <i class="bi bi-chevron-down"></i></a>
+              <a class="color-white"><span><i class="bi bi-person-circle large-icon"></i></span> <i class="bi bi-chevron-down"></i></a>
               <ul>
                 <li><a href="{{url_for('mypage')}}">My Poem</a></li>
                 <li><a href="{{url_for('logout')}}">Logout</a></li>
@@ -109,7 +109,7 @@
                   <p class="mx-2"> Beyond instruction, our platform fosters a vibrant community where users share their poetic creations, fostering connections and inspiring one another. Our mission is to unveil the enchanting world of poetry, nurturing a deep understanding and appreciation for this timeless art form among many. Join us on this journey, where the beauty of poetry thrives and hearts find solace in the art of written expression.</p>
               </div>
                 <div class="col-md-6 ps-3"data-aos="fade-left">
-                          <img src="../static/img/about2 (3).jpeg" class="d-block img-fluid mx-auto" alt="First Slide">
+                          <img src="../static/img/about2 (3).jpeg" class="d-block img-fluid mx-auto about-img" alt="First Slide">
               </div>
           </div>
 
@@ -167,17 +167,17 @@
       <h2>Statistics</h2>
     </div>
           <div class="row">
-              <div class="col-md-6 ">
+              <div class="col-md-6 " data-aos="flip-right">
                   <div class="card data-card mx-auto">
                     <div class="card-body">
-                        <h3 class="text-center">Number of Types</h3>
+                        <h3 class="text-center">Types of Poems</h3>
                         <p class="text-center mt-4">The distribution of the different types of poems created by users.</p>
                         <canvas class="mx-auto" id="typePie"></canvas>
                     </div>
                   </div>
               </div>
 
-                            <div class="col-md-6 mt-5 mt-md-0" >
+                            <div class="col-md-6 mt-5 mt-md-0"  data-aos="flip-right">
                 <div class="card data-card mx-auto">
                     <div class="card-body">
                         <h3 class="text-center">Sentiments</h3>
@@ -187,7 +187,7 @@
                   </div>
               </div>
 
-                            <div class="col-md-6 mt-5 mt-md-5">
+                            <div class="col-md-6 mt-5 mt-md-5" data-aos="flip-right">
                 <div class="card data-card mx-auto">
                     <div class="card-body">
                         <h3 class="text-center">Frequent Words</h3>
@@ -198,7 +198,7 @@
               </div>
 
 
-                            <div class="col-md-6 mt-5 mt-md-5 mb-5">
+                            <div class="col-md-6 mt-5 mt-md-5 mb-5" data-aos="flip-right">
                 <div class="card data-card mx-auto">
                     <div class="card-body">
                         <h3 class="text-center">Number of Likes</h3>
@@ -263,7 +263,14 @@
           }]
         },
         options:{
-          responsive: true
+          responsive: true,
+      plugins: {
+        legend: {
+          labels: {
+            boxWidth: 30, // Adjust box width for legend items, if necessary
+          }
+        }
+      },
         }
 
     });
@@ -297,22 +304,33 @@ var data_wordBar = {
     }]
 };
 
-        var ctx_wordBar = document.getElementById('wordBar').getContext('2d');
-        var barChart = new Chart(ctx_wordBar, {
-            type: 'bar',
-            data: data_wordBar,
-            options: {
-                responsive: true,
-                scales: {
-                    x: {
-                        beginAtZero: true
-                    },
-                    y: {
-                        beginAtZero: true
-                    }
+var ctx_wordBar = document.getElementById('wordBar').getContext('2d');
+var barChart = new Chart(ctx_wordBar, {
+    type: 'bar',
+    data: data_wordBar,
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            x: {
+                beginAtZero: true,
+                scaleLabel: {
+                    display: false, // Ensures no label/title is displayed for the x-axis
+                }
+            },
+            y: {
+                beginAtZero: true,
+                scaleLabel: {
+                    display: false, // Ensures no label/title is displayed for the y-axis
                 }
             }
-        });
+        }
+    }
+});
 
 
         var data_likeBar = {
@@ -338,22 +356,38 @@ var data_wordBar = {
             }]
         };
 
-        var ctx_wordBar = document.getElementById('likesBar').getContext('2d');
-        var barChart = new Chart(ctx_wordBar, {
-            type: 'bar',
-            data: data_likeBar,
-            options: {
-                responsive: true,
-                scales: {
-                    x: {
-                        beginAtZero: true
-                    },
-                    y: {
-                        beginAtZero: true
-                    }
+var ctx_wordBar = document.getElementById('likesBar').getContext('2d');
+var barChart = new Chart(ctx_wordBar, {
+    type: 'bar', // Keep as 'bar' for Chart.js version 3 or newer
+    data: data_likeBar,
+    options: {
+        responsive: true,
+        indexAxis: 'y', // This makes the bar chart horizontal
+        plugins: {
+            legend: {
+                display: false, // Ensures the legend is not displayed,
+
+            }
+        },
+        scales: {
+            x: {
+                beginAtZero: true,
+                ticks: {
+                    // Ensure only integer values are shown on the x-axis
+                    stepSize: 1,
+                    precision: 0 // Chart.js 2.x might require this
+                }
+            },
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    // Optional: if you also want to ensure y-axis has only integer labels (if applicable)
+                    precision: 0 // This might be needed depending on your Chart.js version
                 }
             }
-        });
+        }
+    }
+});
 
 
                     var ctx5 = document.getElementById('sentimentChart').getContext('2d');
@@ -361,7 +395,7 @@ var data_wordBar = {
                 labels: ['Positive', 'Neutral', 'Negative'],
                 datasets: [{
                     data: [{{ sentiment_counts.positive }}, {{ sentiment_counts.neutral }}, {{ sentiment_counts.negative }}],
-                    backgroundColor: ['#36a2eb', '#ffce56', '#ff6384'],
+                    backgroundColor: ["#C2EAF7","#C5F7C2","#F7C3C2"],
                 }]
             };
 
@@ -370,7 +404,14 @@ var data_wordBar = {
                 data: data,
 
         options:{
-          responsive: true
+          responsive: true,
+                plugins: {
+        legend: {
+          labels: {
+            boxWidth: 30, // Adjust box width for legend items, if necessary
+          }
+        }
+      }
         }
             });
 

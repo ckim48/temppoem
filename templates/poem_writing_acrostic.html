@@ -14,7 +14,7 @@
     <link href="../static/img/apple-touch-icon.png" rel="apple-touch-icon">
 </head>
 
-<body  class="haikuback">
+<body  class="acrosticback">
  <header id="header" class="fixed-top d-flex align-items-center">
     <div class="container d-flex justify-content-between">
 
@@ -37,7 +37,7 @@
 
           {% if isLogin %}
             <li class="dropdown">
-              <a href="#"><span><i class="bi bi-person-circle large-icon"></i></span> <i class="bi bi-chevron-down"></i></a>
+              <a  class="color-white"><span><i class="bi bi-person-circle large-icon"></i></span> <i class="bi bi-chevron-down"></i></a>
               <ul>
                 <li><a href="{{url_for('mypage')}}">My Poem</a></li>
                 <li><a href="{{url_for('logout')}}">Logout</a></li>
@@ -174,12 +174,12 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <ul id="poemErrors">
+        <ol id="poemErrors">
         {% with messages = get_flashed_messages() %}
             {% for message in messages %}
                 <li>{{ message }}</li>
             {% endfor %}
-        {% endwith %}        </ul>
+        {% endwith %}        </ol>
       </div>
 
     </div>
@@ -312,10 +312,12 @@ document.getElementById('viewPoemButton').addEventListener('click', function() {
 });
 </script>
 <script>
+{% if isBegin == True%}
 $(document).ready(function() {
     // Automatically open the acrostic poem rules modal when the page loads
     $('#haiku_instruction').modal('show');
 });
+{% endif %}
 </script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
