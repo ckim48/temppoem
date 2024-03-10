@@ -1383,16 +1383,19 @@ background:#A2AFF6 !important;
 color:white !important;
 }
 
+
 .poem-card{
 width: 17rem !important;
-height: 230px;
+height: 210px;
 background-color:#ECEFFE;
 border: 2px solid #BECDFB;
 transition: transform 0.3s ease-in-out;
 }
-.poem-card:hover{
-    transform: translateY(-14px);
-}
+
+//.poem-card:hover{
+//    transform: translateY(-14px);
+//}
+
 .card-subtitle{
 font-size: 15px !important;
 }
@@ -1563,6 +1566,77 @@ color: #BECDFB !important;
 font-size: 17px;
 color:black;
 }
+.poem-tags {
+    margin-top: 10px;
+}
+.poem-card-s{
+background-color:#FEF7F1 !important;
+border: 2px solid #F1CCAE!important
+}
+
+
+.tags {
+    display: inline-block;
+    background-color: #FEF7F1  !important;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-right: 1px;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+
+}
+
+.tagf {
+    display: inline-block;
+    background-color: #F2FFFF !important;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-right: 1px;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+
+}
+.taga {
+    display: inline-block;
+    background-color: #F9FDF1 !important;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-right: 1px;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+
+}
+
+.tagh {
+    display: inline-block;
+    background-color: #ECEFFE !important;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-right: 1px;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+
+}
+@media (max-width: 1400px) {
+.tagh,.tags,.tagf,.taga{
+margin-right: -26px;
+}
+}
+
+@media (max-width: 992px) {
+.tagh,.tags,.tagf,.taga{
+margin-right: 16px;
+}
+
+@media (max-width: 576px) {
+.tagh,.tags,.tagf,.taga{
+margin-right: 86px;
+}
+
         .toggle-switch {
             display: inline-block;
             position: relative;

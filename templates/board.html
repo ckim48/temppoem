@@ -124,9 +124,35 @@
             {% for i in range(num_poems) %}
               {% if i < 4 %}
                 <div class="col-md-6 col-lg-3 poem-item filter-{{types[i]}} mt-3 mt-md-4" data-title="{{titles[i]}}" data-date="{{dates[i][0:10]}}" data-type="{{types[i]}}"data-poem-id="{{ ids[i] }}"data-likes ="{{ num_likes[i] }}">
+                <div class="poem-tags text-end me-3">
+                                         {% if types[i] == "Acrostic" %}
+      <span class="taga">{{types[i]}}</span> <!-- Display the type as a tag -->
+                  {% elif types[i] == "Freestyle" %}
+      <span class="tagf">{{types[i]}}</span> <!-- Display the type as a tag -->
+                  {% elif types[i] == "Sonnet" %}
+      <span class="tags">{{types[i]}}</span> <!-- Display the type as a tag -->
+
+                    {% else %}
+      <span class="tagh">{{types[i]}}</span> <!-- Display the type as a tag -->
+
+                  {% endif %}
+    </div>
               {% else %}
                 <div class="col-md-6 col-lg-3 poem-item filter-{{types[i]}} mt-3 mt-md-4 mt-lg-4"data-title="{{titles[i]}}"  data-date="{{ dates[i][0:10]}}" data-type="{{types[i]}}"data-poem-id="{{ ids[i] }}"data-likes ="{{ num_likes[i] }}">
-              {% endif %}
+                  <div class="poem-tags text-end me-3 " >
+                                          {% if types[i] == "Acrostic" %}
+      <span class="taga">{{types[i]}}</span> <!-- Display the type as a tag -->
+                  {% elif types[i] == "Freestyle" %}
+      <span class="tagf">{{types[i]}}</span> <!-- Display the type as a tag -->
+                  {% elif types[i] == "Sonnet" %}
+      <span class="tags">{{types[i]}}</span> <!-- Display the type as a tag -->
+
+                    {% else %}
+      <span class="tagh">{{types[i]}}</span> <!-- Display the type as a tag -->
+
+                  {% endif %}
+    </div>
+                    {% endif %}
                     {% if types[i] == "Acrostic" %}
               <div class="card poem-card mx-auto poem-card-h" style="width: 18rem;">
                   {% elif types[i] == "Freestyle" %}
@@ -140,6 +166,7 @@
                   {% endif %}
 
                 <div class="card-body">
+
                           <div class="d-flex justify-content-between align-items-center mb-2">
 
                                     {% if titles[i]|length < 11 %}
@@ -176,7 +203,7 @@
                   </div>
                     {% endif %}
                               </div>
-                                      <h6 class="card-subtitle mb-2 text-muted">Type: {{types[i]}}</h6>
+<!--                                      <h6 class="card-subtitle mb-2 text-muted">Type: {{types[i]}}</h6>-->
 
                   <h6 class="card-subtitle mb-2 text-muted">Author: {{usernames[i]}}</h6>
                   <h6 class="card-subtitle mb-2 text-muted">Date: <span class="date">{{dates[i][0:10]}}</span></h6>
