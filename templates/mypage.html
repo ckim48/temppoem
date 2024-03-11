@@ -119,98 +119,101 @@
 
           <div class="row poem-container">
               {% set counter = 0 %}
-                    {% for i in range(num_poems) %}
-                        {% if username == usernames[i] %}
-                            {% set counter = counter + 1 %}
-                          {% if counter < 4 %}
-                            <div class="col-md-6 col-lg-3 poem-item filter-{{types[i]}} mt-4 mt-md-4" data-title="{{titles[i]}}" data-date="{{dates[i][0:10]}}" data-type="{{types[i]}}" data-likes ="{{ num_likes[i] }}">
-                          {% else %}
-                            <div class="col-md-6 col-lg-3 poem-item filter-{{types[i]}} mt-4 mt-md-4 mt-lg-4"data-title="{{titles[i]}}"  data-date="{{ dates[i][0:10]}}" data-type="{{types[i]}}" data-likes ="{{ num_likes[i] }}">
-                          {% endif %}
-                    {% if types[i] == "Acrostic" %}
-              <div class="card poem-card mx-auto poem-card-h" style="width: 18rem;">
-                  {% elif types[i] == "Freestyle" %}
-                                <div class="card poem-card mx-auto poem-card-f" style="width: 18rem;">
+ {% for i in range(num_poems) %}
+          {% if username == usernames[i] %}
+              {% set counter = counter + 1 %}
+
+         {% if counter < 4 %}
+         <div class="col-md-6 col-lg-3 poem-item filter-{{types[i]}} mt-3 mt-md-4" data-title="{{titles[i]}}" data-date="{{dates[i][0:10]}}" data-type="{{types[i]}}"data-poem-id="{{ ids[i] }}"data-likes ="{{ num_likes[i] }}">
+         <div class="poem-tags text-end me-3">
+            {% if types[i] == "Acrostic" %}
+            <span class="taga">{{types[i]}}</span> <!-- Display the type as a tag -->
+            {% elif types[i] == "Freestyle" %}
+            <span class="tagf">{{types[i]}}</span> <!-- Display the type as a tag -->
+            {% elif types[i] == "Sonnet" %}
+            <span class="tags">{{types[i]}}</span> <!-- Display the type as a tag -->
+            {% else %}
+            <span class="tagh">{{types[i]}}</span> <!-- Display the type as a tag -->
+            {% endif %}
+         </div>
+         {% else %}
+         <div class="col-md-6 col-lg-3 poem-item filter-{{types[i]}} mt-4 mt-md-5 mt-lg-5"data-title="{{titles[i]}}"  data-date="{{ dates[i][0:10]}}" data-type="{{types[i]}}"data-poem-id="{{ ids[i] }}"data-likes ="{{ num_likes[i] }}">
+            <div class="poem-tags text-end me-3 " >
+               {% if types[i] == "Acrostic" %}
+               <span class="taga">{{types[i]}}</span> <!-- Display the type as a tag -->
+               {% elif types[i] == "Freestyle" %}
+               <span class="tagf">{{types[i]}}</span> <!-- Display the type as a tag -->
+               {% elif types[i] == "Sonnet" %}
+               <span class="tags">{{types[i]}}</span> <!-- Display the type as a tag -->
+               {% else %}
+               <span class="tagh">{{types[i]}}</span> <!-- Display the type as a tag -->
+               {% endif %}
+            </div>
+            {% endif %}
+            {% if types[i] == "Acrostic" %}
+            <div class="card poem-card mx-auto poem-card-h" style="width: 18rem;">
+               {% elif types[i] == "Freestyle" %}
+               <div class="card poem-card mx-auto poem-card-f" style="width: 18rem;">
                   {% elif types[i] == "Sonnet" %}
-                                <div class="card poem-card mx-auto poem-card-s" style="width: 18rem;">
-
-                    {% else %}
-                                <div class="card poem-card mx-auto" style="width: 18rem;">
-
-                  {% endif %}
+                  <div class="card poem-card mx-auto poem-card-s" style="width: 18rem;">
+                     {% else %}
+                     <div class="card poem-card mx-auto" style="width: 18rem;">
+                        {% endif %}
                         <div class="card-body">
-                        <div class="d-flex">
-                    {% if titles[i]|length < 11 %}
-                                                            {% if iambs[i] == 1 %}
-                                  <h5 class="card-title"><span class="title">{{titles[i]}} (I)- </span> </h5>
-                                        {% else %}
-                                                      <h5 class="card-title"><span class="title">{{titles[i]}} </span> </h5>
+                           <div class="d-flex justify-content-between align-items-center mb-2">
+                              {% if titles[i]|length < 11 %}
+                              {% if iambs[i] == 1 %}
+                              <h5 class="card-title"><span class="title">{{titles[i]}} (I)- </span> </h5>
+                              {% else %}
+                              <h5 class="card-title"><span class="title">{{titles[i]}} </span> </h5>
+                              {% endif %}
+                              {% else %}
+                              {% if iambs[i] == 1 %}
+                              <h5 class="card-title"><span class="title">{{titles[i][0:11]}} (I)... </span>  </h5>
+                              {% else %}
+                              <h5 class="card-title"><span class="title">{{titles[i][0:11]}}... </span>  </h5>
+                              {% endif %}
+                              {% endif %}
 
-                                        {% endif %}
-                    {% else %}
-                                                                                {% if iambs[i] == 1 %}
-                                                                  <h5 class="card-title"><span class="title">{{titles[i][0:11]}} (I)...</span></h5>
-
-                                                    {% else %}
-                                                  <h5 class="card-title"><span class="title">{{titles[i][0:11]}}...</span></h5>
-
-                                                    {% endif %}
-                    {% endif %}
-
-<div class="options-button-container ms-auto d-flex align-items-center">
-                                                    {% if liked_status[i] == 1 %}
-                  <div class="text-right">
-                    <button class="mb-2 like-button" data-poem-id="{{ ids[i] }}" data-username="{{ usernames[i] }}" data-liked="{{ liked_status[i] }}">
-      <i class="bi bi-heart-fill"></i> <span class="like-count">{{ num_likes[i] }}</span>
-                    </button>
-                  </div>
-
-                    {%else %}
-                                      <div class="text-right">
-                    <button class="mb-2 like-button" data-poem-id="{{ ids[i] }}" data-username="{{ usernames[i] }}" data-liked="{{ liked_status[i] }}">
-      <i class="bi bi-heart"></i> <span class="like-count">{{ num_likes[i] }}</span>
-                    </button>
-                  </div>
-                    {% endif %}
-    <div class="btn-group">
-        <button type="button" class="btn btn-outline-primary dropdown-toggle border-0 bg-transparent custom-size" data-bs-toggle="dropdown" aria-expanded="false">
-    <i class="bi bi-three-dots icon-nudge-up"></i> <!-- More icon with custom class -->
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#editPoemModal" data-poem-id="{{ ids[i] }}" data-title="{{ titles[i] }}" data-type="{{ types[i] }}" data-content="{{ contents[i] }}"><i class="bi bi-pencil"></i> Edit</a></li>
-            <li><a class="dropdown-item delete-button" href="#" data-poem-id="{{ ids[i] }}"><i class="bi bi-trash"></i> Delete</a></li>
-        </ul>
-    </div>
-</div>
-
-</div>
-                                      <h6 class="card-subtitle mb-2 text-muted">Type: {{types[i]}}</h6>
-
-                  <h6 class="card-subtitle mb-2 text-muted">Author: {{usernames[i]}}</h6>
-                  <h6 class="card-subtitle mb-2 text-muted">Date: <span class="date">{{dates[i][0:10]}}</span></h6>
-                            {% if contents[i][:45]|length < 25 %}
-                          <p class="card-text mytext">{{contents[i][0:40]}} ...</p>
-                    <br>
-                            {% else %}
-                             <p class="card-text mytext">{{contents[i][0:40]}}...</p>
-
-                            {% endif %}
-                <div class="text-end">
-
-                  <a class="card-link text-right" data-bs-toggle="modal" data-bs-target="#poemModal" data-poem-id="{{ ids[i] }}" data-title="{{titles[i]}}" data-type="{{types[i]}}" data-username="{{usernames[i]}}" data-date="{{dates[i][0:10]}}" data-content="{{contents[i]}}">
- Read More
-</a>
-
-                </div>
+                           </div>
+                           <!--                                      <h6 class="card-subtitle mb-2 text-muted">Type: {{types[i]}}</h6>-->
+<!--                           <h6 class="card-subtitle mb-2 text-muted font-italic">Author: {{usernames[i]}}</h6>-->
+<!--                           <h6 class="card-subtitle mb-2 text-muted">Date: <span class="date">{{dates[i][0:10]}}</span></h6>-->
+                           {% if contents[i][:45]|length < 25 %}
+                           <p class="card-text mytext">{{contents[i][0:40]}} ...</p>
+                           <br>
+                           {% else %}
+                           <p class="card-text mytext">{{contents[i][0:40]}}...</p>
+                           {% endif %}
+                           <div class="text-end">
+                              <a class="card-link text-right" data-bs-toggle="modal" data-bs-target="#poemModal" data-poem-id="{{ ids[i] }}" data-title="{{titles[i]}}" data-type="{{types[i]}}" data-username="{{usernames[i]}}" data-date="{{dates[i][0:10]}}" data-content="{{contents[i]}}">
+                              Read More
+                              </a>
+                           </div>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between mt-1 mb-5">
+                            <div class="like-button-container ms-1">
+                                {% if liked_status[i] == 1 %}
+                                <button class="like-button btn-like" data-poem-id="{{ ids[i] }}" data-username="{{ usernames[i] }}" data-liked="{{ liked_status[i] }}" data-likes ="{{ num_likes[i] }}">
+                                    <i class="bi bi-heart-fill"></i> <!-- Filled heart -->
+                                    <span class="like-count">{{ num_likes[i] }}</span>
+                                </button>
+                                {% else %}
+                                <button class="like-button" data-poem-id="{{ ids[i] }}" data-username="{{ usernames[i] }}" data-liked="{{ liked_status[i] }}" data-likes ="{{ num_likes[i] }}">
+                                    <i class="bi bi-heart"></i> <!-- Unfilled heart -->
+                                    <span class="like-count">{{ num_likes[i] }}</span>
+                                </button>
+                                {% endif %}
+                            </div>
+                           <a class="smb2 me-1"data-bs-html="true" data-bs-toggle="tooltip" data-bs-placement="top" title="Author: {{usernames[i]}} <br> Date: {{dates[i][0:10]}}">
+                                <i class="bi bi-search"></i>
+                            </a>
                         </div>
 
-                      </div>
-
-
-
-                    </div>
-                        {% endif %}
-                    {% endfor %}
+                     </div>
+                  </div>
+                   {% endif %}
+                  {% endfor %}
 
                   </div>
 
@@ -288,7 +291,7 @@
         <!-- Poem details content goes here -->
         <h6 class="modal-subtitle mb-2 text-muted"><span class="username"></span> - <span class="date"></span></h6>
         <p class="modal-text"></p>
-
+<hr>
             <div id="comments-section">
     <h5 class="mt-4">Comments</h5>
     <ul id="comments-list"></ul>

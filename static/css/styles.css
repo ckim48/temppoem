@@ -144,7 +144,9 @@ h1 {
 body {
     margin: 0;
 }
-
+.card-subtitle .font-italic{
+font-style: italic !important;
+}
 .loginback {
     position: relative;
     width: 100%; /* Ensure full width */
