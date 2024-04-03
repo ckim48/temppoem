@@ -1172,8 +1172,8 @@ font-size:20px;
 }
 .haikuback {
     position: relative;
-    width: 100%; /* Ensure full width */
-    min-height: 100vh; /* Adjust height to cover full content */
+    width: 100%;
+    min-height: 100vh;
     background-image: url("../img/tempbg2.jpg");
     background-size: cover;
     background-repeat: no-repeat;
@@ -1184,18 +1184,18 @@ font-size:20px;
 .haikuback::before {
     content: "";
     position: absolute;
-  top: -70px; /* Adjust this based on your navbar's actual height */
+  top: -70px;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(228, 216, 247, 0.27); /* Adjust the opacity (0.5) to make it darker or lighter */
+    background: rgba(198, 235, 202, 0.3);
     z-index: -1;
 }
 
 .acrosticback {
     position: relative;
-    width: 100%; /* Ensure full width */
-    min-height: 100vh; /* Adjust height to cover full content */
+    width: 100%;
+    min-height: 100vh;
     background-image: url("../img/tempbg2.jpg");
     background-size: cover;
     background-repeat: no-repeat;
@@ -1227,19 +1227,19 @@ font-size:20px;
 .acrosticback::before {
     content: "";
     position: absolute;
-  top: -70px; /* Adjust this based on your navbar's actual height */
+  top: -70px;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(222, 247, 216, 0.25); /* Adjust the opacity (0.5) to make it darker or lighter */
+    background: rgba(247, 227, 233, 0.5);
     z-index: -1;
 }
 
 
 .sonnetback {
     position: relative;
-    width: 100%; /* Ensure full width */
-    min-height: 100vh; /* Adjust height to cover full content */
+    width: 100%;
+    min-height: 100vh;
     background-image: url("../img/tempbg2.jpg");
     background-size: cover;
     background-repeat: no-repeat;
@@ -1247,14 +1247,14 @@ font-size:20px;
     background-position: center;
 }
 
-.sonneetback::before {
+.sonnetback::before {
     content: "";
     position: absolute;
-  top: -70px; /* Adjust this based on your navbar's actual height */
+  top: -70px;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(247, 241, 216, 0.25); /* Adjust the opacity (0.5) to make it darker or lighter */
+    background: rgba(132, 147, 232, 0.2);
     z-index: -1;
 }
 
@@ -1273,11 +1273,11 @@ font-size:20px;
 .freeback::before {
     content: "";
     position: absolute;
-  top: -70px; /* Adjust this based on your navbar's actual height */
+  top: -70px;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(216, 238, 247, 0.25); /* Adjust the opacity (0.5) to make it darker or lighter */
+    background: rgba(252, 252, 202, 0.2);
     z-index: -1;
 }
 .tubebg {
@@ -1524,6 +1524,12 @@ width:14rem !important;
 
 }
 
+.mt-error{
+    margin-top:300px;
+}
+.mt-error2{
+    margin-top:270px;
+}
 @media (max-width: 768px) {
 .data-card{
 width: 350px;
