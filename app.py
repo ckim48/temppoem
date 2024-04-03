@@ -286,11 +286,17 @@ def poem_writing_haiku():
 			return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title,
 								   isMatch=isMatch, isBad=isBad, isEmpty=isEmpty)
 		for line in lines:
+			if len(line) <=3:
+				isMatch = True
+				flash("Please write appropriate contents.")
+				return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title,
+									   isMatch=isMatch, isBad=isBad,isEmpty=isEmpty)
 			if line == "":
 				isEmpty = True
 				flash("Please write a poem before you submit.")
 				return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title,
 									   isMatch=isMatch, isBad=isBad,isEmpty=isEmpty)
+
 		if isSimilar_theme(title,lines) < 0.11:
 			isMatch = True
 			flash("Please match the title with your contents of poem.")
