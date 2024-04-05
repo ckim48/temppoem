@@ -1529,7 +1529,7 @@ font-size:15.5px !important;
 @media (max-width: 768px) {
 .data-card{
 width: 350px;
-height: 450px;
+height: 405px;
 }
 .mt-end{
   position: fixed;
