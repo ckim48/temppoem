@@ -352,6 +352,7 @@ display:none !important;
 .navbar-mobile {
   position: fixed;
   overflow: hidden;
+  height:520px;
   top: 0;
   right: 0;
   left: 0;
@@ -1391,7 +1392,6 @@ color:white !important;
 
 
 .poem-card{
-width: 17rem !important;
 height: 210px;
 background-color:rgba(198, 235, 202, 0.3);
 border: 2px solid #A2DEA0;
@@ -1514,10 +1514,18 @@ font-size:15.5px !important;
 
 }
 }
+
+
+
+.poem-card {
+    width: 17rem !important;
+}
+
+
 @media (min-width: 990px) and (max-width: 1200px) {
-  .poem-card {
-    width: 14rem !important; /* Adjusted width for the specified screen range */
-  }
+    .poem-card {
+        width: 15rem !important;
+    }
 }
 
 .mt-error{
@@ -1584,7 +1592,7 @@ color:black;
     background-color: rgba(132, 147, 232, 0.2) !important;
     border-radius: 5px;
     padding: 5px 10px;
-    margin-right: 1px;
+    margin-right: -8px;
     margin-top: 10px;
     font-size: 14px;
     font-weight: 700;
@@ -1597,7 +1605,7 @@ color:black;
     background-color: rgba(252, 252, 202, 0.4) !important;
     border-radius: 5px;
     padding: 5px 10px;
-    margin-right: 1px;
+    margin-right: -8 px;
         font-weight: 700;
 
     margin-top: 10px;
@@ -1610,7 +1618,7 @@ color:black;
     background-color: rgba(247, 227, 233, 0.5) !important;
     border-radius: 5px;
     padding: 5px 10px;
-    margin-right: 1px;
+    margin-right: -8px;
     margin-top: 10px;
         font-weight: 700;
 
@@ -1626,7 +1634,7 @@ color:black;
     padding: 5px 10px;
         font-weight: 700;
 
-    margin-right: 1px;
+    margin-right: -8px;
     margin-top: 10px;
     font-size: 14px;
     color: #333;
@@ -1641,7 +1649,7 @@ margin-right: -26px;
 
 @media (max-width: 1200px) {
 .tagh,.tags,.tagf,.taga{
-margin-right: -70px;
+margin-right: -40px;
 }
 }
 

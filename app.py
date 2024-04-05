@@ -14,6 +14,7 @@ app = Flask(__name__)
 app.secret_key = "randommessage"
 app.permanent_session_lifetime = timedelta(seconds=3600)
 
+punctuation = ["@!#$%^&*"]
 
 @app.route('/', methods=['GET']) # / => main homepage; decorator
 def index(): #index func calls render_template, showing login.html on website
