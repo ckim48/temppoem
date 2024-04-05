@@ -1393,8 +1393,8 @@ color:white !important;
 .poem-card{
 width: 17rem !important;
 height: 210px;
-background-color:#ECEFFE;
-border: 2px solid #BECDFB;
+background-color:rgba(198, 235, 202, 0.3);
+border: 2px solid #A2DEA0;
 transition: transform 0.3s ease-in-out;
 }
 
@@ -1406,16 +1406,16 @@ transition: transform 0.3s ease-in-out;
 font-size: 15px !important;
 }
 .poem-card-s{
-background-color:#FEF7F1 !important;
-border: 2px solid #F1CCAE!important
+background-color: rgba(132, 147, 232, 0.2) !important;
+border: 2px solid #BBBEEF!important
 }
 .poem-card-h{
-background-color:#F9FDF1 !important;
-border: 2px solid #99DA86 !important;
+background-color:rgba(247, 227, 233, 0.5) !important;
+border: 2px solid #FFC4C4 !important;
 }
 .poem-card-f{
-background-color: #F2FFFF !important;
-border: 2px solid #86DADA !important;
+background-color: rgba(252, 252, 202, 0.4) !important;
+border: 2px solid #F7E8BA !important;
 }
 .stat-mt{
     margin-top: 100px;
@@ -1514,21 +1514,17 @@ font-size:15.5px !important;
 
 }
 }
-@media (max-width: 1200px) {
-.mytext{
-font-size:14px !important;
-}
-.poem-card{
-width:14rem !important;
-}
-
+@media (min-width: 990px) and (max-width: 1200px) {
+  .poem-card {
+    width: 14rem !important; /* Adjusted width for the specified screen range */
+  }
 }
 
 .mt-error{
     margin-top:300px;
 }
 .mt-error2{
-    margin-top:270px;
+    margin-top:200px;
 }
 @media (max-width: 768px) {
 .data-card{
@@ -1581,15 +1577,11 @@ color:black;
 .poem-tags {
     margin-top: 10px;
 }
-.poem-card-s{
-background-color:#FEF7F1 !important;
-border: 2px solid #F1CCAE!important
-}
 
 
 .tags {
     display: inline-block;
-    background-color: #FEF7F1  !important;
+    background-color: rgba(132, 147, 232, 0.2) !important;
     border-radius: 5px;
     padding: 5px 10px;
     margin-right: 1px;
@@ -1602,7 +1594,7 @@ border: 2px solid #F1CCAE!important
 
 .tagf {
     display: inline-block;
-    background-color: #F2FFFF !important;
+    background-color: rgba(252, 252, 202, 0.4) !important;
     border-radius: 5px;
     padding: 5px 10px;
     margin-right: 1px;
@@ -1615,7 +1607,7 @@ border: 2px solid #F1CCAE!important
 }
 .taga {
     display: inline-block;
-    background-color: #F9FDF1 !important;
+    background-color: rgba(247, 227, 233, 0.5) !important;
     border-radius: 5px;
     padding: 5px 10px;
     margin-right: 1px;
@@ -1629,7 +1621,7 @@ border: 2px solid #F1CCAE!important
 
 .tagh {
     display: inline-block;
-    background-color: #ECEFFE !important;
+    background-color: rgba(198, 235, 202, 0.3) !important;
     border-radius: 5px;
     padding: 5px 10px;
         font-weight: 700;
@@ -1646,13 +1638,37 @@ margin-right: -26px;
 }
 }
 
+
+@media (max-width: 1200px) {
+.tagh,.tags,.tagf,.taga{
+margin-right: -70px;
+}
+}
+
 @media (max-width: 992px) {
 .tagh,.tags,.tagf,.taga{
 margin-right: 16px;
 }
 }
+@media (max-width: 800px) {
+.tagh,.tags,.tagf,.taga{
+margin-right: 105px;
+}
+}
 
 @media (max-width: 576px) {
+.tagh,.tags,.tagf,.taga{
+margin-right: 120px;
+}
+}
+
+@media (max-width: 500px) {
+.tagh,.tags,.tagf,.taga{
+margin-right: 85px;
+}
+}
+
+@media (max-width: 450px) {
 .tagh,.tags,.tagf,.taga{
 margin-right: 31px;
 }
