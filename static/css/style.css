@@ -95,7 +95,7 @@ margin-top:3px;
   font-size:12px !importants;
   }
       .title-label{
-    color:white;
+    color:black;
     font-size:17px;
 
     }
@@ -1682,13 +1682,13 @@ margin-right: 120px;
 
 @media (max-width: 500px) {
 .tagh,.tags,.tagf,.taga{
-margin-right: 85px;
+margin-right: 81px;
 }
 }
 
 @media (max-width: 450px) {
 .tagh,.tags,.tagf,.taga{
-margin-right: 31px;
+margin-right: 27px;
 }
 }
         .toggle-switch {
