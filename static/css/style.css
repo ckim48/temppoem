@@ -1682,13 +1682,13 @@ margin-right: 120px;
 
 @media (max-width: 500px) {
 .tagh,.tags,.tagf,.taga{
-margin-right: 81px;
+margin-right: 80px;
 }
 }
 
 @media (max-width: 450px) {
 .tagh,.tags,.tagf,.taga{
-margin-right: 27px;
+margin-right: 26px;
 }
 }
         .toggle-switch {
