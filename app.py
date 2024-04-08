@@ -307,10 +307,11 @@ def poem_writing_haiku():
 			if contains_profanity(line):
 				isBad = True
 				flash("Do not use any harmful words.")
+				break
 				# return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad)
-		if isMatch or isBad:
-			return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title,
-								   isMatch=isMatch, isBad=isBad, isEmpty=isEmpty)
+		if isBad or isMatch or isEmpty:
+			return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title, isBad=isBad, isMatch=isMatch)
+
 		result = haiku_is_standard(lines)
 		if result:
 			username = session["username"]
@@ -507,6 +508,7 @@ def poem_writing_free():
 			if contains_profanity(line):
 				isBad = True
 				flash("Do not use any harmful words.")
+				break
 		if isMatch or isBad or isFinal:
 				return render_template('poem_writing_free.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad, isMatch=isMatch,isFinal=isFinal ), 300
 
@@ -720,6 +722,7 @@ def poem_writing_acrostic():
 			if contains_profanity(line):
 				isBad = True
 				flash("Do not use any harmful words.")
+				break
 				# return render_template('poem_writing_acrostic.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad)
 
 		result = is_acroustic(title,lines)
@@ -830,7 +833,8 @@ def poem_writing_sonnet():
 		for line in lines:
 			if contains_profanity(line):
 				isBad = True
-				flash("Wrong!")
+				flash("Do not use any harmful words.")
+				break
 				# return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad)
 		if isBad or isMatch or isFinal or isLine:
 			return render_template('poem_writing_sonnet.html', isLogin=isLogin, lines=lines, title=title, isBad=isBad, isMatch=isMatch, isFinal = isFinal, isLine = isLine)

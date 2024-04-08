@@ -69,51 +69,8 @@
                 <button type="button" id="resetButton" class="btn btn-primary btn-primarym me-2">Reset</button>
                 <button type="submit" class="btn btn-primary btn-primarym">Submit</button>
             </div>
-                <div class="modal fade mt-erro" id="wrongPoemModal" tabindex="-1" aria-labelledby="wrongPoemModalLabel" aria-hidden="true">
-  <div class="modal-dialogr">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="wrongPoemModalLabel">Errors</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <ol id="poemErrors">
-        {% with messages = get_flashed_messages() %}
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        {% endwith %}        </ol>
-      </div>
 
-    </div>
-  </div>
-</div>
-<!--                            {% with messages = get_flashed_messages() %}-->
-<!--                {% if messages%}-->
-<!--                    <div class="alert alert-danger d-block mx-auto mt-3 mb-" role="alert">-->
-<!--                        Wrong poem!-->
-<!--                                        <ul>-->
-<!--                    {% if isBad%}-->
-<!--                    <li>Do not use any harmful words!</li>-->
-<!--                    {% endif %}-->
-<!--                                                                                    {% if isMatch%}-->
-<!--                    <li>Please match the title with your contents of poem!</li>-->
-<!--                    {% endif %}-->
-<!--                                            {% if isLine%}-->
-<!--                    <li>Sonnet needs to have 14 lines!</li>-->
-<!--                    {% endif %}-->
 
-<!--                                                                                        {% if isFinal %}-->
-<!--                    <li>Check your stress pattern!</li>-->
-<!--                    {% endif %}-->
-
-<!--                                                                                        {% if isWrong%}-->
-<!--                    <li>Please check your rhymes!</li>-->
-<!--                    {% endif %}-->
-<!--                </ul>-->
-<!--                    </div>-->
-<!--                {% endif %}-->
-<!--            {% endwith %}-->
                 <div class="themebox-container d-flex justify-content-center mb-3">
                     <label for="theme" class="form-label title-label me-2 color-black">Title:</label>
                     <input class="title-box me-5" name="theme"id="themeInput" placeholder="" value="{{ title | default('') }}">
@@ -187,9 +144,26 @@
                           </div>
                     </div>
 
-
             </form>
+<div class="modal fade mt-error" id="wrongPoemModal" tabindex="-1" aria-labelledby="wrongPoemModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="wrongPoemModalLabel">Errors</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ol id="poemErrors">
+        {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        {% endwith %}        </ol>
+      </div>
 
+    </div>
+  </div>
+</div>
         </div>
     </div>
 <div class="modal fade mt-haiku-info mt-error2" id="haiku_instruction" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -337,7 +311,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     <script>
-        $("form").submit(function (event) {
+         $("form").submit(function (event) {
             event.preventDefault(); // Prevent the default form submission
 
             var form_data = $(this).serialize(); // Serialize form data
@@ -420,7 +394,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
        </script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
 <script>
 $(document).ready(function() {
     {% with messages = get_flashed_messages() %}
@@ -430,13 +403,14 @@ $(document).ready(function() {
     {% endwith %}
 });
 </script>
-        <script>
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Focus on the theme input field when the page loads
             document.getElementById('themeInput').focus();
         });
     </script>
-    <script>
+
+<script>
 $(document).ready(function() {
     {% if showSuccessModal %}
         $('#successModal').modal('show');
@@ -448,21 +422,7 @@ $(document).ready(function() {
     {% endwith %}
 });
 </script>
-<script>
-document.getElementById('viewPoemButton').addEventListener('click', function() {
-    window.location.href = '/mypage'; // Replace '/mypage' with your target route
-});
-</script>
-  <script src="../static/js/main.js"></script>
-<script>
-{% if isBegin == True%}
-$(document).ready(function() {
-    // Automatically open the acrostic poem rules modal when the page loads
-    $('#haiku_instruction').modal('show');
-});
-{% endif %}
-</script>
-<script>
+ <script>
 document.addEventListener('DOMContentLoaded', function() {
   let currentSectionIndex = 0;
   const sections = document.querySelectorAll('.content-section');
@@ -510,6 +470,19 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+<script>
+document.getElementById('viewPoemButton').addEventListener('click', function() {
+    window.location.href = '/mypage'; // Replace '/mypage' with your target route
+});
+</script>
+<script>
+{% if isBegin == True%}
+$(document).ready(function() {
+    // Automatically open the acrostic poem rules modal when the page loads
+    $('#haiku_instruction').modal('show');
+});
+{% endif %}
+</script>
        <script>
            document.addEventListener('DOMContentLoaded', function() {
     // Select the form or input fields
@@ -528,13 +501,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
        </script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl)
-  })
-});
-</script>
 </body>
 </html>
