@@ -1539,6 +1539,9 @@ font-size:15.5px !important;
     margin-top:90px;
 }
 @media (max-width: 768px) {
+.ms-input{
+    margin-left: 14px !important;
+}
 .mt-error2{
     margin-top:0px;
 }
