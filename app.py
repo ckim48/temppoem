@@ -308,8 +308,9 @@ def poem_writing_haiku():
 				isBad = True
 				flash("Do not use any harmful words.")
 				# return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title,isBad=isBad)
-
-
+		if isMatch or isBad:
+			return render_template('poem_writing_haiku.html', isLogin=isLogin, lines=lines, title=title,
+								   isMatch=isMatch, isBad=isBad, isEmpty=isEmpty)
 		result = haiku_is_standard(lines)
 		if result:
 			username = session["username"]

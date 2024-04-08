@@ -641,6 +641,9 @@ section {
 }
 
 @media (max-width: 768px) {
+    .mybr{
+        display:none;
+    }
   .breadcrumbs .d-flex {
     display: block !important;
   }
@@ -1536,6 +1539,9 @@ font-size:15.5px !important;
     margin-top:200px;
 }
 @media (max-width: 768px) {
+.mt-error2{
+    margin-top:0px;
+}
 .data-card{
 width: 350px;
 height: 405px;
