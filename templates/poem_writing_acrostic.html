@@ -67,7 +67,7 @@
             </div>
                 <div class="themebox-container d-flex justify-content-center mb-3 mt-3">
                     <label for="theme" class="form-label title-label me-2 color-black">Theme:</label>
-                    <input class="title-box me-2 me-md-5" id="themeInput" name="theme" placeholder="" value="{{ title | default('') }}">
+                    <input class="title-box me-2 me-md-5" id="themeInput" name="theme" placeholder="" value="{{ title | default('') }}" onkeypress="return /[a-zA-Z0-9]/.test(event.key)">
                 </div>
                 <div class="gbutton-container">
                     <button type="button" class="btn btn-primary3 small-btn" onclick="createInputBoxes()">Generate Lines</button>
