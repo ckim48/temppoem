@@ -114,7 +114,9 @@
 <!--                        </div>-->
 <!--                    {% endif %}-->
 <!--                {% endwith %}-->
+
             </form>
+
         </div>
     </div>
 
@@ -230,6 +232,9 @@
                     newBox.setAttribute('name', 'line');
                     newBox.classList.add("word-box", "me-3", "text-center", "ms-input");
 
+                    if (i === themeValue.length - 1) {
+                        newInputWrapper.classList.add('mb-4');
+                    }
 
                     newInputWrapper.appendChild(newBox);
                     wordboxContainer.appendChild(newInputWrapper);
